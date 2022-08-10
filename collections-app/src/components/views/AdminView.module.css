@@ -1,0 +1,76 @@
+.container {
+  border-radius: 1rem;
+  margin-top: 1rem;
+}
+
+input[type="checkbox"] {
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid black;
+}
+
+.tableToolbar {
+  background-color: rgba(75, 81, 87, 0.837);
+  height: 5rem;
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding: 2rem;
+  font-size: 3rem;
+  font-weight: bold;
+  border-radius: 1rem;
+  color: aliceblue;
+  text-shadow: 0.2rem 0.2rem black;
+  font-family: "Open Sans", sans-serif;
+}
+
+@media (max-width: 576px) {
+  .tableToolbar {
+    font-size: 2rem;
+  }
+}
+
+.actionButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 4rem;
+  color: black;
+}
+
+.actionButtons > Button {
+  font-size: 2rem;
+  margin: 1rem;
+  padding: 0rem 1rem 0rem 1rem;
+}
+
+.iconDelete,
+.iconLock,
+.iconAdmin {
+  padding: 1rem;
+}
+
+.iconDelete:hover {
+  color: red;
+}
+.iconLock:hover {
+  color: green;
+}
+
+.iconAdmin:hover {
+  color: gold;
+}
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+table {
+  background-color: rgba(255, 244, 228, 0.705);
+  font-size: 1.5rem;
+  font-family: "Open Sans", sans-serif;
+  table-layout: auto;
+}

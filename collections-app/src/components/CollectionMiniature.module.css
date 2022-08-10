@@ -1,0 +1,24 @@
+.collectionCon {
+  border: 1px solid red;
+  font-size: 3rem;
+  display: flex;
+  flex-direction: row;
+  padding: 1rem;
+}
+.collectionName {
+  border-bottom: 1px solid white;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.iconEdit:hover {
+  color: blue;
+}
+
+.iconDelete:hover {
+  color: red;
+}

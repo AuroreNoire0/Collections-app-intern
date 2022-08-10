@@ -1,0 +1,15 @@
+.input {
+  font-size: 2rem;
+  background-color: white;
+}
+
+.plus {
+  font-size: 2rem;
+  border: 1px solid black;
+  border-radius: 1rem;
+  background-color: green;
+}
+
+.plus:hover {
+  background-color: darkgreen;
+}

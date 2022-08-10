@@ -1,0 +1,26 @@
+.navContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar {
+  background-color: rgb(218, 157, 25);
+  font-size: 2.5rem;
+}
+
+.navbrand {
+  font-size: 3rem;
+}
+
+.navContainer button {
+  width: 5rem;
+  height: 4rem;
+  border: 2px solid black;
+}
+
+.navContainer button span {
+  font-size: 2rem;
+  width: 3rem;
+  height: 2rem;
+}
