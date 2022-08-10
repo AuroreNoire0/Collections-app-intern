@@ -5,7 +5,7 @@ import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import { Button } from "react-bootstrap";
 import styles from "./AddItem.module.css";
-import Autocomplete from "@mui/material/Autocomplete";
+// import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -43,7 +43,7 @@ function AddItem() {
         </Col>
         <Col md>
           <Form.Label>Tags</Form.Label>
-          <Autocomplete
+          {/* <Autocomplete
             multiple
             id="tags-filled"
             className={styles.input}
@@ -56,7 +56,7 @@ function AddItem() {
           />
           {/* {emailHasError && (
               <p className={styles.errorText}>Please enter a valid email.</p>
-            )} */}
+            )} */}{" "}
         </Col>
       </Row>
       <FontAwesomeIcon className={styles.plus} icon={faPlus} />
