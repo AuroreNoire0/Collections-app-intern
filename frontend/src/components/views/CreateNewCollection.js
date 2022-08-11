@@ -11,7 +11,8 @@ function CreateNewCollection() {
   return (
     <Container>
       <h1 className={styles.title}>Create a new collection</h1>
-      <Row className="g-2">
+
+      {/* <Row className="g-2">
         <Col md>
           <FloatingLabel
             className={styles.name}
@@ -72,7 +73,7 @@ function CreateNewCollection() {
           label="Upload Profile Picture"
           className={styles.image}
         />
-      </Form.Group>
+      </Form.Group> */}
       <div className={styles.divButton}>
         <Button
           variant="primary"

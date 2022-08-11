@@ -1,11 +1,11 @@
 .searchStack {
   font-size: 3rem;
-  background-color: #00000092;
-  color: antiquewhite;
+  background-color: #aa93908b;
+  color: rgb(0, 0, 0);
 }
 
 .TextField input,
 .TextField label {
   font-size: 1.5rem;
-  color: antiquewhite;
+  color: rgb(0, 0, 0);
 }
