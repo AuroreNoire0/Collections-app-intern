@@ -2,9 +2,9 @@ import Container from "react-bootstrap/esm/Container";
 
 function AccountView() {
   return (
-    <Container className={styles.collectionCon}>
-      <h1> Your collection:</h1>
-      <div style={{ height: 400, width: "100%" }}>
+    <Container>
+      <h1> Your collections:</h1>
+      {/* <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={rows}
           columns={columns}
@@ -12,7 +12,7 @@ function AccountView() {
           rowsPerPageOptions={[8]}
           checkboxSelection
         />
-      </div>
+      </div> */}
     </Container>
   );
 }
