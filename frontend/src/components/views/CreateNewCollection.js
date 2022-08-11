@@ -1,90 +1,177 @@
+import * as React from "react";
+import { useState } from "react";
 import Container from "react-bootstrap/esm/Container";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Grid";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import { Button } from "react-bootstrap";
-import AddItem from "./AddItem";
+
 import styles from "./CreateNewCollection.module.css";
+import MenuItem from "@mui/material/MenuItem";
 
 function CreateNewCollection() {
+  const [topic, setTopic] = useState("");
+  const topics = [
+    {
+      value: "Books",
+      label: "Books",
+    },
+    {
+      value: "Signs",
+      label: "Signs",
+    },
+    {
+      value: "Whiskys",
+      label: "Whiskys",
+    },
+    {
+      value: "Cars",
+      label: "Cars",
+    },
+    {
+      value: "Toys",
+      label: "Toys",
+    },
+    {
+      value: "Games",
+      label: "Games",
+    },
+    {
+      value: "Postcards",
+      label: "Postcards",
+    },
+    {
+      value: "Shoes",
+      label: "Shoes",
+    },
+    {
+      value: "Films",
+      label: "Films",
+    },
+
+    {
+      value: "Jewellery",
+      label: "Jewellery",
+    },
+
+    {
+      value: "Other",
+      label: "Other",
+    },
+  ];
+
+  const handleChange = (event) => {
+    setTopic(event.target.value);
+  };
   return (
     <Container>
-      <h1 className={styles.title}>Create a new collection</h1>
-
-      {/* <Row className="g-2">
-        <Col md>
-          <FloatingLabel
-            className={styles.name}
-            controlId="floatingInputGrid"
-            label="Collection name"
-          >
-            <Form.Control
-              className={styles.input}
-              size="lg"
-              type="text"
-              placeholder="Name"
-            />
-          </FloatingLabel>
-        </Col>
-        <Col md>
-          <FloatingLabel
-            className={styles.topic}
-            controlId="floatingSelectGrid"
-            size="lg"
-          >
-            <Form.Select
-              aria-label="Floating label select example"
-              className={styles.selects}
-              size="lg"
-            >
-              <option>Choose corresponding topic</option>
-              <option value="Books">Books</option>
-              <option value="Signs">Signs</option>
-              <option value="Whiskys">Whiskys</option>
-              <option value="Cars">Cars</option>
-              <option value="Toys">Toys</option>
-              <option value="Games">Games</option>
-              <option value="Postcards">Postcards</option>
-              <option value="Shoes">Shoes</option>
-              <option value="Jewellery">Jewellery</option>
-              <option value="Films">Films</option>
-              <option value="Other">Other</option>
-            </Form.Select>
-          </FloatingLabel>
-        </Col>
-      </Row>
-      <FloatingLabel
-        controlId="floatingTextarea"
-        label="Description"
-        className={styles.description}
-      >
-        <Form.Control
-          className={styles.descriptionField}
-          as="textarea"
-          placeholder="Leave a comment here"
-        />
-      </FloatingLabel>
-
-      <Form.Group controlId="pic">
-        <Form.Label className={styles.labelImage}>Image</Form.Label>
-        <Form.Control
-          type="file"
-          label="Upload Profile Picture"
-          className={styles.image}
-        />
-      </Form.Group> */}
-      <div className={styles.divButton}>
-        <Button
-          variant="primary"
-          type="submit"
-          className={styles.subBtn}
-          // disabled={!formIsValid}
-        >
-          Add collection
-        </Button>
+      <div className={styles.divTitle}>
+        <h1 className={styles.title}>Create a new collection</h1>
       </div>
-      <AddItem />
+      <Grid className={styles.form}>
+        <form>
+          <Grid container spacing={1}>
+            <Grid xs={12} sm={6} item>
+              <TextField
+                placeholder="Enter name"
+                label="Name"
+                variant="outlined"
+                className={styles.textField}
+              />
+            </Grid>
+            <Grid xs={12} sm={6} item>
+              <TextField
+                id="outlined-select-currency"
+                select
+                label="Topic"
+                value={topic}
+                className={styles.textField}
+                onChange={handleChange}
+              >
+                {topics.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                id="outlined-multiline-static"
+                label="Multiline"
+                multiline
+                rows={4}
+                placeholder="Description"
+                className={styles.textField}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <TextField
+                type="text"
+                placeholder="Enter name of property"
+                label="Name of property"
+                variant="outlined"
+                className={styles.textField}
+              />
+            </Grid>
+            <Grid item xs={8}>
+              <TextField
+                type="text"
+                placeholder="Enter other value"
+                label="Other value"
+                variant="outlined"
+                className={styles.textField}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <TextField
+                type="text"
+                placeholder="Enter name of property"
+                label="Name of property"
+                variant="outlined"
+                className={styles.textField}
+              />
+            </Grid>
+            <Grid item xs={8}>
+              <TextField
+                type="data"
+                placeholder="Enter other value"
+                label="Other value"
+                variant="outlined"
+                className={styles.textField}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <input
+                accept="image/*"
+                className={styles.input}
+                id="raised-button-file"
+                multiple
+                type="file"
+              />
+
+              <label htmlFor="raised-button-file">
+                <Button
+                  variant="primary"
+                  component="span"
+                  className={styles.uploadBtn}
+                >
+                  Dodaj
+                </Button>
+              </label>
+            </Grid>
+            <div className={styles.divButton}>
+              <Button type="submit" variant="primary" className={styles.subBtn}>
+                Add collection
+              </Button>
+            </div>
+          </Grid>
+        </form>
+      </Grid>
     </Container>
   );
 }

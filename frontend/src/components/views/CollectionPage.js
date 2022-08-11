@@ -6,13 +6,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import Col from "react-bootstrap/esm/Col";
+import AddItem from "./AddItem";
 import styles from "./CollectionPage.module.css";
 import { useState } from "react";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 function CollectionPage() {
   const [tableData, setTableData] = useState([]);
   const columns = [
-    { field: "id", headerName: "ID", width: 70 },
+    { field: "id", headerName: "ID", width: 130 },
     { field: "Name", headerName: "Name", width: 130 },
     { field: "Tags", headerName: "Tags", width: 130 },
     {
@@ -45,19 +47,22 @@ function CollectionPage() {
     { id: 8, lastName: "Frances", Name: "Rossini", age: 36 },
     { id: 9, lastName: "Roxie", Name: "Harvey", age: 65 },
   ];
-
+  //collection name
   return (
     <Container className={styles.collectionCon}>
-      <h1> Your collection: </h1>
-      <div style={{ height: 500, width: "100%" }}>
+      <h1> Your collection:</h1>
+      <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={rows}
           columns={columns}
           pageSize={8}
-          rowsPerPageOptions={[5]}
+          rowsPerPageOptions={[8]}
           checkboxSelection
         />
       </div>
+      <h1 className={styles.title}>
+        Add Item <FontAwesomeIcon className={styles.plus} icon={faPlus} />
+      </h1>
     </Container>
   );
 }

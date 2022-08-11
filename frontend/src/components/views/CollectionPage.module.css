@@ -6,3 +6,7 @@
 .collectionCon h1 {
   margin: 1rem;
 }
+
+.title .textField {
+  width: 100% !important;
+}

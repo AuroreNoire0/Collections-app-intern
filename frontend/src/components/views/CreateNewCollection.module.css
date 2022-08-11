@@ -1,5 +1,17 @@
+.divTitle {
+  text-align: center;
+  justify-content: center;
+}
+
 .title {
   font-size: 5rem;
+  margin: 1rem;
+  padding: 1rem;
+  font-style: italic;
+}
+
+.form {
+  margin: 2rem 0rem;
 }
 
 .name,
@@ -37,10 +49,25 @@
 .divButton {
   display: flex;
   justify-content: flex-end;
+  width: 100% !important;
 }
 .subBtn {
   font-size: 1.8rem;
-  padding-left: 2.5rem;
-  padding-right: 2.5rem;
+  /* padding-left: 2.5rem;
+  padding-right: 2.5rem; */
   margin: 2rem 0rem 2rem 2rem;
+}
+
+.textField {
+  width: 100% !important;
+}
+
+.plus {
+  font-size: 2rem;
+  border: 1px solid black;
+  border-radius: 1rem;
+}
+
+.plus:hover {
+  background-color: darkgreen;
 }

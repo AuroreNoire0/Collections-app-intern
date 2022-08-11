@@ -7,70 +7,51 @@ import { Button } from "react-bootstrap";
 import styles from "./AddItem.module.css";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Grid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 function AddItem() {
   return (
     <Container>
-      <h1 className={styles.title}>Add Item</h1>
-      <Row className="g-2">
-        <Col md>
-          <Form.Group className="mb-3" controlId="formBasicId">
-            <Form.Label>Id</Form.Label>
-            <Form.Control
-              className={styles.input}
-              type="text"
-              placeholder="Id-generated automatically"
-            />
-            {/* {emailHasError && (
-              <p className={styles.errorText}>Please enter a valid email.</p>
-            )} */}
-          </Form.Group>
-        </Col>
-        <Col md>
-          <Form.Group className="mb-3" controlId="formBasicName">
-            <Form.Label>Name</Form.Label>
-            <Form.Control
-              className={styles.input}
-              type="text"
-              placeholder="Name"
-            />
-            {/* {emailHasError && (
-              <p className={styles.errorText}>Please enter a valid email.</p>
-            )} */}
-          </Form.Group>
-        </Col>
-        <Col md>
-          <Form.Label>Tags</Form.Label>
-          <Autocomplete
-            multiple
-            id="tags-filled"
-            className={styles.input}
-            options={top100Films}
-            getOptionLabel={(option) => option.title}
-            filterSelectedOptions
-            renderInput={(params) => (
-              <TextField {...params} placeholder="Tags" />
-            )}
-          />
-          {/* {emailHasError && (
-              <p className={styles.errorText}>Please enter a valid email.</p>
-          )} */}
-        </Col>
-      </Row>
-      <FontAwesomeIcon className={styles.plus} icon={faPlus} />
-
-      <div className={styles.divButton}>
-        <Button
-          variant="primary"
-          type="submit"
-          className={styles.subBtn}
-          // disabled={!formIsValid}
-        >
-          Add Item
-        </Button>
-      </div>
+      <Grid>
+        <form>
+          <Grid container spacing={1}>
+            <Grid item xs={12} sm={4}>
+              <TextField
+                type="text"
+                placeholder="Id (generated automatically)"
+                label="Id (generated automatically)"
+                variant="outlined"
+                className={styles.textField}
+                disabled
+              />
+            </Grid>
+            <Grid xs={12} sm={4} item>
+              <TextField
+                placeholder="Enter name"
+                label="Name"
+                variant="outlined"
+                className={styles.textField}
+              />
+            </Grid>
+            <Grid xs={12} sm={4} item>
+              <Autocomplete
+                multiple
+                id="tags-filled"
+                label="Tags"
+                className={styles.input}
+                options={top100Films}
+                getOptionLabel={(option) => option.title}
+                filterSelectedOptions
+                renderInput={(params) => (
+                  <TextField {...params} placeholder="Tags" />
+                )}
+              />
+            </Grid>
+          </Grid>
+        </form>
+      </Grid>
     </Container>
   );
 }
