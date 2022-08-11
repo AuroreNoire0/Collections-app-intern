@@ -1,9 +1,13 @@
+.mainContainer {
+  background-color: whitesmoke;
+  padding: 1rem;
+}
 .mainHeader {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 1rem 0rem;
+  text-shadow: 1px 1px gray;
   padding: 3rem;
   font-size: 5rem;
   font-style: italic;

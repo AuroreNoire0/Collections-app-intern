@@ -1,0 +1,14 @@
+.welcome {
+  margin: 1rem;
+  font-size: 4rem;
+  font-style: italic;
+}
+
+.title {
+  margin: 1.5rem;
+  text-align: center;
+}
+
+.collectionList {
+  list-style-type: none;
+}

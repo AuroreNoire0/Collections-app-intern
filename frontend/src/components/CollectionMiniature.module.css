@@ -1,18 +1,32 @@
 .collectionCon {
-  border: 1px solid red;
-  font-size: 3rem;
+  border: 1px solid rgba(170, 147, 144, 0.866);
+  border-radius: 10px;
+  font-size: 2rem;
   display: flex;
   flex-direction: row;
   padding: 1rem;
-}
-.collectionName {
-  border-bottom: 1px solid white;
+  background-color: #aa939053;
+  margin: 1rem;
 }
 
+.collectionCon:hover {
+  background-color: #aa93909a;
+}
+.collectionName {
+  border-bottom: 1px solid rgb(0, 0, 0);
+  padding: 0.5rem;
+  font-weight: bold;
+}
+
+.collectionDescription {
+  font-size: 1.5rem;
+  padding: 0.5rem;
+}
 .actions {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   flex-direction: column;
+  align-items: center;
 }
 
 .iconEdit:hover {

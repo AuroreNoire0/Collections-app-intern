@@ -10,10 +10,16 @@ import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { propTypes } from "react-bootstrap/esm/Image";
 
-function AddItem() {
+function AddItem(props) {
+  const onAddItemHandler = (e) => {
+    e.preventDefault();
+    props.onHideForm();
+  };
+
   return (
-    <Container>
+    <Container className={styles.addItemCon}>
       <Grid>
         <form>
           <Grid container spacing={1}>
@@ -49,6 +55,16 @@ function AddItem() {
                 )}
               />
             </Grid>
+            <div className={styles.divButton}>
+              <Button
+                type="submit"
+                variant="warning"
+                className={styles.subBtn}
+                onClick={onAddItemHandler}
+              >
+                Add Item
+              </Button>
+            </div>
           </Grid>
         </form>
       </Grid>

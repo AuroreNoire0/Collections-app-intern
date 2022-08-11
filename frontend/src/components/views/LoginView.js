@@ -4,6 +4,8 @@ import useNewInput from "../hooks/use-new-input";
 import styles from "./LoginView.module.css";
 import ErrorMessage from "../ErrorMessage";
 import { Container } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faKey } from "@fortawesome/free-solid-svg-icons";
 
 const LogView = (props) => {
   const isNotEmpty = (value) => value.trim() !== "";

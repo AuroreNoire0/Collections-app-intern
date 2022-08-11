@@ -1,12 +1,33 @@
 .collectionCon {
   font-size: 3rem;
-  padding: 2rem;
+  padding: 2rem 3rem;
 }
 
 .collectionCon h1 {
   margin: 1rem;
+  font-size: 5rem;
+  font-style: italic;
+  color: #9d8d7b;
 }
 
 .title .textField {
   width: 100% !important;
+}
+
+.addItem {
+  padding: 1rem;
+  margin: 0.5rem 0rem;
+  font-size: 2rem;
+  border: 0.5px solid black;
+  width: 15rem;
+  border-radius: 2rem;
+  text-align: center;
+  box-shadow: 3px 3px 0px 0px gray;
+}
+.addItem:hover {
+  background-color: #9d8d7b7f;
+}
+
+.collectionCon .dataGrid {
+  font-size: 1.2rem;
 }

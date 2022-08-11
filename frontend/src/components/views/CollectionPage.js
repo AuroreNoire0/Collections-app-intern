@@ -13,6 +13,10 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 function CollectionPage() {
   const [tableData, setTableData] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+  {
+    showForm && <AddItem />;
+  }
   const columns = [
     { field: "id", headerName: "ID", width: 130 },
     { field: "Name", headerName: "Name", width: 130 },
@@ -58,11 +62,13 @@ function CollectionPage() {
           pageSize={8}
           rowsPerPageOptions={[8]}
           checkboxSelection
+          className={styles.dataGrid}
         />
       </div>
-      <h1 className={styles.title}>
-        Add Item <FontAwesomeIcon className={styles.plus} icon={faPlus} />
-      </h1>
+      <p className={styles.addItem} onClick={(e) => setShowForm(true)}>
+        <FontAwesomeIcon className={styles.plus} icon={faPlus} /> New Item
+      </p>
+      {showForm && <AddItem onHideForm={(e) => setShowForm(false)} />}
     </Container>
   );
 }
