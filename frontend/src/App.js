@@ -2,13 +2,13 @@ import { Fragment } from "react";
 import { Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import Header from "./components/Header";
+import Header from "./components/common/Header";
 import MainView from "./components/views/MainView";
 import LoginView from "./components/views/LoginView";
 import RegisterView from "./components/views/RegisterView";
 import AdminView from "./components/views/AdminView";
 
-import Footer from "./components/Footer";
+import Footer from "./components/common/Footer";
 import AccountView from "./components/views/AccountView";
 import CreateNewCollection from "./components/views/CreateNewCollection";
 import UserPage from "./components/views/UserPage";

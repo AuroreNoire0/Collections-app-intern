@@ -2,6 +2,8 @@
   display: flex;
   justify-content: center;
   padding: 3rem;
+  /* background-color: #616060d6;
+  height: 78vh; */
 }
 
 .logContainer {
@@ -11,6 +13,7 @@
   background-color: #aa939053;
   padding: 2rem;
   box-shadow: 0 0 70px rgb(116, 109, 109);
+  /* box-shadow: 0 0 70px rgb(0, 0, 0); */
   border-radius: 2rem;
   z-index: 10;
   background-color: whitesmoke;
@@ -36,13 +39,13 @@
 
 .btns {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 }
 .subBtn {
   font-size: 1.8rem;
-  padding-left: 2.5rem;
-  padding-right: 2.5rem;
-  margin: 2rem 0rem 2rem 2rem;
+  padding: 1.5rem 0rem;
+  margin-top: 3rem;
+  width: 100%;
 }
 
 .errorText {

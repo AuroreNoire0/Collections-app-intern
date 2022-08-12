@@ -1,17 +1,24 @@
+import { React, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import styles from "./RegisterView.module.css";
 import useNewInput from "../hooks/use-new-input";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Row } from "react-bootstrap";
 import ErrorMessage from "../ErrorMessage";
 import { Container } from "react-bootstrap";
+import { register } from "../../actions/userActions";
 
 const RegisterView = (props) => {
   const isNotEmpty = (value) => value.trim() !== "";
   const isEmail = (value) => value.includes("@");
-  const [regOK, setRegOK] = useState();
-  const [error, setError] = useState(null);
+  // const [error, setError] = useState(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error, userInfo } = userRegister;
 
   const {
     value: name,
@@ -40,37 +47,20 @@ const RegisterView = (props) => {
     reset: resetEmail,
   } = useNewInput(isNotEmpty && isEmail);
 
-  // const regHandler = async (event) => {
-  //   event.preventDefault();
-  //   setError(null);
-  //   setRegOK(false);
+  const regHandler = async (event) => {
+    event.preventDefault();
+    // setError(null);
 
-  //   try {
-  //     const config = {
-  //       headers: {
-  //         "Content-type": "application/json",
-  //       },
-  //     };
+    dispatch(register(name, email, password));
+  };
 
-  //     const { data } = await axios.post(
-  //       "/api/users",
-  //       { email, name, password },
-  //       config
-  //     );
-  //     localStorage.setItem("userInfo", JSON.stringify(data));
-
-  //     setRegOK(true);
-  //     resetPassword();
-  //     resetEmail();
-  //     resetName();
-  //   } catch (error) {
-  //     setError(error.response.data.message);
-  //   }
-  // };
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/account");
+    } else return;
+  }, [userInfo, navigate]);
 
   const formIsValid = emailIsValid && passwordIsValid && nameIsValid;
-
-  const rogFormStyles = `${styles.logForm} regModal col-10 col-sm-7 col-lg-4`;
 
   const passwordStyles = passwordHasError
     ? `${styles.invalid} ${styles.input}`
@@ -131,11 +121,11 @@ const RegisterView = (props) => {
           {passwordHasError && (
             <p className={styles.errorText}>This field can't be empty.</p>
           )}
-          {regOK ? (
+          {/* {regOK ? (
             <ErrorMessage variant="success">
               {"Registration successful! You can log in."}
             </ErrorMessage>
-          ) : null}
+          ) : null} */}
           {error ? <ErrorMessage variant="danger">{error}</ErrorMessage> : ""}
         </Form.Group>
 
@@ -145,17 +135,18 @@ const RegisterView = (props) => {
             type="submit"
             className={styles.subBtn}
             disabled={!formIsValid}
+            onClick={regHandler}
           >
             Register
           </Button>
-          <Button
+          {/* <Button
             variant="secondary"
             type="button"
             onClick={props.onCloseRegModal}
             className={styles.subBtn}
           >
             Cancel
-          </Button>
+          </Button> */}
         </div>
       </Form>
     </Container>

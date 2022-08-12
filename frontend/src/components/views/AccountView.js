@@ -1,19 +1,35 @@
 import Container from "react-bootstrap/esm/Container";
 import CollectionMiniature from "../CollectionMiniature";
+import store from "../../store";
 import styles from "./AccountView.module.css";
 
 function AccountView() {
+  const {
+    userLogin: { userInfo },
+  } = store.getState();
+  const userCollections = userInfo.collections;
+
   return (
     <Container>
       <div className={styles.welcome}>
-        <p> Hello, user!</p>
+        <p> Hello, {userInfo.name}!</p>
       </div>
-      <div className={styles.title}>
-        <h1> List of your collections:</h1>
-      </div>
-      <ul className={styles.collectionList}>
-        <CollectionMiniature />
-      </ul>
+      {userCollections.length !== 0 ? (
+        <>
+          {" "}
+          <div className={styles.title}>
+            <h1> List of your collections:</h1>
+          </div>
+          <ul className={styles.collectionList}>
+            <CollectionMiniature />
+          </ul>
+        </>
+      ) : (
+        <div className={styles.noCollection}>
+          <p> You don't have any collection. </p>
+          <p> Click here to create new unique collection! </p>
+        </div>
+      )}
 
       {/* <div style={{ height: 400, width: "100%" }}>
         <DataGrid

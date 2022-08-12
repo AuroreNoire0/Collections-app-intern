@@ -1,0 +1,48 @@
+.navContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar {
+  background-color: #aa9390;
+  font-size: 2.5rem;
+}
+
+.navbrand {
+  color: rgba(0, 0, 0, 0.945);
+  text-decoration: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  font-size: 3rem;
+}
+
+.navbrand:hover {
+  color: rgba(0, 0, 0, 0.7);
+  text-shadow: 50px rgb(60, 58, 58);
+}
+
+.navContainer button {
+  width: 5rem;
+  height: 4rem;
+  border: 2px solid black;
+}
+
+.navContainer button span {
+  font-size: 2rem;
+  width: 3rem;
+  height: 2rem;
+}
+
+.link {
+  color: rgba(0, 0, 0, 0.55);
+  text-decoration: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  font-size: 2rem;
+}
+
+.link:hover {
+  color: rgba(0, 0, 0, 0.7);
+  text-shadow: 50px rgb(60, 58, 58);
+}

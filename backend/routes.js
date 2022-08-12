@@ -1,18 +1,18 @@
 const express = require("express");
 const {
-  getUsers,
+  authUser,
   registerUser,
-  sendMessage,
-  getMessages,
-} = require("./controllers/controllers");
+  blockUser,
+  deleteUser,
+} = require("./controllers/userControllers");
 
 const router = express.Router();
 
 // router.route("/").post(registerUser);
-router.route("/").post(registerUser);
-router.route("/").get(getUsers); // to list of recipient
-router.route("/messages/:name").get(getMessages);
-router.route("/messages/:name").post(sendMessage);
+router.route("/register").post(registerUser);
+router.route("/login").post(authUser);
+// router.route("/messages/:name").get(getMessages);
+// router.route("/messages/:name").post(sendMessage);
 // router.route("/messages/:id").get(getUsers);
 
 module.exports = router;

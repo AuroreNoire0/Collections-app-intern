@@ -9,7 +9,7 @@ dotenv.config();
 connectDB();
 app.use(express.json());
 
-app.use("/api/users", routes);
+app.use("/api", routes);
 
 __dirname = path.resolve();
 

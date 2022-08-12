@@ -4,12 +4,20 @@ import useNewInput from "../hooks/use-new-input";
 import styles from "./LoginView.module.css";
 import ErrorMessage from "../ErrorMessage";
 import { Container } from "react-bootstrap";
+import { login } from "../../actions/userActions";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faKey } from "@fortawesome/free-solid-svg-icons";
+import { useEffect } from "react";
 
 const LogView = (props) => {
   const isNotEmpty = (value) => value.trim() !== "";
   const isEmail = (value) => value.includes("@");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { loading, error, userInfo } = userLogin;
 
   const {
     value: password,
@@ -32,8 +40,14 @@ const LogView = (props) => {
   const logContainer = `${styles.logContainer} col-11 col-sm-10 col-md-7 col-lg-5`;
   const logIn = (event) => {
     event.preventDefault();
-    props.onClickLogBtn(email, password);
+    dispatch(login(email, password));
   };
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate("/account");
+    } else return;
+  }, [userInfo]);
 
   const passwordStyles = passwordHasError
     ? `${styles.invalid} ${styles.input}`
@@ -80,6 +94,7 @@ const LogView = (props) => {
             ""
           )}
         </Form.Group>
+        {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
 
         <div className={styles.btns}>
           <Button
@@ -92,14 +107,14 @@ const LogView = (props) => {
             Log in
           </Button>
 
-          <Button
+          {/* <Button
             variant="secondary"
             type="button"
             onClick={props.onCloseLogModal}
             className={styles.subBtn}
           >
             Cancel
-          </Button>
+          </Button> */}
         </div>
       </Form>
     </Container>
