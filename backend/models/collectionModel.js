@@ -19,6 +19,10 @@ const collectionSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    authorId: {
+      type: String,
+      required: true,
+    },
     img: {
       type: String,
       required: false,

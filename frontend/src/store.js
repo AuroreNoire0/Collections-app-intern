@@ -1,16 +1,22 @@
-import { applyMiddleware } from 'redux';
-import { configureStore } from '@reduxjs/toolkit';
-import thunk from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { applyMiddleware } from "redux";
+import { configureStore } from "@reduxjs/toolkit";
+import thunk from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
 import {
   userDeleteReducer,
   userLoginReducer,
   userRegisterReducer,
   userUpdateReducer,
-} from './reducers/userReducers';
+} from "./reducers/userReducers";
+import {
+  collectionListReducer,
+  collectionCreateReducer,
+  collectionDeleteReducer,
+  collectionUpdateReducer,
+} from "./reducers/collectionReducers";
 
-const userInfoFromStorage = localStorage.getItem('userInfo')
-  ? JSON.parse(localStorage.getItem('userInfo'))
+const userInfoFromStorage = localStorage.getItem("userInfo")
+  ? JSON.parse(localStorage.getItem("userInfo"))
   : null;
 
 const initialState = {
@@ -26,6 +32,10 @@ const store = configureStore(
       userRegister: userRegisterReducer,
       userUpdate: userUpdateReducer,
       userDelete: userDeleteReducer,
+      collectionList: collectionListReducer,
+      collectionCreate: collectionCreateReducer,
+      collectionDelete: collectionDeleteReducer,
+      collectionUpdate: collectionUpdateReducer,
     },
   },
   initialState,

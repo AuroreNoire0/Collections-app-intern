@@ -2,6 +2,7 @@ import Container from "react-bootstrap/esm/Container";
 import CollectionMiniature from "../CollectionMiniature";
 import store from "../../store";
 import styles from "./AccountView.module.css";
+import { deleteCollection } from "../../actions/collectionActions";
 
 function AccountView() {
   const {
@@ -21,7 +22,14 @@ function AccountView() {
             <h1> List of your collections:</h1>
           </div>
           <ul className={styles.collectionList}>
-            <CollectionMiniature />
+            {userCollections.map((col) => (
+              <CollectionMiniature
+                name={col.name}
+                description={col.description}
+                id={col._id}
+                key={col._id}
+              />
+            ))}
           </ul>
         </>
       ) : (

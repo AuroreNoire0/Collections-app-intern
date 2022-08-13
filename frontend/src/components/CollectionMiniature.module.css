@@ -7,10 +7,14 @@
   padding: 1rem;
   background-color: #aa939053;
   margin: 1rem;
+  z-index: 5;
 }
 
 .collectionCon:hover {
   background-color: #aa93909a;
+}
+.collectionInfo {
+  cursor: pointer;
 }
 .collectionName {
   border-bottom: 1px solid rgb(0, 0, 0);
@@ -29,10 +33,21 @@
   align-items: center;
 }
 
+.iconEdit,
+.iconDelete {
+  font-size: 2.5rem;
+}
+
 .iconEdit:hover {
   color: blue;
+  z-index: 0;
 }
 
 .iconDelete:hover {
   color: red;
+  z-index: 0;
+}
+
+.icon {
+  pointer-events: none;
 }

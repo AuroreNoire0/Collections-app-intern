@@ -27,7 +27,7 @@ function App() {
         <Route path="/register" element={<RegisterView />}></Route>
         <Route path="/account" element={<AccountView />}></Route>
         <Route path="/admin" element={<AdminView />}></Route>
-        <Route path="/user-page" element={<UserPage />}></Route>
+        {/* <Route path="/user-page" element={<UserPage />}></Route> */}
         <Route path="/collection" element={<CollectionPage />}></Route>
 
         <Route
