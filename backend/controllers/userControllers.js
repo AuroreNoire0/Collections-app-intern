@@ -125,4 +125,24 @@ const blockUser = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { authUser, registerUser, blockUser, deleteUser };
+const updateUserState = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  const user = await User.findOne({ _id: id });
+
+  if (user) {
+    await user.save();
+    res.json(user);
+    console.log(user);
+  } else {
+    res.status(404);
+    throw new Error("Error occured. Please try to login again.");
+  }
+});
+
+module.exports = {
+  authUser,
+  registerUser,
+  blockUser,
+  deleteUser,
+  updateUserState,
+};

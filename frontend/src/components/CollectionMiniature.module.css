@@ -6,7 +6,7 @@
   flex-direction: row;
   padding: 1rem;
   background-color: #aa939053;
-  margin: 1rem;
+  margin: 1rem 0rem;
   z-index: 5;
 }
 
@@ -33,21 +33,15 @@
   align-items: center;
 }
 
-.iconEdit,
-.iconDelete {
-  font-size: 2.5rem;
-}
-
 .iconEdit:hover {
   color: blue;
-  z-index: 0;
 }
 
 .iconDelete:hover {
   color: red;
-  z-index: 0;
 }
 
 .icon {
   pointer-events: none;
+  font-size: 2.5rem;
 }

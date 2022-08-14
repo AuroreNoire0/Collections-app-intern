@@ -7,6 +7,7 @@ import styles from "./CollectionMiniature.module.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { deleteCollection } from "../actions/collectionActions";
+import { updateUserState } from "../actions/userActions";
 
 function CollectionMiniature(props) {
   const navigate = useNavigate();
@@ -16,10 +17,11 @@ function CollectionMiniature(props) {
     navigate("/collection/");
   };
 
-  const onDeleteCollection = async (event) => {
-    // const clicked = event.target.closest(".iconDelete");
-    console.log(event.target);
-    // dispatch(deleteCollection(event.target.id));
+  const onDeleteCollection = (e) => {
+    const deleteColl = () => {
+      dispatch(deleteCollection(e.target.id));
+    };
+    deleteColl();
   };
 
   return (

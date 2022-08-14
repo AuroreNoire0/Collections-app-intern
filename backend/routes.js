@@ -9,6 +9,7 @@ const {
   registerUser,
   blockUser,
   deleteUser,
+  updateUserState,
 } = require("./controllers/userControllers");
 
 const router = express.Router();
@@ -16,9 +17,10 @@ const router = express.Router();
 // router.route("/").post(registerUser);
 router.route("/register").post(registerUser);
 router.route("/login").post(authUser);
-router.route("/user-page").get(getUserCollections);
+router.route("/update/:id").get(updateUserState);
+router.route("/account/:id").get(getUserCollections);
 router.route("/create-collection").post(createCollection);
-router.route("/collection/:id").get(deleteCollection);
+router.route("/collection/:id").delete(deleteCollection);
 
 // router.route("/messages/:name").post(sendMessage);
 // router.route("/messages/:id").get(getUsers);

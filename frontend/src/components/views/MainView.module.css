@@ -7,18 +7,19 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-shadow: 1px 1px gray;
-  padding: 3rem;
+  text-shadow: 1px 1px 10px gray;
+  padding: 2vh 1vw;
   font-size: 5rem;
   font-style: italic;
   color: #9d8d7b;
+  text-align: center;
 }
 
 .topContainers {
   display: flex;
   flex-direction: row;
   /* flex-wrap: wrap; */
-  padding: 2rem;
+  padding: 0.5vh 1vw;
 }
 
 @media (max-width: 769px) {

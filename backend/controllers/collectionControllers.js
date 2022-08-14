@@ -4,7 +4,8 @@ const User = require("../models/userModel");
 const Collection = require("../models/collectionModel");
 
 const getUserCollections = asyncHandler(async (req, res) => {
-  const userCollections = await Collection.find({ authorId: req.userId });
+  const id = req.params.id;
+  const userCollections = await Collection.find({ authorId: id });
   res.json(userCollections);
 });
 
@@ -93,7 +94,6 @@ const deleteCollection = asyncHandler(async (req, res) => {
 
   if (collection) {
     await collection.remove();
-    console.log(collection);
 
     const authorColl = await User.findOneAndUpdate(
       { _id: authorColId },
