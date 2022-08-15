@@ -6,7 +6,10 @@ import Col from "react-bootstrap/esm/Col";
 import styles from "./CollectionMiniature.module.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { deleteCollection } from "../actions/collectionActions";
+import {
+  deleteCollection,
+  getCollectionDetails,
+} from "../actions/collectionActions";
 import { updateUserState } from "../actions/userActions";
 
 function CollectionMiniature(props) {
@@ -24,6 +27,14 @@ function CollectionMiniature(props) {
     deleteColl();
   };
 
+  const onEditCollection = (e) => {
+    const detailsColl = () => {
+      dispatch(getCollectionDetails(e.target.id));
+    };
+    detailsColl();
+    navigate(`/update-collection/${props.id}`);
+  };
+
   return (
     <Container className={styles.collectionCon}>
       <Col className={styles.collectionInfo} onClick={onClickCollection}>
@@ -39,7 +50,11 @@ function CollectionMiniature(props) {
         >
           <FontAwesomeIcon className={styles.icon} icon={faTrashCan} />
         </div>
-        <div className={styles.iconEdit} id={props.id}>
+        <div
+          className={styles.iconEdit}
+          id={props.id}
+          onClick={onEditCollection}
+        >
           <FontAwesomeIcon className={styles.icon} icon={faPenToSquare} />
         </div>
       </Col>

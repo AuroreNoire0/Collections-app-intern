@@ -13,6 +13,7 @@ import {
   collectionCreateReducer,
   collectionDeleteReducer,
   collectionUpdateReducer,
+  collectionDetailsReducer,
 } from "./reducers/collectionReducers";
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
@@ -36,6 +37,7 @@ const store = configureStore(
       collectionCreate: collectionCreateReducer,
       collectionDelete: collectionDeleteReducer,
       collectionUpdate: collectionUpdateReducer,
+      collectionDetails: collectionDetailsReducer,
     },
   },
   initialState,

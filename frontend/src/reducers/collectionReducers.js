@@ -11,6 +11,9 @@ import {
   COLLECTION_DELETE_FAIL,
   COLLECTION_DELETE_REQUEST,
   COLLECTION_DELETE_SUCCESS,
+  COLLECTION_DETAILS_FAIL,
+  COLLECTION_DETAILS_REQUEST,
+  COLLECTION_DETAILS_SUCCESS,
 } from "../constants/collectionConstants";
 
 export const collectionListReducer = (state = { collections: [] }, action) => {
@@ -18,10 +21,23 @@ export const collectionListReducer = (state = { collections: [] }, action) => {
     case COLLECTION_LIST_REQUEST:
       return { loading: true };
     case COLLECTION_LIST_SUCCESS:
-      return { loading: false, notes: action.payload };
+      return { loading: false, collections: action.payload };
     case COLLECTION_LIST_FAIL:
       return { loading: false, error: action.payload };
 
+    default:
+      return state;
+  }
+};
+
+export const collectionDetailsReducer = (state = {}, action) => {
+  switch (action.type) {
+    case COLLECTION_DETAILS_REQUEST:
+      return { loading: true };
+    case COLLECTION_DETAILS_SUCCESS:
+      return { loading: false, collectionInfo: action.payload };
+    case COLLECTION_DETAILS_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

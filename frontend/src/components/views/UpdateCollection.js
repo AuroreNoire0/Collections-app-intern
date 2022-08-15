@@ -1,21 +1,38 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Container from "react-bootstrap/esm/Container";
+import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import { Button } from "react-bootstrap";
 import styles from "./CreateNewCollection.module.css";
 import MenuItem from "@mui/material/MenuItem";
 import { useDispatch } from "react-redux";
-import { createCollection } from "../../actions/collectionActions";
+import { updateCollection } from "../../actions/collectionActions";
 import { topics } from "../../constants/topicConstants";
+import { useSelector } from "react-redux";
+import store from "../../store";
 
-function CreateNewCollection() {
+function UpdateCollection() {
+  const {
+    collectionDetails: { collectionInfo },
+  } = store.getState();
+  const collectionDetails = useSelector((state) => state.collectionDetails);
   const [values, setValues] = useState({
-    name: "",
-    description: "",
-    topic: "",
+    name: ``,
+    description: ``,
+    topic: ``,
   });
+
+  useEffect(() => {
+    collectionDetails.collectionInfo &&
+      setValues({
+        name: `${collectionDetails.collectionInfo.name}`,
+        description: `${collectionDetails.collectionInfo.description}`,
+        topic: `${collectionDetails.collectionInfo.topic}`,
+      });
+  }, [collectionDetails]);
+
   const dispatch = useDispatch();
 
   const onChangeHandler = (e) => {
@@ -26,15 +43,17 @@ function CreateNewCollection() {
   const onFormSubmit = async (e) => {
     e.preventDefault();
     const { name, topic, description } = values;
-    const createColl = () => {
-      dispatch(createCollection(name, topic, description));
+    const id = collectionDetails.collectionInfo._id;
+    const updateColl = () => {
+      dispatch(updateCollection(name, topic, description, id));
     };
-    createColl();
+    updateColl();
   };
+
   return (
     <Container>
       <div className={styles.divTitle}>
-        <h1 className={styles.title}>Create a new collection</h1>
+        <h1 className={styles.title}>Edit collection</h1>
       </div>
       <Grid className={styles.form}>
         <form onSubmit={onFormSubmit}>
@@ -45,6 +64,7 @@ function CreateNewCollection() {
                 label="Name"
                 variant="outlined"
                 name="name"
+                value={values.name}
                 className={styles.textField}
                 onChange={onChangeHandler}
               />
@@ -73,6 +93,7 @@ function CreateNewCollection() {
                 multiline
                 rows={4}
                 name="description"
+                value={values.description}
                 placeholder="Description"
                 className={styles.textField}
                 onChange={onChangeHandler}
@@ -141,7 +162,7 @@ function CreateNewCollection() {
                 className={styles.subBtn}
                 // onClick={addCollectionHandler}
               >
-                Add collection
+                Edit collection
               </Button>
             </div>
           </Grid>
@@ -151,4 +172,4 @@ function CreateNewCollection() {
   );
 }
 
-export default CreateNewCollection;
+export default UpdateCollection;

@@ -11,6 +11,7 @@ import AdminView from "./components/views/AdminView";
 import Footer from "./components/common/Footer";
 import AccountView from "./components/views/AccountView";
 import CreateNewCollection from "./components/views/CreateNewCollection";
+import UpdateCollection from "./components/views/UpdateCollection";
 import UserPage from "./components/views/UserPage";
 import CollectionPage from "./components/views/CollectionPage";
 
@@ -33,6 +34,10 @@ function App() {
         <Route
           path="/create-collection"
           element={<CreateNewCollection />}
+        ></Route>
+        <Route
+          path="/update-collection/:id"
+          element={<UpdateCollection />}
         ></Route>
       </Routes>
       <Footer />

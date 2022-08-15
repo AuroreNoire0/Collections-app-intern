@@ -114,4 +114,61 @@ const deleteCollection = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { getUserCollections, createCollection, deleteCollection };
+const getCollectionDetails = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  const collection = await Collection.findOne({ _id: id });
+
+  if (collection) {
+    res.json(collection);
+  } else {
+    res.status(404);
+    throw new Error("Collection not found");
+  }
+});
+
+const updateCollection = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  const { name, description, topic, items } = req.body;
+  const collection = await Collection.findOne({ _id: id });
+  const authorColId = collection.authorId;
+  console.log(id);
+
+  if (collection) {
+    collection.name = name;
+    collection.description = description;
+    collection.topic = topic;
+    collection.items = items;
+    const updatedCollection = await collection.save();
+    console.log(updatedCollection);
+
+    const authorColl = await User.findOneAndUpdate(
+      { _id: authorColId },
+      { $pull: { collections: { _id: id } } }
+    );
+
+    const authorColl2 = await User.findOneAndUpdate(
+      { _id: authorColId },
+      { $push: { collections: updatedCollection } }
+    );
+
+    if (authorColl2) {
+      updatedUser = await authorColl2.save();
+    } else {
+      res.status(404);
+      throw new Error("User not found");
+    }
+
+    res.json(updatedCollection);
+  } else {
+    res.status(404);
+    throw new Error("Collection not found");
+  }
+});
+
+module.exports = {
+  getUserCollections,
+  createCollection,
+  deleteCollection,
+  getCollectionDetails,
+  updateCollection,
+};

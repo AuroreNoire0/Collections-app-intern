@@ -125,17 +125,29 @@ const blockUser = asyncHandler(async (req, res) => {
   }
 });
 
-const updateUserState = asyncHandler(async (req, res) => {
+const getUpdatedUserState = asyncHandler(async (req, res) => {
   const id = req.params.id;
   const user = await User.findOne({ _id: id });
 
   if (user) {
     await user.save();
     res.json(user);
-    console.log(user);
   } else {
     res.status(404);
-    throw new Error("Error occured. Please try to login again.");
+    throw new Error("Error occured. Please try to log in again.");
+  }
+});
+
+const updateUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+  if (user) {
+    user.status = "Blocked";
+    updatedUser = await user.save();
+    res.json(updatedUser);
+  } else {
+    res.status(404);
+    throw new Error("User not found");
   }
 });
 
@@ -144,5 +156,5 @@ module.exports = {
   registerUser,
   blockUser,
   deleteUser,
-  updateUserState,
+  getUpdatedUserState,
 };
