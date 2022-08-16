@@ -1,7 +1,5 @@
-import * as React from "react";
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Container from "react-bootstrap/esm/Container";
-import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import { Button } from "react-bootstrap";
@@ -12,12 +10,16 @@ import { updateCollection } from "../../actions/collectionActions";
 import { topics } from "../../constants/topicConstants";
 import { useSelector } from "react-redux";
 import store from "../../store";
+import { COLLECTION_UPDATE_CLEAN } from "../../constants/collectionConstants";
+import MessageSnackbar from "../MessageSnackbar";
 
 function UpdateCollection() {
   const {
     collectionDetails: { collectionInfo },
+    collectionUpdate: { success },
   } = store.getState();
   const collectionDetails = useSelector((state) => state.collectionDetails);
+  const collectionUpdate = useSelector((state) => state.collectionUpdate);
   const [values, setValues] = useState({
     name: ``,
     description: ``,
@@ -31,9 +33,18 @@ function UpdateCollection() {
         description: `${collectionDetails.collectionInfo.description}`,
         topic: `${collectionDetails.collectionInfo.topic}`,
       });
-  }, [collectionDetails]);
+  }, [collectionDetails.collectionInfo]);
 
   const dispatch = useDispatch();
+
+  console.log(success);
+  useEffect(() => {
+    if (success) {
+      setTimeout(() => {
+        dispatch({ type: COLLECTION_UPDATE_CLEAN });
+      }, 5000);
+    }
+  }, [dispatch, success]);
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -52,6 +63,7 @@ function UpdateCollection() {
 
   return (
     <Container>
+      <MessageSnackbar open={success} message={"Collection updated."} />
       <div className={styles.divTitle}>
         <h1 className={styles.title}>Edit collection</h1>
       </div>

@@ -6,20 +6,33 @@ import styles from "./AccountView.module.css";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { COLLECTION_DELETE_CLEAN } from "../../constants/collectionConstants";
+import MessageSnackbar from "../MessageSnackbar";
 
 function AccountView() {
   const {
     userLogin: { userInfo },
+    collectionDelete: { success, loading },
   } = store.getState();
-  const [isLoading, setIsLoading] = useState(false);
   const [userCollections, setUserCollections] = useState([]);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
+  const collectionDelete = useSelector((state) => state.collectionDelete);
 
   useEffect(() => {
     setUserCollections(userLogin.userInfo.collections);
   }, [userLogin.userInfo.collections]);
+
+  console.log(success);
+  useEffect(() => {
+    if (success) {
+      setTimeout(() => {
+        dispatch({ type: COLLECTION_DELETE_CLEAN });
+      }, 5000);
+    }
+  }, [dispatch, success]);
 
   const onCreateCollHandler = () => {
     navigate("/create-collection");
@@ -57,6 +70,7 @@ function AccountView() {
 
   return (
     <Container>
+      <MessageSnackbar open={success} message={"Collection deleted."} />
       <div className={styles.welcome}>
         <p> Hello, {userInfo.name}!</p>
         <Button
@@ -68,7 +82,13 @@ function AccountView() {
           Add new collection
         </Button>
       </div>
-      {isLoading ? <CircularProgress color="secondary" /> : <Content />}
+      {loading ? (
+        <div className={styles.progressCircle}>
+          <CircularProgress color="inherit" />{" "}
+        </div>
+      ) : (
+        <Content />
+      )}
       {/* <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={rows}

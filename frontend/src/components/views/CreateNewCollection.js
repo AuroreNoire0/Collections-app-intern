@@ -1,22 +1,37 @@
-import * as React from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Container from "react-bootstrap/esm/Container";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import { Button } from "react-bootstrap";
 import styles from "./CreateNewCollection.module.css";
 import MenuItem from "@mui/material/MenuItem";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createCollection } from "../../actions/collectionActions";
 import { topics } from "../../constants/topicConstants";
+import store from "../../store";
+import MessageSnackbar from "../MessageSnackbar";
+import { COLLECTION_CREATE_CLEAN } from "../../constants/collectionConstants";
 
 function CreateNewCollection() {
+  const {
+    collectionCreate: { success },
+  } = store.getState();
+  const collectionCreate = useSelector((state) => state.collectionCreate);
   const [values, setValues] = useState({
     name: "",
     description: "",
     topic: "",
   });
   const dispatch = useDispatch();
+
+  console.log(success);
+  useEffect(() => {
+    if (success) {
+      setTimeout(() => {
+        dispatch({ type: COLLECTION_CREATE_CLEAN });
+      }, 5000);
+    }
+  }, [dispatch, success]);
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -33,6 +48,7 @@ function CreateNewCollection() {
   };
   return (
     <Container>
+      <MessageSnackbar open={success} message={"Collection created."} />
       <div className={styles.divTitle}>
         <h1 className={styles.title}>Create a new collection</h1>
       </div>

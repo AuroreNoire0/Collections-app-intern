@@ -153,10 +153,10 @@ export const updateCollection =
         { name, description, topic, items },
         config
       );
-      console.log("1");
+
       dispatch({ type: COLLECTION_UPDATE_SUCCESS, payload: data });
+
       dispatch(updateUserState());
-      console.log("2");
     } catch (error) {
       const message =
         error.response && error.response.data.message
