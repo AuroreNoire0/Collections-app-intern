@@ -56,11 +56,12 @@ function AddItem(props) {
               <Autocomplete
                 isOptionEqualToValue={(option, value) => option === value}
                 multiple
+                freeSolo
                 id="tags-filled"
                 label="Tags"
                 className={styles.input}
                 options={tagsOptions}
-                getOptionLabel={(option) => option}
+                getOptionLabel={(option) => option || ""}
                 onChange={onTagsChangeHandler}
                 filterSelectedOptions
                 renderInput={(params) => (

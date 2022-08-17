@@ -14,20 +14,6 @@
   width: 100% !important;
 }
 
-.addItem {
-  padding: 1rem;
-  margin: 0.5rem 0rem;
-  font-size: 2rem;
-  border: 0.5px solid black;
-  width: 15rem;
-  border-radius: 2rem;
-  text-align: center;
-  box-shadow: 3px 3px 0px 0px gray;
-}
-.addItem:hover {
-  background-color: #9d8d7b7f;
-}
-
 .collectionCon .dataGrid {
   font-size: 1.2rem;
 }
@@ -43,4 +29,10 @@
   border: 1px solid rgba(170, 147, 144, 0.866);
   border-radius: 10px;
   margin: 2rem;
+}
+
+.btn {
+  font-size: 1.5rem;
+  margin: 1rem;
+  padding: 0.5rem 1rem;
 }

@@ -67,6 +67,40 @@ export const createItem = (name, tags) => async (dispatch) => {
   }
 };
 
+export const deleteItem = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: ITEM_DELETE_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+      collectionDetails: { collectionInfo },
+    } = store.getState();
+
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    let collectionId = collectionInfo._id;
+
+    const { data } = await axios.post(`/api/delete-item/${id}`, config);
+
+    dispatch({ type: ITEM_DELETE_SUCCESS, payload: data });
+    dispatch(getCollectionDetails(collectionId));
+    dispatch(updateUserState());
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({
+      type: ITEM_DELETE_FAIL,
+      payload: message,
+    });
+  }
+};
+
 export const getTags = () => async (dispatch) => {
   try {
     dispatch({ type: ITEM_TAGS_LIST_REQUEST });

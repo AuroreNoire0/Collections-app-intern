@@ -1,16 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
 import Container from "react-bootstrap/esm/Container";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import AddItem from "../Items/AddItem";
 import styles from "./CollectionPage.module.css";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useSelector, useDispatch } from "react-redux";
 import store from "../../store";
 import { CircularProgress } from "@mui/material";
 import ItemsList from "../Items/ItemsList";
 import { getTags } from "../../actions/itemActions";
+import { Button } from "react-bootstrap";
+import CustomButton from "../CustomButton";
 
 function CollectionPage() {
   const {
@@ -56,9 +54,13 @@ function CollectionPage() {
       ) : (
         <ItemsList rows={tableData} collectionName={collectionInfo.name} />
       )}
-      <p className={styles.addItem} onClick={onClickNewItemHandler}>
-        <FontAwesomeIcon className={styles.plus} icon={faPlus} /> New Item
-      </p>
+
+      <CustomButton
+        variant="warning"
+        name="New item"
+        onClickBtn={onClickNewItemHandler}
+      />
+
       {showForm && (
         <AddItem tags={tags} onHideForm={(e) => setShowForm(false)} />
       )}
