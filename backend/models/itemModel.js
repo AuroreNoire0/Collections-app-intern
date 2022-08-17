@@ -7,6 +7,22 @@ const itemSchema = mongoose.Schema(
       type: String,
       required: false,
     },
+    author: {
+      type: String,
+      required: false,
+    },
+    authorId: {
+      type: String,
+      required: false,
+    },
+    collectionName: {
+      type: String,
+      required: false,
+    },
+    collectionId: {
+      type: String,
+      required: false,
+    },
     tags: [
       {
         type: String,

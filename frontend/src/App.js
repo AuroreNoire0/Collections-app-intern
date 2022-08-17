@@ -29,7 +29,7 @@ function App() {
         <Route path="/account" element={<AccountView />}></Route>
         <Route path="/admin" element={<AdminView />}></Route>
         {/* <Route path="/user-page" element={<UserPage />}></Route> */}
-        <Route path="/collection" element={<CollectionPage />}></Route>
+        <Route path="/collection/:id" element={<CollectionPage />}></Route>
 
         <Route
           path="/create-collection"

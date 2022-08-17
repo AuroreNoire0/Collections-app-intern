@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import Container from "react-bootstrap/esm/Container";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
@@ -11,11 +12,20 @@ import Grid from "@mui/material/Grid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { propTypes } from "react-bootstrap/esm/Image";
+import { createItem } from "../../actions/itemActions";
+import { useSelector, useDispatch } from "react-redux";
 
 function AddItem(props) {
+  const [name, setName] = useState("");
+  const dispatch = useDispatch();
+
+  const onChangeNameHandler = (e) => {
+    setName(e.target.value);
+  };
   const onAddItemHandler = (e) => {
     e.preventDefault();
     props.onHideForm();
+    dispatch(createItem(name));
   };
 
   return (
@@ -37,6 +47,8 @@ function AddItem(props) {
               <TextField
                 placeholder="Enter name"
                 label="Name"
+                value={name}
+                onChange={onChangeNameHandler}
                 variant="outlined"
                 className={styles.textField}
               />

@@ -6,6 +6,7 @@ const {
   getCollectionDetails,
   updateCollection,
 } = require("./controllers/collectionControllers");
+const { createItem } = require("./controllers/itemControllers");
 const {
   authUser,
   registerUser,
@@ -24,6 +25,7 @@ router.route("/create-collection").post(createCollection);
 router.route("/update-collection/:id").post(updateCollection);
 router.route("/details/:id").get(getCollectionDetails);
 router.route("/collection/:id").delete(deleteCollection);
+router.route("/create-item").post(createItem);
 
 // router.route("/messages/:name").post(sendMessage);
 // router.route("/messages/:id").get(getUsers);

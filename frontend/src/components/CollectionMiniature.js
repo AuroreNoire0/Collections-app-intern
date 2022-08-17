@@ -16,8 +16,9 @@ function CollectionMiniature(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const onClickCollection = () => {
-    navigate("/collection/");
+  const onClickCollection = (e) => {
+    dispatch(getCollectionDetails(e.target.id));
+    navigate(`/collection/${props.id}`);
   };
 
   const onDeleteCollection = (e) => {
@@ -37,7 +38,11 @@ function CollectionMiniature(props) {
 
   return (
     <Container className={styles.collectionCon}>
-      <Col className={styles.collectionInfo} onClick={onClickCollection}>
+      <Col
+        className={styles.collectionInfo}
+        id={props.id}
+        onClick={onClickCollection}
+      >
         <div className={styles.collectionName}>{props.name}</div>
         <div className={styles.collectionDescription}> {props.description}</div>
       </Col>

@@ -27,11 +27,7 @@ const collectionSchema = mongoose.Schema(
       type: String,
       required: false,
     },
-    items: [
-      {
-        Item,
-      },
-    ],
+    items: [Item],
   },
   {
     timestamps: true,
