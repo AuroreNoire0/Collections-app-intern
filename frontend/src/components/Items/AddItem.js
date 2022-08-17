@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Container from "react-bootstrap/esm/Container";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/esm/Row";
-import Col from "react-bootstrap/esm/Col";
 import { Button } from "react-bootstrap";
 import styles from "./AddItem.module.css";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -11,21 +7,24 @@ import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { propTypes } from "react-bootstrap/esm/Image";
 import { createItem } from "../../actions/itemActions";
 import { useSelector, useDispatch } from "react-redux";
 
 function AddItem(props) {
   const [name, setName] = useState("");
+  const [selectedTags, setSelectedTags] = useState([]);
+  const tagsOptions = props.tags;
   const dispatch = useDispatch();
 
-  const onChangeNameHandler = (e) => {
-    setName(e.target.value);
+  const onTagsChangeHandler = (event, value) => {
+    setSelectedTags(value);
   };
+  const onChangeNameHandler = (e) => setName(e.target.value);
   const onAddItemHandler = (e) => {
     e.preventDefault();
     props.onHideForm();
-    dispatch(createItem(name));
+    let tags = selectedTags;
+    dispatch(createItem(name, tags));
   };
 
   return (
@@ -55,12 +54,14 @@ function AddItem(props) {
             </Grid>
             <Grid xs={12} sm={4} item>
               <Autocomplete
+                isOptionEqualToValue={(option, value) => option === value}
                 multiple
                 id="tags-filled"
                 label="Tags"
                 className={styles.input}
-                options={top100Films}
-                getOptionLabel={(option) => option.title}
+                options={tagsOptions}
+                getOptionLabel={(option) => option}
+                onChange={onTagsChangeHandler}
                 filterSelectedOptions
                 renderInput={(params) => (
                   <TextField {...params} placeholder="Tags" />
@@ -85,19 +86,3 @@ function AddItem(props) {
 }
 
 export default AddItem;
-
-const top100Films = [
-  { title: "The Shawshank Redemption", year: 1994 },
-  { title: "The Godfather", year: 1972 },
-  { title: "The Godfather: Part II", year: 1974 },
-  { title: "The Dark Knight", year: 2008 },
-  { title: "12 Angry Men", year: 1957 },
-  { title: "Schindler's List", year: 1993 },
-  { title: "Pulp Fiction", year: 1994 },
-  {
-    title: "The Lord of the Rings: The Return of the King",
-    year: 2003,
-  },
-  { title: "The Good, the Bad and the Ugly", year: 1966 },
-  { title: "Fight Club", year: 1999 },
-];

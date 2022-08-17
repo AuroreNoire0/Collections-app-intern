@@ -58,8 +58,22 @@ const createItem = asyncHandler(async (req, res) => {
   }
 });
 
+const fetchTags = asyncHandler(async (req, res) => {
+  const items = await Item.find();
+  const tags = items.map((i) => i.tags).flat();
+  console.log(tags);
+
+  if (tags) {
+    res.status(201).json(tags);
+  } else {
+    res.status(404);
+    throw new Error("Tags not found");
+  }
+});
+
 module.exports = {
   createItem,
+  fetchTags,
   // getUserCollections,
   // deleteCollection,
   // getCollectionDetails,

@@ -178,7 +178,6 @@ export const getCollectionDetails = (id) => async (dispatch) => {
         "Content-type": "application/json",
       },
     };
-    console.log(id);
 
     const { data } = await axios.get(`/api/details/${id}`, config);
 

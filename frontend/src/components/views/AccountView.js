@@ -25,7 +25,6 @@ function AccountView() {
     setUserCollections(userLogin.userInfo.collections);
   }, [userLogin.userInfo.collections]);
 
-  console.log(success);
   useEffect(() => {
     if (success) {
       setTimeout(() => {

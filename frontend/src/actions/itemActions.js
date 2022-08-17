@@ -12,6 +12,9 @@ import {
   ITEM_DELETE_FAIL,
   ITEM_DELETE_REQUEST,
   ITEM_DELETE_SUCCESS,
+  ITEM_TAGS_LIST_SUCCESS,
+  ITEM_TAGS_LIST_REQUEST,
+  ITEM_TAGS_LIST_FAIL,
   COLLECTION_DETAILS_FAIL,
   COLLECTION_DETAILS_REQUEST,
   COLLECTION_DETAILS_SUCCESS,
@@ -59,6 +62,33 @@ export const createItem = (name, tags) => async (dispatch) => {
         : error.message;
     dispatch({
       type: ITEM_CREATE_FAIL,
+      payload: message,
+    });
+  }
+};
+
+export const getTags = () => async (dispatch) => {
+  try {
+    dispatch({ type: ITEM_TAGS_LIST_REQUEST });
+
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+      },
+    };
+
+    const { data } = await axios.get(`/api/get-tags`, config);
+
+    const tags = [...new Set(data)];
+    dispatch({ type: ITEM_TAGS_LIST_SUCCESS, payload: tags });
+    return tags;
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({
+      type: ITEM_TAGS_LIST_FAIL,
       payload: message,
     });
   }
