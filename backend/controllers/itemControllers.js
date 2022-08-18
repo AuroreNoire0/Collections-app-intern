@@ -97,6 +97,18 @@ const deleteItem = asyncHandler(async (req, res) => {
   }
 });
 
+const getItemDetails = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  const item = await Item.findOne({ _id: id });
+
+  if (item) {
+    res.json(item);
+  } else {
+    res.status(404);
+    throw new Error("Item not found");
+  }
+});
+
 const fetchTags = asyncHandler(async (req, res) => {
   const items = await Item.find();
   const tags = items.map((i) => i.tags).flat();
@@ -112,6 +124,7 @@ const fetchTags = asyncHandler(async (req, res) => {
 module.exports = {
   createItem,
   deleteItem,
+  getItemDetails,
   fetchTags,
   // getUserCollections,
   // deleteCollection,

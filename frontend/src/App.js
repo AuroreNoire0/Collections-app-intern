@@ -14,6 +14,7 @@ import CreateNewCollection from "./components/views/CreateNewCollection";
 import UpdateCollection from "./components/views/UpdateCollection";
 import UserPage from "./components/views/UserPage";
 import CollectionPage from "./components/views/CollectionPage";
+import ItemPage from "./components/views/ItemPage";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           path="/update-collection/:id"
           element={<UpdateCollection />}
         ></Route>
+        <Route path="/item/:id" element={<ItemPage />}></Route>
       </Routes>
       <Footer />
     </Fragment>

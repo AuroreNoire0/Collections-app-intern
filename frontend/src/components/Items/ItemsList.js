@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbarQuickFilter } from "@mui/x-data-grid";
 import styles from "../views/CollectionPage.module.css";
 import { Button } from "react-bootstrap";
 import { deleteItem } from "../../actions/itemActions";
 import { useSelector, useDispatch } from "react-redux";
+import { Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const ItemsList = (props) => {
   const [selectedItems, setSelectedItems] = useState([]);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const onDeleteHandler = () => {
     selectedItems.map((i) => dispatch(deleteItem(i)));
@@ -28,6 +31,23 @@ const ItemsList = (props) => {
     },
   ];
 
+  // function QuickSearchToolbar() {
+  //   return (
+  //     <Box
+  //       sx={{
+  //         p: 0.5,
+  //         pb: 0,
+  //       }}
+  //     >
+  //       <GridToolbarQuickFilter />
+  //     </Box>
+  //   );
+  // }
+  const handleEvent = (params) => {
+    console.log(params.id);
+    navigate(`/item/${params.id}`);
+  };
+
   console.log("s");
   return (
     <>
@@ -36,13 +56,17 @@ const ItemsList = (props) => {
         <>
           <div style={{ height: 400, width: "100%" }}>
             <DataGrid
+              // components={{ Toolbar: QuickSearchToolbar }}
               rows={props.rows}
               columns={columns}
               pageSize={6}
               rowsPerPageOptions={[6]}
               checkboxSelection
+              disableSelectionOnClick
+              onRowClick={handleEvent}
               className={styles.dataGrid}
               onSelectionModelChange={(itm) => setSelectedItems(itm)}
+              disableColumnSelector
             />
           </div>
           <Button

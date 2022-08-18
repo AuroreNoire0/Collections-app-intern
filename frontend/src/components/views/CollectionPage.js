@@ -56,6 +56,10 @@ function CollectionPage() {
     setTags(tags);
   };
 
+  const onClickItemHandler = () => {
+    console.log("click");
+  };
+
   const isAuthor =
     userLogin.userInfo &&
     collectionDetails.collectionInfo &&

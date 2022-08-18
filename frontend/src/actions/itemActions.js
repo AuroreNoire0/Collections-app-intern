@@ -15,9 +15,9 @@ import {
   ITEM_TAGS_LIST_SUCCESS,
   ITEM_TAGS_LIST_REQUEST,
   ITEM_TAGS_LIST_FAIL,
-  COLLECTION_DETAILS_FAIL,
-  COLLECTION_DETAILS_REQUEST,
-  COLLECTION_DETAILS_SUCCESS,
+  ITEM_DETAILS_FAIL,
+  ITEM_DETAILS_REQUEST,
+  ITEM_DETAILS_SUCCESS,
 } from "../constants/itemConstants";
 import store from "../store";
 import axios from "axios";
@@ -137,6 +137,31 @@ export const updateItem = (name, tags, comments, id) => async (dispatch) => {
     dispatch({
       type: ITEM_UPDATE_FAIL,
       payload: message,
+    });
+  }
+};
+
+export const getItemDetails = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: ITEM_DETAILS_REQUEST });
+
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+      },
+    };
+
+    const { data } = await axios.get(`/api/item-details/${id}`, config);
+
+    dispatch({ type: ITEM_DETAILS_SUCCESS, payload: data });
+    localStorage.setItem("collectionInfo", JSON.stringify(data));
+  } catch (error) {
+    dispatch({
+      type: ITEM_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
     });
   }
 };

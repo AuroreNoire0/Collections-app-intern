@@ -10,6 +10,7 @@ const {
   createItem,
   deleteItem,
   fetchTags,
+  getItemDetails,
 } = require("./controllers/itemControllers");
 const {
   authUser,
@@ -30,6 +31,7 @@ router.route("/update-collection/:id").post(updateCollection);
 router.route("/details/:id").get(getCollectionDetails);
 router.route("/collection/:id").delete(deleteCollection);
 router.route("/create-item").post(createItem);
+router.route("/item-details/:id").get(getItemDetails);
 router.route("/delete-item/:id").delete(deleteItem);
 router.route("/get-tags").get(fetchTags);
 

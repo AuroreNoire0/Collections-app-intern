@@ -17,6 +17,7 @@ import {
 } from "./reducers/collectionReducers";
 import {
   itemDeleteReducer,
+  itemDetailsReducer,
   itemTagsListReducer,
   itemUpdateReducer,
 } from "./reducers/itemReducers";
@@ -45,6 +46,7 @@ const store = configureStore(
       collectionDetails: collectionDetailsReducer,
       itemDelete: itemDeleteReducer,
       itemUpdate: itemUpdateReducer,
+      itemDetails: itemDetailsReducer,
       tagsList: itemTagsListReducer,
     },
   },
