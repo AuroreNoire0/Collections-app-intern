@@ -22,7 +22,6 @@ import {
   USER_UPDATE_SUCCESS,
 } from "../constants/userConstants";
 import { updateUserState } from "./userActions";
-import { useParams } from "react-router-dom";
 
 export const fetchUsersCollections = () => async (dispatch) => {
   try {
@@ -182,7 +181,6 @@ export const getCollectionDetails = (id) => async (dispatch) => {
     const { data } = await axios.get(`/api/details/${id}`, config);
 
     dispatch({ type: COLLECTION_DETAILS_SUCCESS, payload: data });
-
     localStorage.setItem("collectionInfo", JSON.stringify(data));
   } catch (error) {
     dispatch({

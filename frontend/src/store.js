@@ -15,7 +15,11 @@ import {
   collectionUpdateReducer,
   collectionDetailsReducer,
 } from "./reducers/collectionReducers";
-import { itemTagsListReducer } from "./reducers/itemReducers";
+import {
+  itemDeleteReducer,
+  itemTagsListReducer,
+  itemUpdateReducer,
+} from "./reducers/itemReducers";
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo"))
@@ -39,6 +43,8 @@ const store = configureStore(
       collectionDelete: collectionDeleteReducer,
       collectionUpdate: collectionUpdateReducer,
       collectionDetails: collectionDetailsReducer,
+      itemDelete: itemDeleteReducer,
+      itemUpdate: itemUpdateReducer,
       tagsList: itemTagsListReducer,
     },
   },

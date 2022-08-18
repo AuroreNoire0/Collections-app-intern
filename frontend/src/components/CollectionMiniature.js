@@ -16,8 +16,7 @@ function CollectionMiniature(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const onClickCollection = (e) => {
-    dispatch(getCollectionDetails(e.target.id));
+  const onClickCollection = () => {
     navigate(`/collection/${props.id}`);
   };
 

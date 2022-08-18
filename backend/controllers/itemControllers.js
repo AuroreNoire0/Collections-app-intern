@@ -58,10 +58,48 @@ const createItem = asyncHandler(async (req, res) => {
   }
 });
 
+const deleteItem = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  const item = await Item.findOne({ _id: id });
+
+  if (item) {
+    await item.remove();
+
+    const parentCollection = await Collection.findOneAndUpdate(
+      { _id: item.collectionId },
+      { $pull: { items: { _id: id } } }
+    );
+
+    if (parentCollection) {
+      updatedCollection = await parentCollection.save();
+    } else {
+      res.status(404);
+      throw new Error("Collection not found");
+    }
+
+    const author = await User.findOneAndUpdate(
+      { _id: item.authorId },
+      { $pull: { "collections.$[e].items": { _id: id } } },
+      { arrayFilters: [{ "e._id": item.collectionId }] }
+    );
+
+    if (author) {
+      updatedAuthor = await author.save();
+    } else {
+      res.status(404);
+      throw new Error("User not found");
+    }
+
+    res.json({ message: "Item deleted" });
+  } else {
+    res.status(404);
+    throw new Error("Collection not found");
+  }
+});
+
 const fetchTags = asyncHandler(async (req, res) => {
   const items = await Item.find();
   const tags = items.map((i) => i.tags).flat();
-  console.log(tags);
 
   if (tags) {
     res.status(201).json(tags);
@@ -73,6 +111,7 @@ const fetchTags = asyncHandler(async (req, res) => {
 
 module.exports = {
   createItem,
+  deleteItem,
   fetchTags,
   // getUserCollections,
   // deleteCollection,
