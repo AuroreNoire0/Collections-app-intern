@@ -48,7 +48,6 @@ const ItemsList = (props) => {
     navigate(`/item/${params.id}`);
   };
 
-  console.log("s");
   return (
     <>
       <h1> Collection "{props.collectionName}" </h1>

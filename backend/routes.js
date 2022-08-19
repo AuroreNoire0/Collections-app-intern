@@ -6,6 +6,7 @@ const {
   getCollectionDetails,
   updateCollection,
 } = require("./controllers/collectionControllers");
+const { createComment } = require("./controllers/commentControllers");
 const {
   createItem,
   deleteItem,
@@ -34,6 +35,7 @@ router.route("/create-item").post(createItem);
 router.route("/item-details/:id").get(getItemDetails);
 router.route("/delete-item/:id").delete(deleteItem);
 router.route("/get-tags").get(fetchTags);
+router.route("/create-comment").post(createComment);
 
 // router.route("/messages/:name").post(sendMessage);
 // router.route("/messages/:id").get(getUsers);

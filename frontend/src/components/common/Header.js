@@ -4,7 +4,7 @@ import Search from "./Search";
 
 function Header() {
   return (
-    <Container fluid className="p-0 bg-light">
+    <Container fluid className="p-0 bg-light sticky-top">
       <Navigation />
       <Search />
     </Container>

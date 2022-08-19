@@ -1,0 +1,85 @@
+.collectionCon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+
+.itemContainer {
+  display: flex;
+  width: 60vw;
+  height: 30vh;
+  justify-content: center;
+  align-items: center;
+}
+.itemCard {
+  margin: 2vw 0;
+  font-size: 2rem;
+  width: 100%;
+  border: none;
+}
+.imgContainer {
+  padding: 0;
+  margin: 2vw 0;
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+}
+.imgContainer p {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+}
+.img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.itemCard .title {
+  font-size: 3rem;
+  text-align: center;
+  text-decoration: underline;
+  padding: 0.5vh;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+}
+.details span {
+  padding: 0.5vw;
+}
+.link {
+  padding: 0.5vw;
+  text-decoration: none;
+  font-style: italic;
+  color: black;
+}
+.badge span {
+  font-size: 1.5rem;
+}
+
+.likeRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  text-align: end;
+  padding: 1vw;
+}
+
+.likeRow span {
+  font-size: 1.5rem;
+}
+.likeIcon {
+  font-size: 4rem;
+  color: rgb(186, 25, 25);
+  cursor: pointer;
+}
+.likeIcon:hover {
+  color: rgb(126, 28, 28);
+}

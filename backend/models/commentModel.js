@@ -6,7 +6,19 @@ const commentSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    author: {
+    authorComment: {
+      type: String,
+      required: true,
+    },
+    itemId: {
+      type: String,
+      required: true,
+    },
+    collectionId: {
+      type: String,
+      required: true,
+    },
+    authorItemId: {
       type: String,
       required: true,
     },

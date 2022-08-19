@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Container from "react-bootstrap/esm/Container";
 import AddItem from "../Items/AddItem";
-import styles from "./CollectionPage.module.css";
+import styles from "./ItemPage.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { CircularProgress, TextareaAutosize } from "@mui/material";
-import ItemsList from "../Items/ItemsList";
-import { getItemDetails, getTags } from "../../actions/itemActions";
-import { Button, Form } from "react-bootstrap";
+import { Badge, CircularProgress, TextareaAutosize } from "@mui/material";
+import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import Comment from "../Comment";
+import { getItemDetails } from "../../actions/itemActions";
+import CommentsSection from "../CommentsSection";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import img from "../../img/NoImg.jpg";
 
 function ItemPage() {
   const params = useParams();
@@ -23,7 +28,7 @@ function ItemPage() {
     itemInfo();
   }, [dispatch, params.id]);
 
-  const onClickItemHandler = () => {
+  const onNewCommentHandler = () => {
     console.log("click");
   };
 
@@ -38,16 +43,55 @@ function ItemPage() {
     <Container className={styles.collectionCon}>
       {itemDetails.itemInfo && !itemDetails.loading && (
         <>
-          <h1>{itemDetails.itemInfo.name}</h1>
-          <p> Collection: {itemDetails.itemInfo.collectionName}</p>
-          <p> Tags: {itemDetails.itemInfo.tags}</p>
-          <p> Author: {itemDetails.itemInfo.collectionName}</p>
-          <TextareaAutosize
-            aria-label="minimum height"
-            minRows={3}
-            placeholder="Leave a comment..."
-            style={{ width: 200 }}
-          />
+          <Row styles={styles.itemContainer}>
+            <Col sm={12} lg={6} className="p-0">
+              <Card className={styles.itemCard}>
+                <Card.Body className="mx-1">
+                  <Card.Title className={styles.title}>
+                    {itemDetails.itemInfo.name}
+                  </Card.Title>
+                  <Card.Text className={styles.details}>
+                    <span>
+                      Collection: {itemDetails.itemInfo.collectionName}{" "}
+                    </span>
+                    <span>Tags: {itemDetails.itemInfo.tags.join(" | ")} </span>
+                    <span>Author: {itemDetails.itemInfo.author} </span>
+                  </Card.Text>
+                  <Link
+                    to={`/collection/${itemDetails.itemInfo.collectionId}`}
+                    className={styles.link}
+                  >
+                    {" "}
+                    Check this collection
+                  </Link>
+                  <Row className={styles.likeRow}>
+                    <Col xs={10} lg={10}>
+                      <span> Do you like this item? Leave a like!</span>
+                    </Col>
+                    <Col xs={2} lg={2}>
+                      <Badge
+                        className={styles.badge}
+                        color="primary"
+                        sx={{ fontSize: 3 }}
+                        showZero
+                        badgeContent={5}
+                      >
+                        <FontAwesomeIcon
+                          icon={faHeart}
+                          className={styles.likeIcon}
+                        />
+                      </Badge>
+                    </Col>
+                  </Row>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col sm={12} lg={6} className={styles.imgContainer}>
+              <img src={img} className={styles.img} alt="Item"></img>
+              <p> Here could be your photo!</p>
+            </Col>
+          </Row>
+          <CommentsSection />
         </>
       )}
       {/* {collectionDetails.collectionInfo && !collectionDetails.loading ? (
