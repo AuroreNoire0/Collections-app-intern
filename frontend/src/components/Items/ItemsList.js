@@ -44,7 +44,6 @@ const ItemsList = (props) => {
   //   );
   // }
   const handleEvent = (params) => {
-    console.log(params.id);
     navigate(`/item/${params.id}`);
   };
 

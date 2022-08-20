@@ -30,6 +30,12 @@ const itemSchema = mongoose.Schema(
       },
     ],
     comments: [Comment],
+    likedBy: [
+      {
+        type: String,
+        required: false,
+      },
+    ],
   },
   {
     timestamps: true,

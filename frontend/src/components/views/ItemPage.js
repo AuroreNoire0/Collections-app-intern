@@ -7,7 +7,7 @@ import { Badge, CircularProgress, TextareaAutosize } from "@mui/material";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import Comment from "../Comment";
-import { getItemDetails } from "../../actions/itemActions";
+import { addLike, getItemDetails, removeLike } from "../../actions/itemActions";
 import CommentsSection from "../CommentsSection";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -28,7 +28,12 @@ function ItemPage() {
     itemInfo();
   }, [dispatch, params.id]);
 
-  const onNewCommentHandler = () => {
+  const onLikeHandler = () => {
+    // itemDetails.itemInfo.likedBy.includes(
+    //   userLogin.userInfo._id
+    //     ? dispatch(removeLike(params.id))
+    //     : dispatch(addLike(params.id))
+    // );
     console.log("click");
   };
 
@@ -75,6 +80,7 @@ function ItemPage() {
                         sx={{ fontSize: 3 }}
                         showZero
                         badgeContent={5}
+                        onClick={onLikeHandler}
                       >
                         <FontAwesomeIcon
                           icon={faHeart}
@@ -91,7 +97,7 @@ function ItemPage() {
               <p> Here could be your photo!</p>
             </Col>
           </Row>
-          <CommentsSection />
+          <CommentsSection comments={itemDetails.itemInfo.comments} />
         </>
       )}
       {/* {collectionDetails.collectionInfo && !collectionDetails.loading ? (
@@ -102,9 +108,6 @@ function ItemPage() {
         </div>
       )} */}
       <>
-        {/* <div className={styles.progressCircle}>
-          <CircularProgress color="inherit" />{" "}
-        </div> */}
         {/* {" "}
         {itemDetails.itemInfo && itemDetails.loading ? (
           <div className={styles.progressCircle}>

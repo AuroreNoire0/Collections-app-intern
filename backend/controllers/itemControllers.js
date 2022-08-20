@@ -121,11 +121,50 @@ const fetchTags = asyncHandler(async (req, res) => {
   }
 });
 
+const addLike = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  const { fromUserId } = req.body;
+
+  const item = await Item.findOneAndUpdate(
+    { _id: id },
+    { $push: { likedBy: fromUserId } }
+  );
+  console.log(item);
+  if (item) {
+    const updatedItem = await item.save();
+    console.log(updatedItem);
+    res.json(updatedItem);
+  } else {
+    res.status(404);
+    throw new Error("Item not found");
+  }
+});
+
+const removeLike = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  const { fromUserId } = req.body;
+  const item = await Item.findOneAndUpdate(
+    { _id: id },
+    { $pull: { likedBy: fromUserId } }
+  );
+  console.log(item);
+  if (item) {
+    const updatedItem = await item.save();
+    console.log(updatedItem);
+    res.json(updatedItem);
+  } else {
+    res.status(404);
+    throw new Error("Item not found");
+  }
+});
+
 module.exports = {
   createItem,
   deleteItem,
   getItemDetails,
   fetchTags,
+  addLike,
+  removeLike,
   // getUserCollections,
   // deleteCollection,
   // getCollectionDetails,

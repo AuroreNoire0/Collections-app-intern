@@ -153,7 +153,7 @@ export const getItemDetails = (id) => async (dispatch) => {
     const { data } = await axios.get(`/api/item-details/${id}`, config);
 
     dispatch({ type: ITEM_DETAILS_SUCCESS, payload: data });
-    localStorage.setItem("collectionInfo", JSON.stringify(data));
+    localStorage.setItem("itemInfo", JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: ITEM_DETAILS_FAIL,
@@ -187,6 +187,82 @@ export const getTags = () => async (dispatch) => {
         : error.message;
     dispatch({
       type: ITEM_TAGS_LIST_FAIL,
+      payload: message,
+    });
+  }
+};
+
+export const addLike = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: ITEM_UPDATE_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = store.getState();
+
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    let fromUserId = userInfo._id;
+
+    const { data } = await axios.post(
+      `/api/add-like/${id}`,
+      { fromUserId },
+      config
+    );
+
+    dispatch({ type: ITEM_UPDATE_SUCCESS, payload: data });
+
+    dispatch(getItemDetails());
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({
+      type: ITEM_UPDATE_FAIL,
+      payload: message,
+    });
+  }
+};
+
+export const removeLike = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: ITEM_UPDATE_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = store.getState();
+
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    let fromUserId = userInfo._id;
+
+    const { data } = await axios.post(
+      `/api/remove-like/${id}`,
+      { fromUserId },
+      config
+    );
+
+    dispatch({ type: ITEM_UPDATE_SUCCESS, payload: data });
+
+    dispatch(getItemDetails());
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({
+      type: ITEM_UPDATE_FAIL,
       payload: message,
     });
   }

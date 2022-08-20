@@ -10,14 +10,15 @@ import store from "../store";
 import axios from "axios";
 import { getCollectionDetails } from "./collectionActions";
 import { updateUserState } from "./userActions";
+import { getItemDetails } from "./itemActions";
 
-export const createComment = (name, tags) => async (dispatch) => {
+export const createComment = (content) => async (dispatch) => {
   try {
     dispatch({ type: COMMENT_CREATE_REQUEST });
 
     const {
       userLogin: { userInfo },
-      collectionDetails: { collectionInfo },
+      itemDetails: { itemInfo },
     } = store.getState();
 
     const config = {
@@ -28,16 +29,18 @@ export const createComment = (name, tags) => async (dispatch) => {
     };
 
     let authorComment = userInfo.name;
-    let authorCommentId = userInfo._id;
-    let collectionId = collectionInfo._id;
+    let itemId = itemInfo._id;
+    let collectionId = itemInfo.collectionId;
+    let authorItemId = itemInfo.authorId;
 
     const { data } = await axios.post(
       `/api/create-comment`,
-      { content, authorComment, authorCommentId, collectionId, authorItemId },
+      { content, authorComment, itemId, collectionId, authorItemId },
       config
     );
 
     dispatch({ type: COMMENT_CREATE_SUCCESS, payload: data });
+    dispatch(getItemDetails(itemId));
     dispatch(getCollectionDetails(collectionId));
     dispatch(updateUserState());
   } catch (error) {

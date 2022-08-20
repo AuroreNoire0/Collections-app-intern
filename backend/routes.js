@@ -12,6 +12,8 @@ const {
   deleteItem,
   fetchTags,
   getItemDetails,
+  addLike,
+  removeLike,
 } = require("./controllers/itemControllers");
 const {
   authUser,
@@ -36,6 +38,8 @@ router.route("/item-details/:id").get(getItemDetails);
 router.route("/delete-item/:id").delete(deleteItem);
 router.route("/get-tags").get(fetchTags);
 router.route("/create-comment").post(createComment);
+router.route("/add-like/:id").post(addLike);
+router.route("/remove-like/:id").post(removeLike);
 
 // router.route("/messages/:name").post(sendMessage);
 // router.route("/messages/:id").get(getUsers);

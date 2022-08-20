@@ -27,12 +27,6 @@
   font-size: 1.5rem;
   padding: 0;
 }
-.user {
-  height: 14vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 .commentDetails {
   display: flex;
@@ -56,6 +50,7 @@
 
 .user {
   height: 16vh;
+  width: 16vh;
   display: flex;
   justify-content: center;
   align-items: center;
