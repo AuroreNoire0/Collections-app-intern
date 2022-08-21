@@ -31,7 +31,7 @@ const createComment = asyncHandler(async (req, res) => {
       updatedUser = await authorItem.save();
     } else {
       res.status(404);
-      throw new Error("Author  not found");
+      throw new Error("Author not found");
     }
 
     const collection = await Collection.findOneAndUpdate(

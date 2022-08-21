@@ -6,18 +6,27 @@ import { CircularProgress, TextareaAutosize } from "@mui/material";
 import { Button, Col, Row } from "react-bootstrap";
 import Comment from "./Comment";
 import { createComment } from "../actions/commentActions";
+import MessageSnackbar from "./MessageSnackbar";
 
 function CommentsSection(props) {
   const userLogin = useSelector((state) => state.userLogin);
   const itemDetails = useSelector((state) => state.itemDetails);
   const [content, setContent] = useState("");
+  const [contentIsEmpty, setContentIsEmpty] = useState(false);
   const dispatch = useDispatch();
 
   const onChangeCommentHandler = (e) => {
     setContent(e.target.value);
   };
   const onNewCommentHandler = () => {
-    dispatch(createComment(content));
+    if (content.trim() === "") {
+      setContentIsEmpty(true);
+      setTimeout(() => {
+        setContentIsEmpty(false);
+      }, 3000);
+    } else {
+      dispatch(createComment(content));
+    }
   };
 
   return (
@@ -27,6 +36,11 @@ function CommentsSection(props) {
       ) : (
         <>
           <h1 className="my-3"> Comments:</h1>
+          <MessageSnackbar
+            open={contentIsEmpty}
+            message={"Comment field can't be empty."}
+            severity="warning"
+          />
           <Container className={styles.comments}>
             <Row className={styles.newComment}>
               <Col lg={2} className={styles.user}>
@@ -40,6 +54,7 @@ function CommentsSection(props) {
                   onChange={onChangeCommentHandler}
                   className={styles.textArea}
                 />
+
                 <Button
                   type="button"
                   variant="warning"

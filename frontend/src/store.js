@@ -21,6 +21,7 @@ import {
   itemTagsListReducer,
   itemUpdateReducer,
 } from "./reducers/itemReducers";
+import { commentCreateReducer } from "./reducers/commentReducers";
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo"))
@@ -48,6 +49,7 @@ const store = configureStore(
       itemUpdate: itemUpdateReducer,
       itemDetails: itemDetailsReducer,
       tagsList: itemTagsListReducer,
+      comment: commentCreateReducer,
     },
   },
   initialState,

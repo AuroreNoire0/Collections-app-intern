@@ -6,15 +6,29 @@ import { deleteItem } from "../../actions/itemActions";
 import { useSelector, useDispatch } from "react-redux";
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import MessageSnackbar from "../MessageSnackbar";
 
 const ItemsList = (props) => {
   const [selectedItems, setSelectedItems] = useState([]);
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const onDeleteHandler = () => {
     selectedItems.map((i) => dispatch(deleteItem(i)));
   };
-  const onEditHandler = () => {};
+  const onEditHandler = () => {
+    if (selectedItems.length > 1) {
+      setMessage("You can choose only one item to edit.");
+      setTimeout(() => {
+        setMessage("");
+      }, 3000);
+    } else if (selectedItems.length === 0) {
+      return;
+    } else {
+      navigate(`/edit-item/${selectedItems[0]}`);
+    }
+  };
+
   const columns = [
     { field: "id", headerName: "ID", width: 180 },
     { field: "name", headerName: "Name", width: 130 },
@@ -67,6 +81,11 @@ const ItemsList = (props) => {
               disableColumnSelector
             />
           </div>
+          <MessageSnackbar
+            open={message !== "" ? true : false}
+            severity="warning"
+            message={message}
+          />
           <Button
             type="button"
             variant="danger"

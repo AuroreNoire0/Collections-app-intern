@@ -97,7 +97,7 @@ export const deleteItem = (id) => async (dispatch) => {
   }
 };
 
-export const updateItem = (name, tags, comments, id) => async (dispatch) => {
+export const updateItem = (name, tags, id) => async (dispatch) => {
   try {
     dispatch({ type: ITEM_UPDATE_REQUEST });
 
@@ -114,16 +114,15 @@ export const updateItem = (name, tags, comments, id) => async (dispatch) => {
 
     let author = userInfo.name;
     let authorId = userInfo._id;
-    let items = [];
 
     const { data } = await axios.post(
       `/api/update-item/${id}`,
-      { name, tags, comments },
+      { name, tags },
       config
     );
 
     dispatch({ type: ITEM_UPDATE_SUCCESS, payload: data });
-
+    dispatch(getItemDetails(id));
     dispatch(updateUserState());
   } catch (error) {
     const message =

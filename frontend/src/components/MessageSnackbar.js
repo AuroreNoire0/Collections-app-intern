@@ -10,13 +10,8 @@ export default function MessageSnackbar(props) {
       <Collapse in={props.open}>
         <Alert
           style={{ fontSize: 15 }}
-          action={
-            <IconButton
-              aria-label="close"
-              color="inherit"
-              size="small"
-            ></IconButton>
-          }
+          severity={props.severity}
+          action={<IconButton aria-label="close" size="small"></IconButton>}
           sx={{ mb: 2 }}
         >
           {props.message}

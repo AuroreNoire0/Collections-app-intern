@@ -15,6 +15,7 @@ import UpdateCollection from "./components/views/UpdateCollection";
 import UserPage from "./components/views/UserPage";
 import CollectionPage from "./components/views/CollectionPage";
 import ItemPage from "./components/views/ItemPage";
+import EditItem from "./components/views/EditItem";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
           element={<UpdateCollection />}
         ></Route>
         <Route path="/item/:id" element={<ItemPage />}></Route>
+        <Route path="/edit-item/:id" element={<EditItem />}></Route>
       </Routes>
       <Footer />
     </Fragment>

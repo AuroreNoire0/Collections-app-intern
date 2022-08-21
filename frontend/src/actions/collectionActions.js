@@ -145,16 +145,15 @@ export const updateCollection =
 
       let author = userInfo.name;
       let authorId = userInfo._id;
-      let items = [];
 
       const { data } = await axios.post(
         `/api/update-collection/${id}`,
-        { name, description, topic, items },
+        { name, description, topic },
         config
       );
 
       dispatch({ type: COLLECTION_UPDATE_SUCCESS, payload: data });
-
+      dispatch(getCollectionDetails(id));
       dispatch(updateUserState());
     } catch (error) {
       const message =

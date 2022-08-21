@@ -85,3 +85,13 @@
 .calendar {
   width: 2vw;
 }
+
+.errorText {
+  font-size: 1.5rem;
+  color: rgb(200, 3, 3);
+}
+
+.invalid.textArea {
+  border: 1px solid #b40e0e;
+  background-color: #fddddd;
+}

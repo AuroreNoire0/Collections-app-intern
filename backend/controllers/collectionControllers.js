@@ -128,7 +128,7 @@ const getCollectionDetails = asyncHandler(async (req, res) => {
 
 const updateCollection = asyncHandler(async (req, res) => {
   const id = req.params.id;
-  const { name, description, topic, items } = req.body;
+  const { name, description, topic } = req.body;
   const collection = await Collection.findOne({ _id: id });
   const authorColId = collection.authorId;
   console.log(id);
@@ -137,7 +137,6 @@ const updateCollection = asyncHandler(async (req, res) => {
     collection.name = name;
     collection.description = description;
     collection.topic = topic;
-    collection.items = items;
     const updatedCollection = await collection.save();
     console.log(updatedCollection);
 
@@ -158,6 +157,7 @@ const updateCollection = asyncHandler(async (req, res) => {
       throw new Error("User not found");
     }
 
+    console.log(updatedCollection);
     res.json(updatedCollection);
   } else {
     res.status(404);

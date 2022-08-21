@@ -163,6 +163,35 @@ const removeLike = asyncHandler(async (req, res) => {
   }
 });
 
+const updateItem = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  const { name, tags } = req.body;
+  const item = await Item.findOne({ _id: id });
+  const collectionId = item.collectionId;
+  const authorId = item.authorId;
+  console.log(id);
+
+  if (item) {
+    item.name = name;
+    item.tags = tags;
+    const updatedItem = await item.save();
+    console.log(updatedItem);
+
+    if (authorColl2) {
+      updatedUser = await authorColl2.save();
+    } else {
+      res.status(404);
+      throw new Error("User not found");
+    }
+
+    console.log(updatedCollection);
+    res.json(updatedCollection);
+  } else {
+    res.status(404);
+    throw new Error("Collection not found");
+  }
+});
+
 module.exports = {
   createItem,
   deleteItem,

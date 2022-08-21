@@ -88,10 +88,8 @@ const LogView = (props) => {
           {passwordHasError && (
             <p className={styles.errorText}>This field can't be empty.</p>
           )}
-          {props.errorMessage ? (
+          {props.errorMessage && (
             <ErrorMessage variant="danger">{props.errorMessage}</ErrorMessage>
-          ) : (
-            ""
           )}
         </Form.Group>
         {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
