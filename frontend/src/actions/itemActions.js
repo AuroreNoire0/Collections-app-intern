@@ -2,9 +2,6 @@ import {
   ITEM_CREATE_REQUEST,
   ITEM_CREATE_SUCCESS,
   ITEM_CREATE_FAIL,
-  ITEM_LIST_REQUEST,
-  ITEM_LIST_SUCCESS,
-  ITEM_LIST_FAIL,
   ITEM_UPDATE_FAIL,
   ITEM_UPDATE_REQUEST,
   ITEM_UPDATE_SUCCESS,
@@ -217,7 +214,7 @@ export const addLike = (id) => async (dispatch) => {
 
     dispatch({ type: ITEM_UPDATE_SUCCESS, payload: data });
 
-    dispatch(getItemDetails());
+    dispatch(getItemDetails(id));
   } catch (error) {
     const message =
       error.response && error.response.data.message
@@ -255,7 +252,7 @@ export const removeLike = (id) => async (dispatch) => {
 
     dispatch({ type: ITEM_UPDATE_SUCCESS, payload: data });
 
-    dispatch(getItemDetails());
+    dispatch(getItemDetails(id));
   } catch (error) {
     const message =
       error.response && error.response.data.message

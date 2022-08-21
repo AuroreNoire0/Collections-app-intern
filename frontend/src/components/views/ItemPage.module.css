@@ -5,6 +5,13 @@
   align-items: center;
   padding: 0;
 }
+.progressCircle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  width: 50vw;
+}
 
 .itemContainer {
   display: flex;
@@ -59,6 +66,7 @@
   font-style: italic;
   color: black;
 }
+
 .badge span {
   font-size: 1.5rem;
 }
@@ -82,4 +90,10 @@
 }
 .likeIcon:hover {
   color: rgb(126, 28, 28);
+}
+
+.likeIconInactive {
+  font-size: 4rem;
+  color: rgb(186, 25, 25);
+  cursor: not-allowed;
 }

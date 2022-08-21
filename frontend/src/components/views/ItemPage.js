@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Container from "react-bootstrap/esm/Container";
-import AddItem from "../Items/AddItem";
 import styles from "./ItemPage.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { Badge, CircularProgress, TextareaAutosize } from "@mui/material";
-import { Button, Card, Col, Form, Row } from "react-bootstrap";
+import { Badge, CircularProgress } from "@mui/material";
+import { Card, Col, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import Comment from "../Comment";
 import { addLike, getItemDetails, removeLike } from "../../actions/itemActions";
 import CommentsSection from "../CommentsSection";
 import { Link } from "react-router-dom";
@@ -29,12 +27,9 @@ function ItemPage() {
   }, [dispatch, params.id]);
 
   const onLikeHandler = () => {
-    // itemDetails.itemInfo.likedBy.includes(
-    //   userLogin.userInfo._id
-    //     ? dispatch(removeLike(params.id))
-    //     : dispatch(addLike(params.id))
-    // );
-    console.log("click");
+    itemDetails.itemInfo.likedBy.includes(userLogin.userInfo._id)
+      ? dispatch(removeLike(params.id))
+      : dispatch(addLike(params.id));
   };
 
   //   const isAuthor =
@@ -43,9 +38,16 @@ function ItemPage() {
   //     userLogin.userInfo._id === collectionDetails.collectionInfo.authorId;
   //   const isAdmin = userLogin.userInfo && userLogin.userInfo.admin;
   //   const allowedToAction = (userLogin.userInfo && isAuthor) || isAdmin;
-
+  const likeStyles = userLogin.userInfo
+    ? `${styles.likeIcon}`
+    : `${styles.likeIconInactive}`;
   return (
     <Container className={styles.collectionCon}>
+      {itemDetails.loading && (
+        <div className={styles.progressCircle}>
+          <CircularProgress color="inherit" />{" "}
+        </div>
+      )}
       {itemDetails.itemInfo && !itemDetails.loading && (
         <>
           <Row styles={styles.itemContainer}>
@@ -69,22 +71,31 @@ function ItemPage() {
                     {" "}
                     Check this collection
                   </Link>
+
                   <Row className={styles.likeRow}>
-                    <Col xs={10} lg={10}>
-                      <span> Do you like this item? Leave a like!</span>
-                    </Col>
+                    {userLogin.userInfo && (
+                      <Col xs={10} lg={10}>
+                        {itemDetails.itemInfo.likedBy.includes(
+                          userLogin.userInfo._id
+                        ) ? (
+                          <span> You like it!</span>
+                        ) : (
+                          <span> Do you like this item? Leave a like!</span>
+                        )}
+                      </Col>
+                    )}
                     <Col xs={2} lg={2}>
                       <Badge
                         className={styles.badge}
                         color="primary"
                         sx={{ fontSize: 3 }}
                         showZero
-                        badgeContent={5}
-                        onClick={onLikeHandler}
+                        badgeContent={itemDetails.itemInfo.likedBy.length}
                       >
                         <FontAwesomeIcon
                           icon={faHeart}
-                          className={styles.likeIcon}
+                          className={likeStyles}
+                          onClick={onLikeHandler}
                         />
                       </Badge>
                     </Col>
@@ -100,29 +111,6 @@ function ItemPage() {
           <CommentsSection comments={itemDetails.itemInfo.comments} />
         </>
       )}
-      {/* {collectionDetails.collectionInfo && !collectionDetails.loading ? (
-        <Form />
-      ) : (
-        <div className={styles.progressCircle}>
-          <CircularProgress color="inherit" />{" "}
-        </div>
-      )} */}
-      <>
-        {/* {" "}
-        {itemDetails.itemInfo && itemDetails.loading ? (
-          <div className={styles.progressCircle}>
-            <CircularProgress color="inherit" />{" "}
-          </div>
-        ) : (
-          <>
-            {" "}
-            <div className={styles.title}>
-              <h1> {itemDetails.itemInfo.name}</h1>
-            </div>
-            <div>Item</div>
-          </>
-        )} */}
-      </>
     </Container>
   );
 }

@@ -1,0 +1,24 @@
+.badge span {
+  font-size: 1.5rem;
+}
+
+.likeRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  text-align: end;
+  padding: 1vw;
+}
+
+.likeRow span {
+  font-size: 1.5rem;
+}
+.likeIcon {
+  font-size: 4rem;
+  color: rgb(186, 25, 25);
+  cursor: pointer;
+}
+.likeIcon:hover {
+  color: rgb(126, 28, 28);
+}

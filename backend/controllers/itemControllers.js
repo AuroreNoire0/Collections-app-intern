@@ -125,14 +125,16 @@ const addLike = asyncHandler(async (req, res) => {
   const id = req.params.id;
   const { fromUserId } = req.body;
 
-  const item = await Item.findOneAndUpdate(
-    { _id: id },
-    { $push: { likedBy: fromUserId } }
-  );
-  console.log(item);
+  // const item = await Item.findOneAndUpdate(
+  //   { _id: id },
+  //   { $push: { likedBy: fromUserId } }
+  // );
+  const item = await Item.findOne({ _id: id });
+  console.log(`Before: ${item}`);
+
   if (item) {
+    item.likedBy.push(fromUserId);
     const updatedItem = await item.save();
-    console.log(updatedItem);
     res.json(updatedItem);
   } else {
     res.status(404);
@@ -143,14 +145,17 @@ const addLike = asyncHandler(async (req, res) => {
 const removeLike = asyncHandler(async (req, res) => {
   const id = req.params.id;
   const { fromUserId } = req.body;
-  const item = await Item.findOneAndUpdate(
-    { _id: id },
-    { $pull: { likedBy: fromUserId } }
-  );
-  console.log(item);
+  // const item = await Item.findOneAndUpdate(
+  //   { _id: id },
+  //   { $pull: { likedBy: fromUserId } },
+  //   { returnNewDocument: true }
+  // );
+  const item = await Item.findOne({ _id: id });
+
   if (item) {
+    item.likedBy = item.likedBy.filter((i) => i !== fromUserId);
+
     const updatedItem = await item.save();
-    console.log(updatedItem);
     res.json(updatedItem);
   } else {
     res.status(404);

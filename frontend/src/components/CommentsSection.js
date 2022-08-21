@@ -56,6 +56,7 @@ function CommentsSection(props) {
                 key={comment._id}
                 author={comment.authorComment}
                 content={comment.content}
+                date={comment.createdAt}
               />
             ))}
           </Container>
