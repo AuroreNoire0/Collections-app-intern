@@ -10,7 +10,8 @@ import { COLLECTION_UPDATE_CLEAN } from "../../constants/collectionConstants";
 import MessageSnackbar from "../MessageSnackbar";
 import { Autocomplete } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { getItemDetails, getTags } from "../../actions/itemActions";
+import { getItemDetails, getTags, updateItem } from "../../actions/itemActions";
+import { ITEM_UPDATE_CLEAN } from "../../constants/itemConstants";
 
 function EditItem() {
   const itemDetails = useSelector((state) => state.itemDetails);
@@ -46,13 +47,13 @@ function EditItem() {
     tags();
   }, [dispatch]);
 
-  //   useEffect(() => {
-  //     if (success) {
-  //       setTimeout(() => {
-  //         dispatch({ type: COLLECTION_UPDATE_CLEAN });
-  //       }, 5000);
-  //     }
-  //   }, [dispatch, success]);
+  useEffect(() => {
+    if (itemUpdate.success) {
+      setTimeout(() => {
+        dispatch({ type: ITEM_UPDATE_CLEAN });
+      }, 5000);
+    }
+  }, [dispatch, itemUpdate.success]);
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -65,10 +66,11 @@ function EditItem() {
   const onEditItemHandler = async (e) => {
     e.preventDefault();
     const { name } = values;
-    const updateItem = () => {
-      dispatch(updateItem(name, selectedTags, params.id));
+    let tags = selectedTags;
+    const editItem = () => {
+      dispatch(updateItem(name, tags, params.id));
     };
-    // updateItem();
+    editItem();
   };
 
   return (
@@ -97,6 +99,7 @@ function EditItem() {
                 placeholder="Enter name"
                 label="Name"
                 value={values.name}
+                name="name"
                 onChange={onChangeHandler}
                 variant="outlined"
                 className={styles.textField}

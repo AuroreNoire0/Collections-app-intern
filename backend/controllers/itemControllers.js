@@ -167,28 +167,34 @@ const updateItem = asyncHandler(async (req, res) => {
   const id = req.params.id;
   const { name, tags } = req.body;
   const item = await Item.findOne({ _id: id });
-  const collectionId = item.collectionId;
+
   const authorId = item.authorId;
-  console.log(id);
 
   if (item) {
     item.name = name;
     item.tags = tags;
     const updatedItem = await item.save();
-    console.log(updatedItem);
 
-    if (authorColl2) {
-      updatedUser = await authorColl2.save();
+    const collection = await Collection.findOneAndUpdate(
+      { _id: item.collectionId },
+      {
+        $set: { "items.$[i].tags": tags },
+        "items.$[i].name": name,
+      },
+      { arrayFilters: [{ "i._id": id }] }
+    );
+
+    if (collection) {
+      const updatedCollection = await collection.save();
     } else {
       res.status(404);
-      throw new Error("User not found");
+      throw new Error("Collection not found");
     }
 
-    console.log(updatedCollection);
-    res.json(updatedCollection);
+    res.json(updatedItem);
   } else {
     res.status(404);
-    throw new Error("Collection not found");
+    throw new Error("Item not found");
   }
 });
 
@@ -199,6 +205,7 @@ module.exports = {
   fetchTags,
   addLike,
   removeLike,
+  updateItem,
   // getUserCollections,
   // deleteCollection,
   // getCollectionDetails,

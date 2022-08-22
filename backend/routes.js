@@ -14,6 +14,7 @@ const {
   getItemDetails,
   addLike,
   removeLike,
+  updateItem,
 } = require("./controllers/itemControllers");
 const {
   authUser,
@@ -36,6 +37,7 @@ router.route("/collection/:id").delete(deleteCollection);
 router.route("/create-item").post(createItem);
 router.route("/item-details/:id").get(getItemDetails);
 router.route("/delete-item/:id").delete(deleteItem);
+router.route("/update-item/:id").post(updateItem);
 router.route("/get-tags").get(fetchTags);
 router.route("/create-comment").post(createComment);
 router.route("/add-like/:id").post(addLike);

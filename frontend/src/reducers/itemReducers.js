@@ -17,6 +17,7 @@ import {
   ITEM_TAGS_LIST_REQUEST,
   ITEM_TAGS_LIST_SUCCESS,
   ITEM_TAGS_LIST_FAIL,
+  ITEM_UPDATE_CLEAN,
 } from "../constants/itemConstants";
 
 export const itemListReducer = (state = { items: [] }, action) => {
@@ -80,6 +81,8 @@ export const itemUpdateReducer = (state = {}, action) => {
       return { loading: false, success: true };
     case ITEM_UPDATE_FAIL:
       return { loading: false, error: action.payload, success: false };
+    case ITEM_UPDATE_CLEAN:
+      return { loading: false, success: null };
     default:
       return state;
   }

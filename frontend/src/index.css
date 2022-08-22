@@ -14,8 +14,27 @@ body {
   font-size: 1.6rem;
   font-family: "Cormorant Garamond", serif;
   position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
   /* background-image: url("./img/palacio-nacional-de-mafra-5118010_1920.jpg"); */
 }
+body::after {
+  content: "";
+  display: block;
+  height: 7vh; /* Set same as footer's height */
+}
+/* #root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: 0;
+} */
+
+/* .content {
+  padding-bottom: 7vh;
+} */
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",

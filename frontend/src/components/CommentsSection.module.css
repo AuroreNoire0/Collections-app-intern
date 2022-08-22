@@ -1,6 +1,5 @@
 .comments {
   min-height: 30vh;
-  max-height: 60vh;
 }
 
 .comment,
@@ -54,7 +53,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0.5vw;
+  padding: 1vw;
 }
 .userImg {
   background-image: url("../img/blank-profile-picture-973460_1280.png");
@@ -70,14 +69,15 @@
 .commentDetails h2 {
   padding: 0.4vw;
 }
-.commentDetails div {
+.commentContent {
   height: 80%;
-  padding: 0.4vw;
-  font-size: 1.5rem;
+  padding: 0.5vw 0.8vw;
+  font-size: 1.7rem;
 }
 
 .date {
   display: flex;
+  font-size: 1.5rem;
   align-items: center;
   color: rgb(120, 117, 117);
 }

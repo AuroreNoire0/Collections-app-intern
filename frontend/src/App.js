@@ -16,14 +16,14 @@ import UserPage from "./components/views/UserPage";
 import CollectionPage from "./components/views/CollectionPage";
 import ItemPage from "./components/views/ItemPage";
 import EditItem from "./components/views/EditItem";
+import { Container } from "react-bootstrap";
+import styles from "./index.css";
 
 function App() {
   return (
     <Fragment>
+      {/* <Container fluid className={styles.content}> */}
       <Header />
-      {/* <MainView /> */}
-      {/* <LoginView /> */}
-
       <Routes>
         <Route exact path="/" element={<MainView />}></Route>
         <Route path="/login" element={<LoginView />}></Route>
@@ -44,6 +44,7 @@ function App() {
         <Route path="/item/:id" element={<ItemPage />}></Route>
         <Route path="/edit-item/:id" element={<EditItem />}></Route>
       </Routes>
+      {/* </Container> */}
       <Footer />
     </Fragment>
   );

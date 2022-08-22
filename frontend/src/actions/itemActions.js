@@ -112,9 +112,6 @@ export const updateItem = (name, tags, id) => async (dispatch) => {
       },
     };
 
-    let author = userInfo.name;
-    let authorId = userInfo._id;
-
     const { data } = await axios.post(
       `/api/update-item/${id}`,
       { name, tags },
@@ -123,7 +120,7 @@ export const updateItem = (name, tags, id) => async (dispatch) => {
 
     dispatch({ type: ITEM_UPDATE_SUCCESS, payload: data });
     dispatch(getItemDetails(id));
-    dispatch(updateUserState());
+    // dispatch(updateUserState());
   } catch (error) {
     const message =
       error.response && error.response.data.message
