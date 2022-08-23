@@ -9,7 +9,7 @@ import {
 import store from "../store";
 import axios from "axios";
 import { getCollectionDetails } from "./collectionActions";
-import { updateUserState } from "./userActions";
+import { getUserDetails, updateUserState } from "./userActions";
 import { getItemDetails } from "./itemActions";
 
 export const createComment = (content) => async (dispatch) => {
@@ -42,7 +42,7 @@ export const createComment = (content) => async (dispatch) => {
     dispatch({ type: COMMENT_CREATE_SUCCESS, payload: data });
     dispatch(getItemDetails(itemId));
     dispatch(getCollectionDetails(collectionId));
-    dispatch(updateUserState());
+    dispatch(getUserDetails());
   } catch (error) {
     const message =
       error.response && error.response.data.message

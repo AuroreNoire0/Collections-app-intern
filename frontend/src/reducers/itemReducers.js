@@ -2,12 +2,14 @@ import {
   ITEM_CREATE_REQUEST,
   ITEM_CREATE_SUCCESS,
   ITEM_CREATE_FAIL,
+  ITEM_CREATE_CLEAN,
   ITEM_LIST_REQUEST,
   ITEM_LIST_SUCCESS,
   ITEM_LIST_FAIL,
   ITEM_UPDATE_FAIL,
   ITEM_UPDATE_REQUEST,
   ITEM_UPDATE_SUCCESS,
+  ITEM_UPDATE_CLEAN,
   ITEM_DELETE_FAIL,
   ITEM_DELETE_REQUEST,
   ITEM_DELETE_SUCCESS,
@@ -17,7 +19,6 @@ import {
   ITEM_TAGS_LIST_REQUEST,
   ITEM_TAGS_LIST_SUCCESS,
   ITEM_TAGS_LIST_FAIL,
-  ITEM_UPDATE_CLEAN,
 } from "../constants/itemConstants";
 
 export const itemListReducer = (state = { items: [] }, action) => {
@@ -55,6 +56,8 @@ export const itemCreateReducer = (state = {}, action) => {
       return { loading: false, success: true };
     case ITEM_CREATE_FAIL:
       return { loading: false, error: action.payload };
+    case ITEM_CREATE_CLEAN:
+      return { loading: false, success: null };
     default:
       return state;
   }

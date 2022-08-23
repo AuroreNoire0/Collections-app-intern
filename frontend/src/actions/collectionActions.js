@@ -21,7 +21,7 @@ import {
   USER_LOGIN_SUCCESS,
   USER_UPDATE_SUCCESS,
 } from "../constants/userConstants";
-import { updateUserState } from "./userActions";
+import { getUserDetails } from "./userActions";
 
 export const fetchUsersCollections = () => async (dispatch) => {
   try {
@@ -74,7 +74,7 @@ export const deleteCollection = (id) => async (dispatch) => {
     const { data } = await axios.delete(`/api/collection/${id}`, config);
 
     dispatch({ type: COLLECTION_DELETE_SUCCESS, payload: data });
-    dispatch(updateUserState());
+    dispatch(getUserDetails());
   } catch (error) {
     const message =
       error.response && error.response.data.message
@@ -114,7 +114,7 @@ export const createCollection =
       );
 
       dispatch({ type: COLLECTION_CREATE_SUCCESS, payload: data });
-      dispatch(updateUserState());
+      dispatch(getUserDetails(authorId));
     } catch (error) {
       const message =
         error.response && error.response.data.message
@@ -154,7 +154,7 @@ export const updateCollection =
 
       dispatch({ type: COLLECTION_UPDATE_SUCCESS, payload: data });
       dispatch(getCollectionDetails(id));
-      dispatch(updateUserState());
+      dispatch(getUserDetails(authorId));
     } catch (error) {
       const message =
         error.response && error.response.data.message

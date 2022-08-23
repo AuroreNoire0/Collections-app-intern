@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { TagCloud } from "react-tagcloud";
 import Container from "react-bootstrap/esm/Container";
 import styles from "./TagCloudContainer.module.css";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getTags } from "../../actions/itemActions";
 
 function TagCloudContainer() {

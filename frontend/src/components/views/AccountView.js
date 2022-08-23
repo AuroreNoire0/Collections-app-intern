@@ -60,7 +60,7 @@ function AccountView() {
         ) : (
           <div className={styles.noCollection}>
             <p> You don't have any collection. </p>
-            <p> Click here to create new unique collection! </p>
+            <p> Click the button to create new unique collection! </p>
           </div>
         )}
       </>
@@ -88,15 +88,6 @@ function AccountView() {
       ) : (
         <Content />
       )}
-      {/* <div style={{ height: 400, width: "100%" }}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          pageSize={8}
-          rowsPerPageOptions={[8]}
-          checkboxSelection
-        />
-      </div> */}
     </Container>
   );
 }

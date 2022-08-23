@@ -24,7 +24,6 @@ function CreateNewCollection() {
   });
   const dispatch = useDispatch();
 
-  console.log(success);
   useEffect(() => {
     if (success) {
       setTimeout(() => {

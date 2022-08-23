@@ -12,18 +12,24 @@ import {
   USER_DELETE_FAIL,
   USER_DELETE_REQUEST,
   USER_DELETE_SUCCESS,
-} from '../constants/userConstants';
+  USER_LIST_SUCCESS,
+  USER_LIST_FAIL,
+  USER_LIST_REQUEST,
+  USER_DETAILS_SUCCESS,
+  USER_DETAILS_FAIL,
+  USER_DETAILS_REQUEST,
+} from "../constants/userConstants";
 
 export const userLoginReducer = (state = {}, action) => {
   switch (action.type) {
     case USER_LOGIN_REQUEST:
       return { loading: true };
     case USER_LOGIN_SUCCESS:
-      return { loading: false, userInfo: action.payload };
+      return { loading: false, userInfo: action.payload, login: true };
     case USER_LOGIN_FAIL:
       return { loading: false, error: action.payload };
     case USER_LOGOUT:
-      return {};
+      return { login: false };
     default:
       return state;
   }
@@ -47,8 +53,21 @@ export const userUpdateReducer = (state = {}, action) => {
     case USER_UPDATE_REQUEST:
       return { loading: true };
     case USER_UPDATE_SUCCESS:
-      return { loading: false, userInfo: action.payload, success: true };
+      return { loading: false, userUpdated: action.payload, success: true };
     case USER_UPDATE_FAIL:
+      return { loading: false, error: action.payload, success: false };
+    default:
+      return state;
+  }
+};
+
+export const userDetailsReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_DETAILS_REQUEST:
+      return { loading: true };
+    case USER_DETAILS_SUCCESS:
+      return { loading: false, user: action.payload, success: true };
+    case USER_DETAILS_FAIL:
       return { loading: false, error: action.payload, success: false };
     default:
       return state;
@@ -60,8 +79,21 @@ export const userDeleteReducer = (state = {}, action) => {
     case USER_DELETE_REQUEST:
       return { loading: true };
     case USER_DELETE_SUCCESS:
-      return { loading: false, success: true };
+      return { loading: false, user: action.payload, success: true };
     case USER_DELETE_FAIL:
+      return { loading: false, error: action.payload, success: false };
+    default:
+      return state;
+  }
+};
+
+export const usersReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_LIST_REQUEST:
+      return { loading: true };
+    case USER_LIST_SUCCESS:
+      return { loading: false, success: true, users: action.payload };
+    case USER_LIST_FAIL:
       return { loading: false, error: action.payload, success: false };
     default:
       return state;

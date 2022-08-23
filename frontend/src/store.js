@@ -4,8 +4,10 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import {
   userDeleteReducer,
+  userDetailsReducer,
   userLoginReducer,
   userRegisterReducer,
+  usersReducer,
   userUpdateReducer,
 } from "./reducers/userReducers";
 import {
@@ -16,6 +18,7 @@ import {
   collectionDetailsReducer,
 } from "./reducers/collectionReducers";
 import {
+  itemCreateReducer,
   itemDeleteReducer,
   itemDetailsReducer,
   itemTagsListReducer,
@@ -40,6 +43,8 @@ const store = configureStore(
       userRegister: userRegisterReducer,
       userUpdate: userUpdateReducer,
       userDelete: userDeleteReducer,
+      userDetails: userDetailsReducer,
+      users: usersReducer,
       collectionList: collectionListReducer,
       collectionCreate: collectionCreateReducer,
       collectionDelete: collectionDeleteReducer,
@@ -48,6 +53,7 @@ const store = configureStore(
       itemDelete: itemDeleteReducer,
       itemUpdate: itemUpdateReducer,
       itemDetails: itemDetailsReducer,
+      itemCreate: itemCreateReducer,
       tagsList: itemTagsListReducer,
       comment: commentCreateReducer,
     },

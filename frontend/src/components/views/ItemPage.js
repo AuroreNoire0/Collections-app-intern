@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Badge, CircularProgress } from "@mui/material";
 import { Card, Col, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import { addLike, getItemDetails, removeLike } from "../../actions/itemActions";
+import { getItemDetails, updateLike } from "../../actions/itemActions";
 import CommentsSection from "../CommentsSection";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -28,8 +28,8 @@ function ItemPage() {
 
   const onLikeHandler = () => {
     itemDetails.itemInfo.likedBy.includes(userLogin.userInfo._id)
-      ? dispatch(removeLike(params.id))
-      : dispatch(addLike(params.id));
+      ? dispatch(updateLike(params.id, "remove"))
+      : dispatch(updateLike(params.id, "add"));
   };
 
   //   const isAuthor =

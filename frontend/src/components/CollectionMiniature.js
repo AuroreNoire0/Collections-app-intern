@@ -10,7 +10,6 @@ import {
   deleteCollection,
   getCollectionDetails,
 } from "../actions/collectionActions";
-import { updateUserState } from "../actions/userActions";
 
 function CollectionMiniature(props) {
   const navigate = useNavigate();

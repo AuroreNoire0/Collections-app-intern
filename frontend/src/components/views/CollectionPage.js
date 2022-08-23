@@ -8,18 +8,14 @@ import ItemsList from "../Items/ItemsList";
 import { getTags } from "../../actions/itemActions";
 import { Button } from "react-bootstrap";
 import { getCollectionDetails } from "../../actions/collectionActions";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 function CollectionPage() {
   const params = useParams();
-  // const {
-  //   collectionDetails: { collectionInfo },
-  // } = store.getState();
+  const navigate = useNavigate();
   const collectionDetails = useSelector((state) => state.collectionDetails);
   const userLogin = useSelector((state) => state.userLogin);
   const [tableData, setTableData] = useState([]);
-  const [tags, setTags] = useState([]);
-  const [showForm, setShowForm] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -50,22 +46,16 @@ function CollectionPage() {
       tableRows();
   }, [collectionDetails.collectionInfo]);
 
-  const onNewItemHandler = async () => {
-    setShowForm(true);
-    const tags = await dispatch(getTags());
-    setTags(tags);
-  };
-
-  const onClickItemHandler = () => {
-    console.log("click");
+  const onClickAddItemHandler = () => {
+    navigate("/create-item");
   };
 
   const isAuthor =
-    userLogin.userInfo &&
+    userLogin.login &&
     collectionDetails.collectionInfo &&
     userLogin.userInfo._id === collectionDetails.collectionInfo.authorId;
-  const isAdmin = userLogin.userInfo && userLogin.userInfo.admin;
-  const allowedToAction = (userLogin.userInfo && isAuthor) || isAdmin;
+  const isAdmin = userLogin.login && userLogin.userInfo.admin;
+  const allowedToAction = (userLogin.login && isAuthor) || isAdmin;
 
   return (
     <Container className={styles.collectionCon}>
@@ -85,15 +75,11 @@ function CollectionPage() {
         type="button"
         variant="warning"
         className={styles.btn}
-        onClick={onNewItemHandler}
+        onClick={onClickAddItemHandler}
         disabled={!allowedToAction}
       >
-        New item
+        Add item
       </Button>
-
-      {showForm && (
-        <AddItem tags={tags} onHideForm={(e) => setShowForm(false)} />
-      )}
     </Container>
   );
 }

@@ -6,7 +6,6 @@ import { Button } from "react-bootstrap";
 import styles from "./EditItem.module.css";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { COLLECTION_UPDATE_CLEAN } from "../../constants/collectionConstants";
 import MessageSnackbar from "../MessageSnackbar";
 import { Autocomplete } from "@mui/material";
 import { useParams } from "react-router-dom";

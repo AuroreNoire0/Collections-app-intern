@@ -71,7 +71,7 @@ const deleteItem = asyncHandler(async (req, res) => {
     );
 
     if (parentCollection) {
-      updatedCollection = await parentCollection.save();
+      await parentCollection.save();
     } else {
       res.status(404);
       throw new Error("Collection not found");
@@ -121,40 +121,21 @@ const fetchTags = asyncHandler(async (req, res) => {
   }
 });
 
-const addLike = asyncHandler(async (req, res) => {
+const updateLike = asyncHandler(async (req, res) => {
   const id = req.params.id;
-  const { fromUserId } = req.body;
+  const { action, fromUserId } = req.body;
 
-  // const item = await Item.findOneAndUpdate(
-  //   { _id: id },
-  //   { $push: { likedBy: fromUserId } }
-  // );
-  const item = await Item.findOne({ _id: id });
-  console.log(`Before: ${item}`);
-
-  if (item) {
-    item.likedBy.push(fromUserId);
-    const updatedItem = await item.save();
-    res.json(updatedItem);
-  } else {
-    res.status(404);
-    throw new Error("Item not found");
-  }
-});
-
-const removeLike = asyncHandler(async (req, res) => {
-  const id = req.params.id;
-  const { fromUserId } = req.body;
-  // const item = await Item.findOneAndUpdate(
-  //   { _id: id },
-  //   { $pull: { likedBy: fromUserId } },
-  //   { returnNewDocument: true }
-  // );
   const item = await Item.findOne({ _id: id });
 
   if (item) {
-    item.likedBy = item.likedBy.filter((i) => i !== fromUserId);
-
+    switch (action) {
+      case "add":
+        item.likedBy.push(fromUserId);
+        break;
+      case "remove":
+        item.likedBy = item.likedBy.filter((i) => i !== fromUserId);
+        break;
+    }
     const updatedItem = await item.save();
     res.json(updatedItem);
   } else {
@@ -185,7 +166,7 @@ const updateItem = asyncHandler(async (req, res) => {
     );
 
     if (collection) {
-      const updatedCollection = await collection.save();
+      await collection.save();
     } else {
       res.status(404);
       throw new Error("Collection not found");
@@ -203,9 +184,8 @@ module.exports = {
   deleteItem,
   getItemDetails,
   fetchTags,
-  addLike,
-  removeLike,
   updateItem,
+  updateLike,
   // getUserCollections,
   // deleteCollection,
   // getCollectionDetails,

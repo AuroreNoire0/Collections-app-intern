@@ -18,7 +18,7 @@ import {
 import store from "../store";
 import axios from "axios";
 import { getCollectionDetails } from "./collectionActions";
-import { updateUserState } from "./userActions";
+import { getUserDetails } from "./userActions";
 
 export const createItem = (name, tags) => async (dispatch) => {
   try {
@@ -50,7 +50,7 @@ export const createItem = (name, tags) => async (dispatch) => {
 
     dispatch({ type: ITEM_CREATE_SUCCESS, payload: data });
     dispatch(getCollectionDetails(collectionId));
-    dispatch(updateUserState());
+    // dispatch(getUserDetails(authorId));
   } catch (error) {
     const message =
       error.response && error.response.data.message
@@ -84,7 +84,7 @@ export const deleteItem = (id) => async (dispatch) => {
 
     dispatch({ type: ITEM_DELETE_SUCCESS, payload: data });
     dispatch(getCollectionDetails(collectionId));
-    dispatch(updateUserState());
+    dispatch(getUserDetails());
   } catch (error) {
     const message =
       error.response && error.response.data.message
@@ -120,7 +120,6 @@ export const updateItem = (name, tags, id) => async (dispatch) => {
 
     dispatch({ type: ITEM_UPDATE_SUCCESS, payload: data });
     dispatch(getItemDetails(id));
-    // dispatch(updateUserState());
   } catch (error) {
     const message =
       error.response && error.response.data.message
@@ -185,7 +184,7 @@ export const getTags = () => async (dispatch) => {
   }
 };
 
-export const addLike = (id) => async (dispatch) => {
+export const updateLike = (id, action) => async (dispatch) => {
   try {
     dispatch({ type: ITEM_UPDATE_REQUEST });
 
@@ -203,8 +202,8 @@ export const addLike = (id) => async (dispatch) => {
     let fromUserId = userInfo._id;
 
     const { data } = await axios.post(
-      `/api/add-like/${id}`,
-      { fromUserId },
+      `/api/update-like/${id}`,
+      { action, fromUserId },
       config
     );
 
@@ -223,40 +222,78 @@ export const addLike = (id) => async (dispatch) => {
   }
 };
 
-export const removeLike = (id) => async (dispatch) => {
-  try {
-    dispatch({ type: ITEM_UPDATE_REQUEST });
+// export const addLike = (id) => async (dispatch) => {
+//   try {
+//     dispatch({ type: ITEM_UPDATE_REQUEST });
 
-    const {
-      userLogin: { userInfo },
-    } = store.getState();
+//     const {
+//       userLogin: { userInfo },
+//     } = store.getState();
 
-    const config = {
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
+//     const config = {
+//       headers: {
+//         "Content-type": "application/json",
+//         Authorization: `Bearer ${userInfo.token}`,
+//       },
+//     };
 
-    let fromUserId = userInfo._id;
+//     let fromUserId = userInfo._id;
 
-    const { data } = await axios.post(
-      `/api/remove-like/${id}`,
-      { fromUserId },
-      config
-    );
+//     const { data } = await axios.post(
+//       `/api/add-like/${id}`,
+//       { fromUserId },
+//       config
+//     );
 
-    dispatch({ type: ITEM_UPDATE_SUCCESS, payload: data });
+//     dispatch({ type: ITEM_UPDATE_SUCCESS, payload: data });
 
-    dispatch(getItemDetails(id));
-  } catch (error) {
-    const message =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message;
-    dispatch({
-      type: ITEM_UPDATE_FAIL,
-      payload: message,
-    });
-  }
-};
+//     dispatch(getItemDetails(id));
+//   } catch (error) {
+//     const message =
+//       error.response && error.response.data.message
+//         ? error.response.data.message
+//         : error.message;
+//     dispatch({
+//       type: ITEM_UPDATE_FAIL,
+//       payload: message,
+//     });
+//   }
+// };
+
+// export const removeLike = (id) => async (dispatch) => {
+//   try {
+//     dispatch({ type: ITEM_UPDATE_REQUEST });
+
+//     const {
+//       userLogin: { userInfo },
+//     } = store.getState();
+
+//     const config = {
+//       headers: {
+//         "Content-type": "application/json",
+//         Authorization: `Bearer ${userInfo.token}`,
+//       },
+//     };
+
+//     let fromUserId = userInfo._id;
+
+//     const { data } = await axios.post(
+//       `/api/remove-like/${id}`,
+//       { fromUserId },
+//       config
+//     );
+
+//     dispatch({ type: ITEM_UPDATE_SUCCESS, payload: data });
+
+//     dispatch(getItemDetails(id));
+//   } catch (error) {
+//     const message =
+//       error.response && error.response.data.message
+//         ? error.response.data.message
+//         : error.message;
+//     dispatch({
+//       type: ITEM_UPDATE_FAIL,
+//       payload: message,
+//     });
+//   }
+// };

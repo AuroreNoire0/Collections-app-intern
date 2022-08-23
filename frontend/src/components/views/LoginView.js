@@ -7,8 +7,6 @@ import { Container } from "react-bootstrap";
 import { login } from "../../actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faKey } from "@fortawesome/free-solid-svg-icons";
 import { useEffect } from "react";
 
 const LogView = (props) => {
@@ -17,7 +15,7 @@ const LogView = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userLogin = useSelector((state) => state.userLogin);
-  const { loading, error, userInfo } = userLogin;
+  const { error, userInfo } = userLogin;
 
   const {
     value: password,
@@ -47,7 +45,7 @@ const LogView = (props) => {
     if (userInfo) {
       navigate("/account");
     } else return;
-  }, [userInfo]);
+  }, [userInfo, navigate]);
 
   const passwordStyles = passwordHasError
     ? `${styles.invalid} ${styles.input}`
@@ -104,15 +102,6 @@ const LogView = (props) => {
           >
             Log in
           </Button>
-
-          {/* <Button
-            variant="secondary"
-            type="button"
-            onClick={props.onCloseLogModal}
-            className={styles.subBtn}
-          >
-            Cancel
-          </Button> */}
         </div>
       </Form>
     </Container>

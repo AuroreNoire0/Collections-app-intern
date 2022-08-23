@@ -2,7 +2,6 @@ import { React, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import styles from "./Navigation.module.css";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,9 +29,6 @@ export default function Navigation() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
           <Nav>
-            <Link to="/account" className={styles.link}>
-              Account
-            </Link>
             {!userInfo ? (
               <>
                 <Link to="/login" className={styles.link}>
@@ -44,9 +40,19 @@ export default function Navigation() {
                 </Link>
               </>
             ) : (
-              <Link to="/account" className={styles.link} onClick={onLogout}>
-                Logout
-              </Link>
+              <>
+                <Link to="/account" className={styles.link}>
+                  Account
+                </Link>
+                {userInfo.admin && (
+                  <Link to="/admin" className={styles.link}>
+                    Admin
+                  </Link>
+                )}
+                <Link to="/" className={styles.link} onClick={onLogout}>
+                  Logout
+                </Link>
+              </>
             )}
           </Nav>
         </Navbar.Collapse>
