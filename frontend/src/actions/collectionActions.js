@@ -56,6 +56,32 @@ export const fetchUsersCollections = () => async (dispatch) => {
   }
 };
 
+export const getCollections = () => async (dispatch) => {
+  try {
+    dispatch({ type: COLLECTION_LIST_REQUEST });
+
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+      },
+    };
+
+    const { data } = await axios.get(`/api/collections`, config);
+
+    dispatch({ type: COLLECTION_LIST_SUCCESS, payload: data });
+    return data;
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({
+      type: COLLECTION_LIST_FAIL,
+      payload: message,
+    });
+  }
+};
+
 export const deleteCollection = (id) => async (dispatch) => {
   try {
     dispatch({ type: COLLECTION_DELETE_REQUEST });

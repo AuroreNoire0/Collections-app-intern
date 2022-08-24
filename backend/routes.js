@@ -5,6 +5,7 @@ const {
   deleteCollection,
   getCollectionDetails,
   updateCollection,
+  getCollections,
 } = require("./controllers/collectionControllers");
 const { createComment } = require("./controllers/commentControllers");
 const {
@@ -14,6 +15,7 @@ const {
   getItemDetails,
   updateItem,
   updateLike,
+  getItems,
 } = require("./controllers/itemControllers");
 const {
   authUser,
@@ -35,11 +37,13 @@ router.route("/account/:id").get(getUserCollections);
 router.route("/users").get(getUsers);
 
 router.route("/create-collection").post(createCollection);
+router.route("/collections").get(getCollections);
 router.route("/update-collection/:id").post(updateCollection);
 router.route("/details/:id").get(getCollectionDetails);
 router.route("/collection/:id").delete(deleteCollection);
 
 router.route("/create-item").post(createItem);
+router.route("/items").get(getItems);
 router.route("/item-details/:id").get(getItemDetails);
 router.route("/delete-item/:id").delete(deleteItem);
 router.route("/update-item/:id").post(updateItem);

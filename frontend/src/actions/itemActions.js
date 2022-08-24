@@ -14,6 +14,9 @@ import {
   ITEM_DETAILS_FAIL,
   ITEM_DETAILS_REQUEST,
   ITEM_DETAILS_SUCCESS,
+  ITEM_LIST_REQUEST,
+  ITEM_LIST_SUCCESS,
+  ITEM_LIST_FAIL,
 } from "../constants/itemConstants";
 import store from "../store";
 import axios from "axios";
@@ -153,6 +156,32 @@ export const getItemDetails = (id) => async (dispatch) => {
         error.response && error.response.data.message
           ? error.response.data.message
           : error.message,
+    });
+  }
+};
+
+export const getItems = () => async (dispatch) => {
+  try {
+    dispatch({ type: ITEM_LIST_REQUEST });
+
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+      },
+    };
+
+    const { data } = await axios.get(`/api/items`, config);
+
+    dispatch({ type: ITEM_LIST_SUCCESS, payload: data });
+    return data;
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({
+      type: ITEM_LIST_FAIL,
+      payload: message,
     });
   }
 };

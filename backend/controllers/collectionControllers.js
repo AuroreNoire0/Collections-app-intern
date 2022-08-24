@@ -114,6 +114,17 @@ const deleteCollection = asyncHandler(async (req, res) => {
   }
 });
 
+const getCollections = asyncHandler(async (req, res) => {
+  const collections = await Collection.find();
+  collections.sort((a, b) => b.items.length - a.items.length);
+  if (collections) {
+    res.json(collections);
+  } else {
+    res.status(404);
+    throw new Error("Collections not found");
+  }
+});
+
 const getCollectionDetails = asyncHandler(async (req, res) => {
   const id = req.params.id;
   const collection = await Collection.findOne({ _id: id });
@@ -131,14 +142,12 @@ const updateCollection = asyncHandler(async (req, res) => {
   const { name, description, topic } = req.body;
   const collection = await Collection.findOne({ _id: id });
   const authorColId = collection.authorId;
-  console.log(id);
 
   if (collection) {
     collection.name = name;
     collection.description = description;
     collection.topic = topic;
     const updatedCollection = await collection.save();
-    console.log(updatedCollection);
 
     const authorColl = await User.findOneAndUpdate(
       { _id: authorColId },
@@ -170,5 +179,6 @@ module.exports = {
   createCollection,
   deleteCollection,
   getCollectionDetails,
+  getCollections,
   updateCollection,
 };

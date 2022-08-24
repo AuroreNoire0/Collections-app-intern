@@ -1,0 +1,58 @@
+:root {
+  --color-logo: #222;
+  --color-navbar-bg: #1c1c22;
+  --color-navbar-box-shadow: rgb(116, 109, 109);
+  --color-navbrand: #aa9390;
+  --color-navbrand-hover: rgba(170, 147, 144, 0.737);
+  --color-link: #aa9390;
+  --color-link-hover: rgba(170, 147, 144, 0.737);
+  --color-search-bg: #303039fc;
+  --color-search-font: rgb(160, 159, 159);
+  --color-footer-bg: #1c1c22;
+  --color-footer-font: #b9b0af;
+  --color-main-bg: #23232b;
+  --color-top-item-bg: #34343e;
+  --color-top-item-font: rgb(160, 159, 159);
+  --color-top-item-box-shadow: rgb(77, 76, 76);
+  --color-top-item-title-font: rgb(160, 159, 159);
+  --font-family-logo: "Gwendolyn", cursive;
+  --font-family-default: "Aboreto", cursive;
+  --font-family-header: "Grey Qo", cursive;
+}
+
+body[data-theme="light"] {
+  --color-logo: #222;
+  --color-navbar-bg: #aa9390;
+  --color-navbar-box-shadow: rgb(81, 77, 77);
+  --color-navbrand: black;
+  --color-navbrand-hover: rgba(0, 0, 0, 0.7);
+  --color-link: rgba(0, 0, 0, 0.6);
+  --color-link-hover: rgba(0, 0, 0, 0.737);
+  --color-search-bg: #aa9390e2;
+  --color-search-font: #000000;
+  --color-footer-bg: #5e5f67;
+  --color-footer-font: rgba(255, 255, 255, 0.46);
+  --color-main-bg: whitesmoke;
+  --color-top-item-bg: #aa9390e2;
+  --color-top-item-font: #000000;
+  --color-top-item-box-shadow: rgb(77, 75, 75);
+  --color-top-item-title-font: #000;
+}
+
+body[data-theme="dark"] {
+  --color-logo: #222;
+  --color-navbar-bg: #1c1c22;
+  --color-navbar-box-shadow: rgb(116, 109, 109);
+  --color-navbrand: #aa9390;
+  --color-navbrand-hover: rgba(170, 147, 144, 0.737);
+  --color-link: #aa9390;
+  --color-link-hover: rgba(170, 147, 144, 0.737);
+  --color-search-bg: #34343e;
+  --color-search-font: rgb(160, 159, 159);
+  --color-footer-bg: #1c1c22;
+  --color-footer-font: #b9b0af;
+  --color-main-bg: #23232b;
+  --color-top-item-bg: #34343e;
+  --color-top-item-font: rgb(160, 159, 159);
+  --color-top-item-box-shadow: rgb(80, 77, 77);
+}

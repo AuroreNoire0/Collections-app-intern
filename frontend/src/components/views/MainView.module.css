@@ -1,5 +1,7 @@
+@import "../../variables.css";
+
 .mainContainer {
-  background-color: whitesmoke;
+  background-color: var(--color-main-bg);
   padding: 1rem;
 }
 .mainHeader {
@@ -8,17 +10,17 @@
   justify-content: center;
   align-items: center;
   text-shadow: 1px 1px 10px gray;
-  padding: 2vh 1vw;
-  font-size: 5rem;
+  padding: 1vh 0.5vw;
+  font-size: 7rem;
   font-style: italic;
   color: #9d8d7b;
   text-align: center;
+  font-family: var(--font-family-header);
 }
 
 .topContainers {
   display: flex;
   flex-direction: row;
-  /* flex-wrap: wrap; */
   padding: 0.5vh 1vw;
 }
 

@@ -62,7 +62,15 @@ function ItemPage() {
                       Collection: {itemDetails.itemInfo.collectionName}{" "}
                     </span>
                     <span>Tags: {itemDetails.itemInfo.tags.join(" | ")} </span>
-                    <span>Author: {itemDetails.itemInfo.author} </span>
+                    <span>
+                      Author:{" "}
+                      <Link
+                        to={`/user/${itemDetails.itemInfo.authorId}`}
+                        className={styles.link}
+                      >
+                        {itemDetails.itemInfo.author}{" "}
+                      </Link>
+                    </span>
                   </Card.Text>
                   <Link
                     to={`/collection/${itemDetails.itemInfo.collectionId}`}

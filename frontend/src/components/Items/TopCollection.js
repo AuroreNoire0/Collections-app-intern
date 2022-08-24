@@ -1,14 +1,14 @@
 import { Tooltip } from "@mui/material";
-import { style } from "@mui/system";
 import { Col } from "react-bootstrap";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/Row";
 import { Link } from "react-router-dom";
+
 import styles from "./TopItem.module.css";
 
-function TopItem(props) {
+function TopCollection(props) {
   return (
-    <Link to={`/item/${props.id}`} className={styles.link}>
+    <Link to={`/collection/${props.id}`} className={styles.link}>
       <Tooltip
         placement="top"
         title={
@@ -18,21 +18,18 @@ function TopItem(props) {
               marginBottom: 0,
             }}
           >
-            Click to check this item
+            Click to check this collection
           </p>
         }
       >
         <Container className={styles.container}>
-          <Col xs={6} className={styles.itemName}>
+          <Col xs={8} className={styles.itemName}>
             {props.name}
           </Col>
-          <Col xs={6} className={styles.details}>
+          <Col xs={4} className={styles.details}>
             <Row>
-              Collection:
-              <span className={styles.collectionName}>{props.collection}</span>
-            </Row>
-            <Row>
-              Author: <span className={styles.author}>{props.author}</span>
+              Author:
+              <span className={styles.author}>{props.author}</span>
             </Row>
           </Col>
         </Container>
@@ -41,4 +38,4 @@ function TopItem(props) {
   );
 }
 
-export default TopItem;
+export default TopCollection;

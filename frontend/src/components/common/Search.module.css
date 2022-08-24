@@ -1,11 +1,13 @@
+@import "../../variables.css";
+
 .searchStack {
   font-size: 3rem;
-  background-color: #aa939083;
+  background-color: var(--color-search-bg);
   color: rgb(0, 0, 0);
 }
 
 .TextField input,
 .TextField label {
   font-size: 1.5rem;
-  color: rgb(0, 0, 0);
+  color: var(--color-search-font);
 }

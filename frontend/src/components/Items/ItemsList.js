@@ -107,7 +107,7 @@ const ItemsList = (props) => {
         </>
       ) : (
         <div className={styles.noItems}>
-          <p> You don't have any items in this collection. </p>
+          <p> There is no item in this collection. </p>
         </div>
       )}
     </>

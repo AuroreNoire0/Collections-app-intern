@@ -1,9 +1,8 @@
 import Container from "react-bootstrap/esm/Container";
-import Top5 from "../Items/Top5";
+import TheLargestCollection from "../Items/TheLargestCollection";
 import TheLatestItems from "../Items/TheLatestItems";
-import TagCloud from "../Items/TagCloud";
 import styles from "./MainView.module.css";
-import TagCloudContainer from "../Items/TagCloud";
+import TagCloudContainer from "../Items/TagCloudContainer";
 
 function MainView() {
   return (
@@ -14,8 +13,8 @@ function MainView() {
       </div>
 
       <Container className={styles.topContainers}>
-        <TheLatestItems xs={10} lg={5} xl={5}></TheLatestItems>
-        <Top5 xs={10} lg={5} xl={5}></Top5>
+        <TheLatestItems xs={10} lg={5}></TheLatestItems>
+        <TheLargestCollection xs={10} lg={5}></TheLargestCollection>
       </Container>
       <TagCloudContainer />
     </Container>

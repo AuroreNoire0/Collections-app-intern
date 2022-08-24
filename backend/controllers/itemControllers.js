@@ -179,6 +179,16 @@ const updateItem = asyncHandler(async (req, res) => {
   }
 });
 
+const getItems = asyncHandler(async (req, res) => {
+  const items = await Item.find().sort({ createdAt: -1 });
+  if (items) {
+    res.json(items);
+  } else {
+    res.status(404);
+    throw new Error("Items not found");
+  }
+});
+
 module.exports = {
   createItem,
   deleteItem,
@@ -186,6 +196,7 @@ module.exports = {
   fetchTags,
   updateItem,
   updateLike,
+  getItems,
   // getUserCollections,
   // deleteCollection,
   // getCollectionDetails,

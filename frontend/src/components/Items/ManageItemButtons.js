@@ -9,9 +9,6 @@ const ManageItemButtons = (props) => {
   const editHandler = () => {};
   return (
     <Container className={styles.container}>
-      {/* <Button type="button" variant="warning" className={styles.subBtn}>
-        New item
-      </Button> */}
       <Button
         type="button"
         variant="danger"
