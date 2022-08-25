@@ -1,0 +1,13 @@
+@import "../../../variables.css";
+.divTitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0.5vw;
+}
+.title {
+  font-size: 3rem;
+  color: var(--color-top-item-title-font);
+  font-family: var(--font-family-default);
+}

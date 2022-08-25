@@ -47,23 +47,6 @@ export default function Navigation() {
                 <Link to="/register" className={styles.link}>
                   Register
                 </Link>
-                <Tooltip
-                  className={styles.tooltip}
-                  checked={checked}
-                  onChange={onThemeChange}
-                  title={
-                    <p
-                      style={{
-                        fontSize: 11,
-                        marginBottom: 0,
-                      }}
-                    >
-                      Switch theme
-                    </p>
-                  }
-                >
-                  <Switch {...label} />
-                </Tooltip>
               </>
             ) : (
               <>
@@ -80,6 +63,23 @@ export default function Navigation() {
                 </Link>
               </>
             )}
+            <Tooltip
+              className={styles.tooltip}
+              checked={checked}
+              onChange={onThemeChange}
+              title={
+                <p
+                  style={{
+                    fontSize: 11,
+                    marginBottom: 0,
+                  }}
+                >
+                  Switch theme
+                </p>
+              }
+            >
+              <Switch {...label} />
+            </Tooltip>
           </Nav>
         </Navbar.Collapse>
       </Container>

@@ -14,6 +14,7 @@ body {
   margin: 0;
   font-size: 1.6rem;
   font-family: var(--font-family-default);
+  background-color: var(--color-main-bg) !important;
   position: relative;
   min-height: 100vh;
   display: flex;

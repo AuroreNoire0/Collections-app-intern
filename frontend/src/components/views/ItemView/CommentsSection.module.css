@@ -1,0 +1,108 @@
+@import "../../../variables.css";
+
+.comments {
+  min-height: 30vh;
+  color: var(--color-default-font);
+  font-family: var(--font-family-default);
+}
+h2 {
+  font-family: var(--font-family-default);
+  color: var(--color-default-font);
+}
+
+.comment,
+.newComment {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px dashed rgb(203, 201, 201);
+  padding: 0.5vw;
+}
+.newComment {
+  border-top: none;
+}
+
+.textArea {
+  width: 100%;
+  height: 100%;
+  font-size: 1.5rem;
+  padding: 1vw;
+  margin: 1vh;
+  background-color: var(--color-search-bg);
+  color: var(--color-default-font);
+}
+.textArea::placeholder {
+  font-size: 1.5rem;
+  padding: 0;
+}
+
+.commentDetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  padding: 0.5vw;
+}
+
+.newComment .commentDetails {
+  align-items: center;
+}
+
+.btn {
+  width: 20%;
+  font-size: 1.2rem;
+  padding: 0.5vw;
+  margin: 0.5vw 0vw;
+  justify-content: flex-end;
+}
+
+.user {
+  height: 16vh;
+  width: 16vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1vw;
+}
+.userImg {
+  background-image: url("../../../img/blank-profile-picture-973460_1280.png");
+  height: 100%;
+  width: 100%;
+  background-position: center;
+  background-size: 100%;
+  border-radius: 50%;
+  border: 1px solid gray;
+  margin: 0.2vw;
+}
+
+.commentDetails h2 {
+  padding: 0.4vw;
+  font-weight: bold;
+}
+.commentContent {
+  height: 80%;
+  padding: 0.5vw 0.8vw;
+  font-size: 1.7rem;
+}
+
+.date {
+  display: flex;
+  font-size: 1.5rem;
+  align-items: center;
+  color: rgb(120, 117, 117);
+}
+
+.calendar {
+  width: 2vw;
+}
+
+.errorText {
+  font-size: 1.5rem;
+  color: rgb(200, 3, 3);
+}
+
+.invalid.textArea {
+  border: 1px solid #b40e0e;
+  background-color: #fddddd;
+}

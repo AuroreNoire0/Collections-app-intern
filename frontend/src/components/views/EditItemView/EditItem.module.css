@@ -1,0 +1,58 @@
+@import "../../../variables.css";
+.divTitle {
+  text-align: center;
+  justify-content: center;
+}
+
+.title {
+  font-size: 5rem;
+  margin: 1rem;
+  padding: 1rem;
+  font-style: italic;
+  font-family: var(--font-family-default);
+  color: var(--color-default-font);
+}
+
+.form {
+  margin: 2rem 0rem;
+}
+
+.textField,
+.textFieldId {
+  width: 100% !important;
+}
+.form ::placeholder,
+.form label,
+.form input,
+.form textarea {
+  font-size: 1.5rem;
+  color: var(--color-default-font);
+}
+
+.textFieldId input {
+  -webkit-text-fill-color: var(--color-disabled-font) !important;
+}
+
+.image {
+  padding: 0.75rem;
+}
+
+.divButton {
+  display: flex;
+  justify-content: flex-end;
+  width: 100% !important;
+}
+.subBtn {
+  font-size: 1.8rem;
+  margin: 2rem 0rem 2rem 2rem;
+}
+
+.input span {
+  color: var(--color-default-font);
+  font-size: 1.3rem;
+}
+
+.input svg,
+.MuiChip-deleteIcon {
+  color: var(--color-chip-icon) !important;
+}

@@ -1,0 +1,65 @@
+@import "../../../variables.css";
+
+.divTitle {
+  text-align: center;
+  justify-content: center;
+}
+
+.title {
+  font-size: 4rem;
+  margin: 1rem;
+  padding: 1rem;
+  font-family: var(--font-family-default);
+  color: var(--color-default-font);
+  font-style: italic;
+}
+
+.form {
+  margin: 2rem 0rem;
+}
+
+.textFieldTopic > div {
+  padding-top: 0.35rem;
+  font-size: 1.3rem;
+  color: var(--color-default-font);
+}
+
+.image {
+  padding: 0.75rem;
+}
+
+.divButton {
+  display: flex;
+  justify-content: flex-end;
+  width: 100% !important;
+}
+.subBtn {
+  font-size: 1.8rem;
+  margin: 2rem 0rem 2rem 2rem;
+}
+
+.textField,
+.textFieldTopic {
+  width: 100% !important;
+}
+
+.form ::placeholder,
+.form label,
+.form input,
+.form textarea,
+.form menuitem {
+  font-size: 1.5rem;
+  color: var(--color-default-font);
+}
+
+.form label {
+  font-size: 1.3rem;
+}
+
+ul {
+  background-color: var(--color-select-bg);
+  color: var(--color-default-font);
+}
+ul > li {
+  font-size: 1.3rem !important;
+}

@@ -1,0 +1,67 @@
+@import "../../../variables.css";
+
+.container {
+  display: flex;
+  justify-content: center;
+  padding: 3rem;
+}
+
+.logContainer {
+  display: block;
+  justify-content: center;
+  font-size: 2rem;
+  color: var(--color-login-font);
+  padding: 2rem;
+  box-shadow: 0 0 70px var(--color-login-box-shadow);
+  border-radius: 2rem;
+  z-index: 10;
+  font-family: var(--font-family-default);
+  background-color: var(--color-login-bg);
+}
+
+.title {
+  font-size: 5rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: var(--text-shadow);
+  padding: 0.5rem;
+}
+
+::placeholder {
+  font-size: 2rem;
+  padding: 1.5rem;
+  margin: 1.5rem;
+}
+
+.btns {
+  display: flex;
+  justify-content: center;
+}
+.subBtn {
+  font-size: 1.8rem;
+  padding: 1.5rem 0rem;
+  margin-top: 3rem;
+  width: 100%;
+}
+
+.errorText {
+  font-size: 1.5rem;
+  color: rgb(200, 3, 3);
+}
+
+.invalid.input {
+  border: 1px solid #b40e0e;
+  background-color: #fddddd;
+}
+
+.inactiveLink {
+  pointer-events: none;
+}
+
+.logContainer .input {
+  font-size: 2rem;
+  margin: 1rem 0rem;
+}

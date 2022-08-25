@@ -1,0 +1,113 @@
+@import "../../../variables.css";
+
+.collectionCon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1vh 2vw;
+}
+.progressCircle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  width: 50vw;
+  color: var(--color-chip-icon);
+}
+
+.itemContainer {
+  display: flex;
+  height: 30vh;
+  justify-content: center;
+  align-items: center;
+}
+.itemCard {
+  margin: 2vw 0;
+  font-size: 2rem;
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  color: var(--color-default-font);
+  font-family: var(--font-family-default);
+}
+
+.itemCard .title {
+  font-size: 2.5rem;
+  text-shadow: var(--text-shadow-item);
+}
+.imgContainer {
+  padding: 2vw 0;
+  margin: 0;
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+}
+.imgContainer p {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+}
+.img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.itemCard .title {
+  font-size: 3rem;
+  text-align: center;
+  text-decoration: underline;
+  padding: 0.5vh;
+  text-shadow: var(--text-shadow-item);
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+}
+.details span {
+  padding: 0.5vw;
+}
+.link {
+  padding: 0.5vw;
+  text-decoration: none;
+  font-style: italic;
+  color: var(--color-default-font);
+}
+.link:hover {
+  color: var(--color-link-hover);
+}
+
+.badge span {
+  font-size: 1.5rem;
+}
+
+.likeRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  text-align: end;
+  padding: 1vw;
+}
+
+.likeRow span {
+  font-size: 1.5rem;
+}
+.likeIcon {
+  font-size: 4rem;
+  color: rgb(186, 25, 25);
+  cursor: pointer;
+}
+.likeIcon:hover {
+  color: rgb(126, 28, 28);
+}
+
+.likeIconInactive {
+  font-size: 4rem;
+  color: rgb(186, 25, 25);
+  cursor: not-allowed;
+}

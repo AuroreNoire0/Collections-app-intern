@@ -1,0 +1,31 @@
+@import "../../../variables.css";
+
+.mainContainer {
+  background-color: var(--color-main-bg);
+  padding: 1rem;
+}
+.mainHeader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-shadow: 1px 1px 10px gray;
+  padding: 1vh 0.5vw;
+  font-size: 7rem;
+  font-style: italic;
+  text-align: center;
+  color: var(--color-main-font);
+  font-family: var(--font-family-header);
+}
+
+.topContainers {
+  display: flex;
+  flex-direction: row;
+  padding: 0.5vh 1vw;
+}
+
+@media (max-width: 769px) {
+  .topContainers {
+    flex-wrap: wrap;
+  }
+}

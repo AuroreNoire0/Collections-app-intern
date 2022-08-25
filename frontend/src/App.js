@@ -3,20 +3,20 @@ import { Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import Header from "./components/common/Header";
-import MainView from "./components/views/MainView";
-import LoginView from "./components/views/LoginView";
-import RegisterView from "./components/views/RegisterView";
-import AdminView from "./components/views/AdminView";
+import MainView from "./components/views/MainView/MainView";
+import LoginView from "./components/views/LoginView/LoginView";
+import RegisterView from "./components/views/RegisterView/RegisterView";
+import AdminView from "./components/views/AdminView/AdminView";
 
 import Footer from "./components/common/Footer";
-import AccountView from "./components/views/AccountView";
-import CreateNewCollection from "./components/views/CreateNewCollection";
-import UpdateCollection from "./components/views/UpdateCollection";
-import UserPage from "./components/views/UserPage";
-import CollectionPage from "./components/views/CollectionPage";
-import ItemPage from "./components/views/ItemPage";
-import EditItem from "./components/views/EditItem";
-import AddItem from "./components/Items/AddItem";
+import AccountView from "./components/views/AccountView/AccountView";
+import CreateNewCollection from "./components/views/NewCollectionView/NewCollection";
+import UpdateCollection from "./components/views/EditCollectionView/EditCollection";
+import UserPage from "./components/views/UserView/UserPage";
+import CollectionPage from "./components/views/CollectionView/CollectionView";
+import ItemPage from "./components/views/ItemView/ItemView";
+import EditItem from "./components/views/EditItemView/EditItem";
+import AddItem from "./components/views/NewItemView/NewItem";
 
 function App() {
   return (

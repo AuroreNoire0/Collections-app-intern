@@ -1,0 +1,50 @@
+@import "../../../variables.css";
+
+.container {
+  font-size: 3rem;
+  padding: 2rem 3rem;
+  text-align: center;
+}
+
+.container h1 {
+  margin: 1vw;
+  font-size: 5vh;
+  font-style: italic;
+  color: var(--color-collection-header-font);
+  font-family: var(--font-family-default);
+}
+
+.title .textField {
+  width: 100% !important;
+}
+
+.container .dataGrid {
+  font-size: 1.2rem;
+  color: var(--color-admin-table-font);
+  font-family: var(--font-family-default);
+}
+
+.container .dataGrid p,
+.container .dataGrid svg {
+  color: var(--color-admin-table-font);
+}
+
+.noItems {
+  background-color: #aa939053;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  font-style: italic;
+  border: 1px solid rgba(170, 147, 144, 0.866);
+  border-radius: 10px;
+  margin: 2rem;
+}
+
+.btn {
+  font-size: 1.5rem;
+  margin: 1rem;
+  padding: 0.5rem 1rem;
+  font-family: var(--font-family-default);
+}
