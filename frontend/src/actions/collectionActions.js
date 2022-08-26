@@ -114,7 +114,7 @@ export const deleteCollection = (id) => async (dispatch) => {
 };
 
 export const createCollection =
-  (name, topic, description) => async (dispatch) => {
+  (name, topic, description, img) => async (dispatch) => {
     try {
       dispatch({ type: COLLECTION_CREATE_REQUEST });
 
@@ -135,7 +135,7 @@ export const createCollection =
 
       const { data } = await axios.post(
         `/api/create-collection`,
-        { name, description, topic, author, authorId, items },
+        { name, description, topic, img, author, authorId, items },
         config
       );
 

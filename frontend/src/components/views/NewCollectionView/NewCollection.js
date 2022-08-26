@@ -21,7 +21,9 @@ function NewCollection() {
     name: "",
     description: "",
     topic: "",
+    img: "",
   });
+  const [pic, setPic] = useState();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -39,12 +41,39 @@ function NewCollection() {
 
   const onFormSubmit = async (e) => {
     e.preventDefault();
-    const { name, topic, description } = values;
+    const { name, topic, description, img } = values;
     const createColl = () => {
-      dispatch(createCollection(name, topic, description));
+      dispatch(createCollection(name, topic, description, img));
     };
     createColl();
   };
+
+  const uploadImage = (e, img) => {
+    const url = "https://api.cloudinary.com/v1_1/collapp/image/upload";
+
+    if (img.type === "image/jpeg" || img.type === "image/png") {
+      const formData = new FormData();
+      formData.append("file", img);
+      formData.append("upload_preset", "collectionApp");
+
+      fetch(url, {
+        method: "POST",
+        body: formData,
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          setValues({ ...values, img: data.url.toString() });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      return console.log("Please select an image");
+    }
+  };
+  console.log(values);
   return (
     <Container>
       <MessageSnackbar open={success} message={"Collection created."} />
@@ -135,7 +164,7 @@ function NewCollection() {
                 accept="image/*"
                 className={styles.input}
                 id="raised-button-file"
-                multiple
+                onChange={(e) => uploadImage(e, e.target.files[0])}
                 type="file"
               />
 

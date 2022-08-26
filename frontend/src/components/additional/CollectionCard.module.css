@@ -1,0 +1,48 @@
+@import "../../variables.css";
+.cardContainer {
+  font-size: 1.5rem;
+  background-color: var(--color-main-bg);
+  font-family: var(--font-family-default);
+  margin: 1vh 0rem;
+  cursor: pointer;
+}
+
+.cardContainer .card-body {
+  cursor: pointer;
+}
+
+.title {
+  font-size: 2rem;
+}
+
+.cardContainer img {
+  height: 35rem;
+}
+.imgContainer {
+  position: relative;
+}
+
+.actions {
+  height: 8vh;
+  background-color: rgba(59, 59, 59, 0.695);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  color: rgb(255, 255, 255);
+}
+
+.iconEdit:hover {
+  color: blue;
+}
+
+.iconDelete:hover {
+  color: red;
+}
+
+.icon {
+  pointer-events: none;
+  font-size: 2.5rem;
+}

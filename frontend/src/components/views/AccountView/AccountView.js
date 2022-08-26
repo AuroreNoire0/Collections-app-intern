@@ -9,6 +9,8 @@ import Container from "react-bootstrap/esm/Container";
 import Button from "react-bootstrap/Button";
 import { CircularProgress } from "@mui/material";
 import { COLLECTION_DELETE_CLEAN } from "../../../constants/collectionConstants";
+import CollectionCard from "../../additional/CollectionCard";
+import { Row } from "react-bootstrap";
 
 function AccountView() {
   const {
@@ -47,14 +49,24 @@ function AccountView() {
               <p> List of your collections:</p>
             </div>
             <ul className={styles.collectionList}>
-              {userCollections.map((col) => (
-                <CollectionMiniature
-                  name={col.name}
-                  description={col.description}
-                  id={col._id}
-                  key={col._id}
-                />
-              ))}
+              <Row>
+                {userCollections.map((col) => (
+                  <CollectionCard
+                    name={col.name}
+                    description={col.description}
+                    id={col._id}
+                    key={col._id}
+                    img={col.img}
+                  />
+
+                  // <CollectionMiniature
+                  //   name={col.name}
+                  //   description={col.description}
+                  //   id={col._id}
+                  //   key={col._id}
+                  // />
+                ))}
+              </Row>
             </ul>
           </>
         ) : (

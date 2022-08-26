@@ -16,6 +16,7 @@ function CollectionView() {
   const collectionDetails = useSelector((state) => state.collectionDetails);
   const userLogin = useSelector((state) => state.userLogin);
   const [tableData, setTableData] = useState([]);
+  const [imgSrc, setImgSrc] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -46,6 +47,11 @@ function CollectionView() {
       tableRows();
   }, [collectionDetails.collectionInfo]);
 
+  useEffect(() => {
+    collectionDetails.collectionInfo &&
+      setImgSrc(`${collectionDetails.collectionInfo.img}`);
+  }, [collectionDetails.collectionInfo]);
+
   const onClickAddItemHandler = () => {
     navigate("/create-item");
   };
@@ -60,11 +66,14 @@ function CollectionView() {
   return (
     <Container className={styles.container}>
       {collectionDetails.collectionInfo && !collectionDetails.loading ? (
-        <ItemsList
-          rows={tableData}
-          collectionName={collectionDetails.collectionInfo.name}
-          allowedToAction={allowedToAction}
-        />
+        <>
+          {" "}
+          <ItemsList
+            rows={tableData}
+            collectionName={collectionDetails.collectionInfo.name}
+            allowedToAction={allowedToAction}
+          />
+        </>
       ) : (
         <div className={styles.progressCircle}>
           <CircularProgress color="inherit" />{" "}
