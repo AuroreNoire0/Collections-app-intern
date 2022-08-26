@@ -42,17 +42,13 @@
   position: relative;
   text-align: center;
   overflow: hidden;
+  justify-content: center;
+  display: flex;
 }
-.imgContainer p {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 1.5rem;
-}
+
 .img {
-  max-height: 100%;
-  max-width: 100%;
+  /* max-height: 100%;
+  max-width: 100%;*/
   object-fit: contain;
 }
 

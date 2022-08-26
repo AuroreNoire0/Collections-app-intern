@@ -12,6 +12,7 @@ import { ITEM_CREATE_CLEAN } from "../../../constants/itemConstants";
 
 function NewItem() {
   const [name, setName] = useState("");
+  const [imgSrc, setImgSrc] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
   const [tagsOptions, setTagsOptions] = useState([]);
   const itemCreate = useSelector((state) => state.itemCreate);
@@ -24,7 +25,7 @@ function NewItem() {
   const onAddItemHandler = (e) => {
     e.preventDefault();
     let tags = selectedTags;
-    dispatch(createItem(name, tags));
+    dispatch(createItem(name, imgSrc, tags));
   };
 
   useEffect(() => {
@@ -42,6 +43,34 @@ function NewItem() {
       }, 5000);
     }
   }, [dispatch, itemCreate.success]);
+
+  const uploadImage = (e, img) => {
+    const url = "https://api.cloudinary.com/v1_1/collapp/image/upload";
+
+    if (img.type === "image/jpeg" || img.type === "image/png") {
+      const formData = new FormData();
+      formData.append("file", img);
+      formData.append("upload_preset", "collectionApp");
+
+      fetch(url, {
+        method: "POST",
+        body: formData,
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          setImgSrc(data.url.toString());
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      return console.log("Please select an image");
+    }
+  };
+
+  console.log(tagsOptions);
 
   return (
     <Container>
@@ -91,6 +120,15 @@ function NewItem() {
                 renderInput={(params) => (
                   <TextField {...params} placeholder="Tags" />
                 )}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <input
+                accept="image/*"
+                className={styles.input}
+                id="raised-button-file"
+                onChange={(e) => uploadImage(e, e.target.files[0])}
+                type="file"
               />
             </Grid>
             <div className={styles.divButton}>

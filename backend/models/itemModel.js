@@ -23,6 +23,10 @@ const itemSchema = mongoose.Schema(
       type: String,
       required: false,
     },
+    img: {
+      type: String,
+      required: false,
+    },
     tags: [
       {
         type: String,

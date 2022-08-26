@@ -23,7 +23,7 @@ import axios from "axios";
 import { getCollectionDetails } from "./collectionActions";
 import { getUserDetails } from "./userActions";
 
-export const createItem = (name, tags) => async (dispatch) => {
+export const createItem = (name, img, tags) => async (dispatch) => {
   try {
     dispatch({ type: ITEM_CREATE_REQUEST });
 
@@ -47,7 +47,16 @@ export const createItem = (name, tags) => async (dispatch) => {
 
     const { data } = await axios.post(
       `/api/create-item`,
-      { name, tags, author, authorId, collectionName, collectionId, comments },
+      {
+        name,
+        tags,
+        author,
+        authorId,
+        collectionName,
+        collectionId,
+        comments,
+        img,
+      },
       config
     );
 
@@ -100,7 +109,7 @@ export const deleteItem = (id) => async (dispatch) => {
   }
 };
 
-export const updateItem = (name, tags, id) => async (dispatch) => {
+export const updateItem = (name, tags, img, id) => async (dispatch) => {
   try {
     dispatch({ type: ITEM_UPDATE_REQUEST });
 
@@ -117,7 +126,7 @@ export const updateItem = (name, tags, id) => async (dispatch) => {
 
     const { data } = await axios.post(
       `/api/update-item/${id}`,
-      { name, tags },
+      { name, tags, img },
       config
     );
 

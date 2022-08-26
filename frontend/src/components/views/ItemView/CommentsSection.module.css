@@ -29,7 +29,7 @@ h2 {
   font-size: 1.5rem;
   padding: 1vw;
   margin: 1vh;
-  background-color: var(--color-search-bg);
+  background-color: var(--color-comment-area-bg);
   color: var(--color-default-font);
 }
 .textArea::placeholder {

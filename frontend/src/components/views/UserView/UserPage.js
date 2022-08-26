@@ -6,6 +6,8 @@ import CollectionMiniature from "../../additional/CollectionMiniature";
 import styles from "./UserPage.module.css";
 import { CircularProgress } from "@mui/material";
 import { getUserDetails } from "../../../actions/userActions";
+import CollectionCard from "../../additional/CollectionCard";
+import { Row } from "react-bootstrap";
 
 function UserPage() {
   const [userCollections, setUserCollections] = useState([]);
@@ -36,14 +38,23 @@ function UserPage() {
               <h1> List of collections:</h1>
             </div>
             <ul className={styles.collectionList}>
-              {userDetails.user.collections.map((col) => (
-                <CollectionMiniature
-                  name={col.name}
-                  description={col.description}
-                  id={col._id}
-                  key={col._id}
-                />
-              ))}
+              <Row>
+                {userDetails.user.collections.map((col) => (
+                  <CollectionCard
+                    name={col.name}
+                    description={col.description}
+                    id={col._id}
+                    key={col._id}
+                    img={col.img}
+                  />
+                  // <CollectionMiniature
+                  //   name={col.name}
+                  //   description={col.description}
+                  //   id={col._id}
+                  //   key={col._id}
+                  // />
+                ))}
+              </Row>
             </ul>
           </>
         ) : (
