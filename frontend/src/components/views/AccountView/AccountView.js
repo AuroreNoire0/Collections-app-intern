@@ -58,13 +58,6 @@ function AccountView() {
                     key={col._id}
                     img={col.img}
                   />
-
-                  // <CollectionMiniature
-                  //   name={col.name}
-                  //   description={col.description}
-                  //   id={col._id}
-                  //   key={col._id}
-                  // />
                 ))}
               </Row>
             </ul>

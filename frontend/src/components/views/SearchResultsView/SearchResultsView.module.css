@@ -1,0 +1,23 @@
+@import "../../../variables.css";
+.container {
+  font-family: var(--font-family-default);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.results {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+h1 {
+  color: var(--color-default-font);
+}
+
+.noResult {
+  color: var(--color-default-font);
+  font-size: 2rem;
+  margin: 5vh;
+}

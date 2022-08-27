@@ -193,6 +193,30 @@ const getItems = asyncHandler(async (req, res) => {
   }
 });
 
+const search = asyncHandler(async (req, res) => {
+  const query = req.params.query;
+  const results = await Item.aggregate([
+    {
+      $search: {
+        index: "Search",
+        text: {
+          query: query,
+          path: {
+            wildcard: "*",
+          },
+        },
+      },
+    },
+  ]);
+
+  if (results) {
+    res.json(results);
+  } else {
+    res.status(404);
+    throw new Error("Results not found");
+  }
+});
+
 module.exports = {
   createItem,
   deleteItem,
@@ -201,6 +225,7 @@ module.exports = {
   updateItem,
   updateLike,
   getItems,
+  search,
   // getUserCollections,
   // deleteCollection,
   // getCollectionDetails,

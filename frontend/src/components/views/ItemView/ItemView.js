@@ -57,68 +57,71 @@ function ItemView() {
       {itemDetails.itemInfo && !itemDetails.loading && (
         <>
           <Row styles={styles.itemContainer}>
-            <Col sm={11} lg={6} className="p-0">
+            <Col sm={12} lg={6} className="p-0">
               <Card className={styles.itemCard}>
-                <Card.Body className="mx-1">
-                  <Card.Title className={styles.title}>
-                    {itemDetails.itemInfo.name}
-                  </Card.Title>
-                  <Card.Text className={styles.details}>
-                    <span>
-                      Collection: {itemDetails.itemInfo.collectionName}{" "}
-                    </span>
-                    <span>Tags: {itemDetails.itemInfo.tags.join(" | ")} </span>
-                    <span>
-                      Author:{" "}
-                      <Link
-                        to={`/user/${itemDetails.itemInfo.authorId}`}
-                        className={styles.link}
-                      >
-                        {itemDetails.itemInfo.author}{" "}
-                      </Link>
-                    </span>
-                  </Card.Text>
-                  <Link
-                    to={`/collection/${itemDetails.itemInfo.collectionId}`}
-                    className={styles.link}
-                  >
-                    {" "}
-                    Check this collection
-                  </Link>
+                <Card.Title className={styles.title}>
+                  {itemDetails.itemInfo.name}
+                </Card.Title>
+                <Card.Text className={styles.details}>
+                  <span>
+                    Collection: {itemDetails.itemInfo.collectionName}{" "}
+                  </span>
+                  <span>Tags: {itemDetails.itemInfo.tags.join(" | ")} </span>
+                  <span>
+                    Author:{" "}
+                    <Link
+                      to={`/user/${itemDetails.itemInfo.authorId}`}
+                      className={styles.link}
+                    >
+                      {itemDetails.itemInfo.author}{" "}
+                    </Link>
+                  </span>
+                </Card.Text>
+                <Link
+                  to={`/collection/${itemDetails.itemInfo.collectionId}`}
+                  className={styles.link}
+                >
+                  {" "}
+                  Check this collection
+                </Link>
 
-                  <Row className={styles.likeRow}>
-                    {userLogin.userInfo && (
-                      <Col xs={10} lg={10}>
-                        {itemDetails.itemInfo.likedBy.includes(
-                          userLogin.userInfo._id
-                        ) ? (
-                          <span> You like it!</span>
-                        ) : (
-                          <span> Do you like this item? Leave a like!</span>
-                        )}
-                      </Col>
-                    )}
-                    <Col xs={2} lg={2}>
-                      <Badge
-                        className={styles.badge}
-                        color="primary"
-                        sx={{ fontSize: 3 }}
-                        showZero
-                        badgeContent={itemDetails.itemInfo.likedBy.length}
-                      >
-                        <FontAwesomeIcon
-                          icon={faHeart}
-                          className={likeStyles}
-                          onClick={onLikeHandler}
-                        />
-                      </Badge>
+                <Row className={styles.likeRow}>
+                  {userLogin.userInfo && (
+                    <Col xs={10} lg={10}>
+                      {itemDetails.itemInfo.likedBy.includes(
+                        userLogin.userInfo._id
+                      ) ? (
+                        <span> You like it!</span>
+                      ) : (
+                        <span> Do you like this item? Leave a like!</span>
+                      )}
                     </Col>
-                  </Row>
-                </Card.Body>
+                  )}
+                  <Col xs={2} lg={2}>
+                    <Badge
+                      className={styles.badge}
+                      color="primary"
+                      sx={{ fontSize: 3 }}
+                      showZero
+                      badgeContent={itemDetails.itemInfo.likedBy.length}
+                    >
+                      <FontAwesomeIcon
+                        icon={faHeart}
+                        className={likeStyles}
+                        onClick={onLikeHandler}
+                      />
+                    </Badge>
+                  </Col>
+                </Row>
               </Card>
             </Col>
-            <Col sm={11} lg={6} className={styles.imgContainer}>
-              <Card.Img variant="top" src={imgSrc} className={styles.img} />
+            <Col sm={12} lg={6} className={styles.imgContainer}>
+              <Card.Img
+                variant="top"
+                src={imgSrc}
+                className={styles.img}
+                alt="Item"
+              />
               {/* <img src={imgSrc} className={styles.img} alt="Item"></img> */}
             </Col>
           </Row>

@@ -1,13 +1,48 @@
-import * as React from "react";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Autocomplete from "@mui/material/Autocomplete";
 import styles from "./Search.module.css";
+import { Button } from "@mui/material";
+import { Col, Form } from "react-bootstrap";
+import { searchQuery } from "../../actions/itemActions";
 
 const Search = () => {
+  const [query, setQuery] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const onSubmitHandler = (event) => {
+    event.preventDefault();
+    dispatch(searchQuery(query));
+    navigate(`/search/${query}`);
+    setQuery("");
+  };
   return (
     <Stack spacing={2} className={styles.searchStack}>
-      <Autocomplete
+      {" "}
+      <Form className={styles.searchContainer} onSubmit={onSubmitHandler}>
+        <Form.Control
+          type="search"
+          placeholder="Search..."
+          className={styles.TextField}
+          aria-label="Search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        <Button type="submit" variant="outline-success">
+          Search
+        </Button>
+      </Form>
+      {/* <Col lg={11}>
+          <TextField className={styles.TextField} label="Search..." />
+        </Col>
+        <Col lg={1}>
+          <Button variant="contained">Contained</Button>
+        </Col> */}
+      {/* <Autocomplete
         id="free-solo-demo"
         options={top100Films.map((option) => option.title)}
         renderInput={(params) => (
@@ -17,7 +52,7 @@ const Search = () => {
             label="Search..."
           />
         )}
-      />
+      /> */}
     </Stack>
   );
 };

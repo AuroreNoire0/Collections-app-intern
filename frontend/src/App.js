@@ -4,11 +4,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import Header from "./components/common/Header";
 import MainView from "./components/views/MainView/MainView";
+import Footer from "./components/common/Footer";
 import LoginView from "./components/views/LoginView/LoginView";
 import RegisterView from "./components/views/RegisterView/RegisterView";
 import AdminView from "./components/views/AdminView/AdminView";
 
-import Footer from "./components/common/Footer";
 import AccountView from "./components/views/AccountView/AccountView";
 import CreateNewCollection from "./components/views/NewCollectionView/NewCollection";
 import UpdateCollection from "./components/views/EditCollectionView/EditCollection";
@@ -17,6 +17,7 @@ import CollectionPage from "./components/views/CollectionView/CollectionView";
 import ItemPage from "./components/views/ItemView/ItemView";
 import EditItem from "./components/views/EditItemView/EditItem";
 import AddItem from "./components/views/NewItemView/NewItem";
+import SearchResultsView from "./components/views/SearchResultsView/SearchResultsView";
 
 function App() {
   return (
@@ -42,6 +43,8 @@ function App() {
         <Route path="/item/:id" element={<ItemPage />}></Route>
         <Route path="/create-item" element={<AddItem />}></Route>
         <Route path="/edit-item/:id" element={<EditItem />}></Route>
+
+        <Route path="/search/:query" element={<SearchResultsView />}></Route>
       </Routes>
       <Footer />
     </Fragment>

@@ -6,10 +6,12 @@ const itemSchema = mongoose.Schema(
     name: {
       type: String,
       required: false,
+      index: true,
     },
     author: {
       type: String,
       required: false,
+      index: true,
     },
     authorId: {
       type: String,
@@ -18,6 +20,7 @@ const itemSchema = mongoose.Schema(
     collectionName: {
       type: String,
       required: false,
+      index: true,
     },
     collectionId: {
       type: String,
@@ -31,6 +34,7 @@ const itemSchema = mongoose.Schema(
       {
         type: String,
         required: false,
+        index: true,
       },
     ],
     comments: [Comment],
@@ -47,5 +51,5 @@ const itemSchema = mongoose.Schema(
 );
 
 const Item = mongoose.model("Item", itemSchema);
-
+Item.createIndexes();
 module.exports = Item;

@@ -16,6 +16,7 @@ const {
   updateItem,
   updateLike,
   getItems,
+  search,
 } = require("./controllers/itemControllers");
 const {
   authUser,
@@ -51,5 +52,6 @@ router.route("/update-item/:id").post(updateItem);
 router.route("/get-tags").get(fetchTags);
 router.route("/create-comment").post(createComment);
 router.route("/update-like/:id").post(updateLike);
+router.route("/search/:query").get(search);
 
 module.exports = router;

@@ -17,6 +17,9 @@ import {
   ITEM_LIST_REQUEST,
   ITEM_LIST_SUCCESS,
   ITEM_LIST_FAIL,
+  SEARCH_REQUEST,
+  SEARCH_SUCCESS,
+  SEARCH_FAIL,
 } from "../constants/itemConstants";
 import store from "../store";
 import axios from "axios";
@@ -260,6 +263,30 @@ export const updateLike = (id, action) => async (dispatch) => {
   }
 };
 
+export const searchQuery = (query) => async (dispatch) => {
+  try {
+    dispatch({ type: SEARCH_REQUEST });
+
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+      },
+    };
+
+    const { data } = await axios.get(`/api/search/${query}`, config);
+    dispatch({ type: SEARCH_SUCCESS, payload: data });
+    return data;
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({
+      type: SEARCH_FAIL,
+      payload: message,
+    });
+  }
+};
 // export const addLike = (id) => async (dispatch) => {
 //   try {
 //     dispatch({ type: ITEM_UPDATE_REQUEST });

@@ -1,0 +1,21 @@
+@import "../../../variables.css";
+.cardContainer {
+  font-size: 1.5rem;
+  background-color: var(--color-card-bg);
+  font-family: var(--font-family-default);
+  margin: 1vh 0rem;
+  cursor: pointer;
+  color: var(--color-default-font);
+}
+
+.cardContainer .card-body {
+  cursor: pointer;
+}
+
+.title {
+  font-size: 2rem;
+}
+
+.cardContainer img {
+  height: 25rem;
+}

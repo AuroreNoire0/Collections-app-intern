@@ -24,6 +24,7 @@ import {
   itemListReducer,
   itemTagsListReducer,
   itemUpdateReducer,
+  searchReducer,
 } from "./reducers/itemReducers";
 import { commentCreateReducer } from "./reducers/commentReducers";
 
@@ -58,6 +59,7 @@ const store = configureStore(
       items: itemListReducer,
       tagsList: itemTagsListReducer,
       comment: commentCreateReducer,
+      result: searchReducer,
     },
   },
   initialState,

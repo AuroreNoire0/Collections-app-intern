@@ -19,6 +19,9 @@ import {
   ITEM_TAGS_LIST_REQUEST,
   ITEM_TAGS_LIST_SUCCESS,
   ITEM_TAGS_LIST_FAIL,
+  SEARCH_REQUEST,
+  SEARCH_SUCCESS,
+  SEARCH_FAIL,
 } from "../constants/itemConstants";
 
 export const itemListReducer = (state = { items: [] }, action) => {
@@ -98,6 +101,19 @@ export const itemTagsListReducer = (state = {}, action) => {
     case ITEM_TAGS_LIST_SUCCESS:
       return { loading: false, success: true, tagsListInfo: action.payload };
     case ITEM_TAGS_LIST_FAIL:
+      return { loading: false, error: action.payload, success: false };
+    default:
+      return state;
+  }
+};
+
+export const searchReducer = (state = {}, action) => {
+  switch (action.type) {
+    case SEARCH_REQUEST:
+      return { loading: true };
+    case SEARCH_SUCCESS:
+      return { loading: false, success: true, searchResults: action.payload };
+    case SEARCH_FAIL:
       return { loading: false, error: action.payload, success: false };
     default:
       return state;

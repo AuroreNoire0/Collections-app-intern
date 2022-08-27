@@ -5,10 +5,13 @@
   --color-navbar-box-shadow: rgb(116, 109, 109);
   --color-navbrand: #aa9390;
   --color-navbrand-hover: rgba(170, 147, 144, 0.737);
+  --color-button-menu-bg: #aa9390;
   --color-link: #aa9390;
   --color-link-hover: rgba(170, 147, 144, 0.737);
   --color-search-bg: #303039fc;
   --color-search-font: rgb(160, 159, 159);
+  --color-search-button-font: #303039fc;
+  --color-search-button-bg: #303039fc;
   --color-footer-bg: #1c1c22;
   --color-footer-font: #b9b0af;
   --color-main-bg: #23232b;
@@ -22,6 +25,7 @@
   --color-admin-font: #aa9390;
   --color-admin-table-font: rgb(198, 196, 196);
   --color-collection-header-font: #9d8d7b;
+  --color-card-bg: #333340ee;
   --color-select-bg: #303039fc;
   --color-disabled-font: #aa939082;
   --color-chip-icon: rgba(131, 79, 79, 0.456);
@@ -45,6 +49,7 @@ body[data-theme="light"] {
   --color-link-hover: rgba(0, 0, 0, 0.737);
   --color-search-bg: #aa9390e2;
   --color-search-font: #000000;
+  --color-search-button-bg: #a28683;
   --color-footer-bg: #5e5f67;
   --color-footer-font: rgba(255, 255, 255, 0.46);
   --color-main-bg: whitesmoke;
@@ -61,6 +66,7 @@ body[data-theme="light"] {
   --color-admin-font: #000;
   --color-admin-table-font: #000;
   --color-collection-header-font: #000;
+  --color-card-bg: #d0b7b38e;
   --color-select-bg: white;
   --color-disabled-font: rgb(151, 150, 150);
   --color-chip-icon: rgba(0, 0, 0, 0.26);
@@ -99,6 +105,7 @@ body[data-theme="dark"] {
   --color-admin-font: #aa9390;
   --color-admin-table-font: rgb(198, 196, 196);
   --color-collection-header-font: #9b856c;
+  --color-card-bg: #333340ee;
   --color-select-bg: #303039fc;
   --color-disabled-font: #aa939082;
   --color-chip-icon: rgba(131, 79, 79, 0.456);

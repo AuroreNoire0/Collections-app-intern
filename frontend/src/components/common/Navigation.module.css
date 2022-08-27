@@ -29,13 +29,15 @@
 .navContainer button {
   width: 5rem;
   height: 4rem;
-  border: 2px solid black;
+  border: 2px solid var(--color-default-font);
+  background-color: var(--color-button-menu-bg);
 }
 
 .navContainer button span {
   font-size: 2rem;
   width: 3rem;
   height: 2rem;
+  color: red !important;
 }
 
 .link {

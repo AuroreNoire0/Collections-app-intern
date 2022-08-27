@@ -19,6 +19,7 @@
 .itemContainer {
   display: flex;
   height: 30vh;
+  width: 100%;
   justify-content: center;
   align-items: center;
 }
@@ -32,10 +33,6 @@
   font-family: var(--font-family-default);
 }
 
-.itemCard .title {
-  font-size: 2.5rem;
-  text-shadow: var(--text-shadow-item);
-}
 .imgContainer {
   padding: 2vw 0;
   margin: 0;
@@ -43,6 +40,7 @@
   text-align: center;
   overflow: hidden;
   justify-content: center;
+  align-items: center;
   display: flex;
 }
 
