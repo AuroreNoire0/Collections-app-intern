@@ -8,6 +8,7 @@
   --color-button-menu-bg: #aa9390;
   --color-link: #aa9390;
   --color-link-hover: rgba(170, 147, 144, 0.737);
+  --color-tags: rgb(106, 85, 85);
   --color-search-bg: #303039fc;
   --color-search-font: rgb(160, 159, 159);
   --color-search-button-font: #303039fc;
@@ -47,6 +48,7 @@ body[data-theme="light"] {
   --color-navbrand-hover: rgba(0, 0, 0, 0.7);
   --color-link: rgba(0, 0, 0, 0.6);
   --color-link-hover: rgba(0, 0, 0, 0.737);
+  --color-tags: rgb(81, 61, 61);
   --color-search-bg: #aa9390e2;
   --color-search-font: #000000;
   --color-search-button-bg: #a28683;
@@ -87,6 +89,7 @@ body[data-theme="dark"] {
   --color-navbrand-hover: rgba(170, 147, 144, 0.737);
   --color-link: #aa9390;
   --color-link-hover: rgba(170, 147, 144, 0.737);
+  --color-tags: rgb(106, 85, 85);
   --color-search-bg: #34343e;
   --color-search-font: rgb(160, 159, 159);
   --color-footer-bg: #1c1c22;

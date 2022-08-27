@@ -3,11 +3,13 @@ import { TagCloud } from "react-tagcloud";
 import Container from "react-bootstrap/esm/Container";
 import styles from "./TagCloudContainer.module.css";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { getTags } from "../../../actions/itemActions";
 
 function TagCloudContainer() {
   const [tags, setTags] = useState([]);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const tags = async () => {
@@ -17,15 +19,17 @@ function TagCloudContainer() {
     tags();
   }, [dispatch]);
 
-  const data = tags.map((tag) => ({ value: tag, count: 35 }));
+  const data = tags.map((tag) => ({ value: tag, count: 20 }));
 
   return (
     <Container className={styles.container}>
       <TagCloud
-        minSize={15}
-        maxSize={50}
+        minSize={10}
+        maxSize={35}
         tags={data}
-        onClick={(tag) => alert(`'${tag.value}' was selected!`)}
+        className={styles.tagCloud}
+        disableRandomColor
+        onClick={(tag) => navigate(`/search/${tag.value}`)}
       />
     </Container>
   );

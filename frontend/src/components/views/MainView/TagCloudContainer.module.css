@@ -1,9 +1,20 @@
+@import "../../../variables.css";
 .container {
-  border: 1rem solid black;
-  border-radius: 30rem;
+  border-top: 2px solid var(--color-default-font);
+  border-radius: 25rem;
   margin-bottom: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
   font-style: italic;
+  padding: 1.5rem 3rem;
+  text-shadow: 1px 1px rgb(178, 158, 158);
+}
+
+.tagCloud {
+  color: var(--color-tags);
+  font-family: var(--font-family-default);
+  font-style: normal;
+  cursor: pointer;
 }

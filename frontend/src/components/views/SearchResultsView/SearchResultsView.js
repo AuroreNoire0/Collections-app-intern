@@ -14,7 +14,7 @@ const SearchResultsView = () => {
 
   useEffect(() => {
     dispatch(searchQuery(params.query));
-  }, []);
+  }, [dispatch, params]);
   return (
     <Container className={styles.container}>
       {result.loading && <CircularProgress color="inherit" />}

@@ -5,11 +5,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  min-width: 90vw;
 }
 
 .results {
   display: flex;
   flex-wrap: wrap;
+  min-width: 80vw;
+  justify-content: center;
 }
 
 h1 {
