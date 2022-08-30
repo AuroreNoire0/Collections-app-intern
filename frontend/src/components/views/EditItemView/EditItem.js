@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/esm/Container";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
@@ -15,17 +16,20 @@ import {
   updateItem,
 } from "../../../actions/itemActions";
 import { ITEM_UPDATE_CLEAN } from "../../../constants/itemConstants";
+import { FormattedMessage } from "react-intl";
 
 function EditItem() {
   const itemDetails = useSelector((state) => state.itemDetails);
   const itemUpdate = useSelector((state) => state.itemUpdate);
   const [values, setValues] = useState({
     name: ``,
+    img: ``,
   });
   const [tagsOptions, setTagsOptions] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const params = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const itemInfo = async () => {
@@ -62,16 +66,46 @@ function EditItem() {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
   };
+  const cancelHandler = async (e) => {
+    navigate("/account");
+  };
   const onTagsChangeHandler = (event, value) => {
     setSelectedTags(value);
   };
 
-  const onEditItemHandler = async (e) => {
+  const uploadImage = (e, img) => {
+    const url = "https://api.cloudinary.com/v1_1/collapp/image/upload";
+
+    if (img.type === "image/jpeg" || img.type === "image/png") {
+      const formData = new FormData();
+      formData.append("file", img);
+      formData.append("upload_preset", "collectionApp");
+
+      fetch(url, {
+        method: "POST",
+        body: formData,
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          setValues({ ...values, img: data.url.toString() });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      return console.log("Please select an image");
+    }
+  };
+
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
-    const { name } = values;
+    const { name, img } = values;
     let tags = selectedTags;
+    console.log(params.id);
     const editItem = () => {
-      dispatch(updateItem(name, tags, params.id));
+      dispatch(updateItem(name, tags, img, params.id));
     };
     editItem();
   };
@@ -79,61 +113,92 @@ function EditItem() {
   return (
     <Container>
       {itemDetails.itemInfo && (
-        <MessageSnackbar open={itemUpdate.success} message={"Item updated."} />
+        <MessageSnackbar
+          open={itemUpdate.success}
+          message={<FormattedMessage id="edit-item.succes-message" />}
+        />
       )}
       <div className={styles.divTitle}>
         <h1 className={styles.title}>Edit item</h1>
       </div>
       <Grid className={styles.form}>
-        <form>
+        <form onSubmit={onSubmitHandler}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
-              <TextField
-                type="text"
-                placeholder="Id (generated automatically)"
-                value={params.id}
-                variant="outlined"
-                className={styles.textFieldId}
-                disabled
-              />
+              <FormattedMessage id="edit-item.id-placeholder">
+                {(placeholder) => (
+                  <TextField
+                    type="text"
+                    placeholder={placeholder}
+                    value={params.id}
+                    variant="outlined"
+                    className={styles.textFieldId}
+                    disabled
+                  />
+                )}
+              </FormattedMessage>
             </Grid>
             <Grid xs={12} sm={6} item>
-              <TextField
-                placeholder="Enter name"
-                label="Name"
-                value={values.name}
-                name="name"
-                onChange={onChangeHandler}
-                variant="outlined"
-                className={styles.textField}
-              />
+              <FormattedMessage id="edit-item.name-placeholder">
+                {(placeholder) => (
+                  <TextField
+                    placeholder={placeholder}
+                    label={placeholder}
+                    value={values.name}
+                    name="name"
+                    onChange={onChangeHandler}
+                    variant="outlined"
+                    className={styles.textField}
+                  />
+                )}
+              </FormattedMessage>
             </Grid>
             <Grid xs={12} sm={12} item>
-              <Autocomplete
-                isOptionEqualToValue={(option, value) => option === value}
-                multiple
-                freeSolo
-                id="tags-filled"
-                label="Tags"
-                className={styles.input}
-                options={tagsOptions}
-                getOptionLabel={(option) => option || ""}
-                onChange={onTagsChangeHandler}
-                filterSelectedOptions
-                value={selectedTags}
-                renderInput={(params) => (
-                  <TextField {...params} placeholder="Tags" />
+              <FormattedMessage id="edit-item.tags-label">
+                {(label) => (
+                  <Autocomplete
+                    isOptionEqualToValue={(option, value) => option === value}
+                    multiple
+                    freeSolo
+                    id="tags-filled"
+                    label={label}
+                    className={styles.input}
+                    options={tagsOptions}
+                    getOptionLabel={(option) => option || ""}
+                    onChange={onTagsChangeHandler}
+                    filterSelectedOptions
+                    value={selectedTags}
+                    renderInput={(params) => (
+                      <FormattedMessage id="edit-item.tags-placeholder">
+                        {(placeholder) => (
+                          <TextField {...params} placeholder={placeholder} />
+                        )}
+                      </FormattedMessage>
+                    )}
+                  />
                 )}
+              </FormattedMessage>
+            </Grid>
+            <Grid item xs={12}>
+              <input
+                accept="image/*"
+                className={styles.input}
+                id="raised-button-file"
+                onChange={(e) => uploadImage(e, e.target.files[0])}
+                type="file"
               />
             </Grid>
             <div className={styles.divButton}>
               <Button
-                type="submit"
-                variant="primary"
+                type="button"
+                variant="secondary"
                 className={styles.subBtn}
-                onClick={onEditItemHandler}
+                onClick={cancelHandler}
               >
-                Edit Item
+                <FormattedMessage id="edit-item.cancel-button" />
+              </Button>
+              <Button type="submit" variant="primary" className={styles.subBtn}>
+                <FormattedMessage id="edit-item.edit-button" />
               </Button>
             </div>
           </Grid>

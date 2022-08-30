@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import Switch from "@mui/material/Switch";
 import Tooltip from "@mui/material/Tooltip";
 import { logout } from "../../actions/userActions";
+import { FormattedMessage } from "react-intl";
 
 export default function Navigation() {
   const dispatch = useDispatch();
@@ -42,24 +43,24 @@ export default function Navigation() {
               <>
                 <Link to="/login" className={styles.link}>
                   {" "}
-                  Log In
+                  <FormattedMessage id="navigation.login-button" />
                 </Link>
                 <Link to="/register" className={styles.link}>
-                  Register
+                  <FormattedMessage id="navigation.register-button" />
                 </Link>
               </>
             ) : (
               <>
                 <Link to="/account" className={styles.link}>
-                  Account
+                  <FormattedMessage id="navigation.account-button" />
                 </Link>
                 {userInfo.admin && (
                   <Link to="/admin" className={styles.link}>
-                    Admin
+                    <FormattedMessage id="navigation.admin-button" />
                   </Link>
                 )}
                 <Link to="/" className={styles.link} onClick={onLogout}>
-                  Logout
+                  <FormattedMessage id="navigation.logout-button" />
                 </Link>
               </>
             )}
@@ -74,7 +75,7 @@ export default function Navigation() {
                     marginBottom: 0,
                   }}
                 >
-                  Switch theme
+                  <FormattedMessage id="navigation.theme-button" />
                 </p>
               }
             >

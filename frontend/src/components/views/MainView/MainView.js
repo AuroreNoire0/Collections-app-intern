@@ -3,13 +3,16 @@ import TheLargestCollection from "./TheLargestCollection";
 import TheLatestItems from "./TheLatestItems";
 import styles from "./MainView.module.css";
 import TagCloudContainer from "./TagCloudContainer";
+import { FormattedMessage } from "react-intl";
 
 function MainView() {
   return (
     <Container fluid className={styles.mainContainer}>
       <div className={styles.mainHeader}>
         {" "}
-        <p>Create your own collection!</p>
+        <p>
+          <FormattedMessage id="main-view.header" />
+        </p>
       </div>
 
       <Container className={styles.topContainers}>

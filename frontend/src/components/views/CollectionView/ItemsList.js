@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MessageSnackbar from "../../additional/MessageSnackbar";
+import { FormattedMessage } from "react-intl";
 
 const ItemsList = (props) => {
   const [selectedItems, setSelectedItems] = useState([]);
@@ -18,9 +19,9 @@ const ItemsList = (props) => {
   };
   const onEditHandler = () => {
     if (selectedItems.length > 1) {
-      setMessage("You can choose only one item to edit.");
+      setMessage();
       setTimeout(() => {
-        setMessage("");
+        setMessage(<FormattedMessage id="item-list.edit-warning" />);
       }, 3000);
     } else if (selectedItems.length === 0) {
       return;
@@ -30,17 +31,29 @@ const ItemsList = (props) => {
   };
 
   const columns = [
-    { field: "id", headerName: "ID", width: 180 },
-    { field: "name", headerName: "Name", width: 130 },
-    { field: "tags", headerName: "Tags", width: 180 },
+    {
+      field: "id",
+      headerName: <FormattedMessage id="item-list.header-id" />,
+      width: 180,
+    },
+    {
+      field: "name",
+      headerName: <FormattedMessage id="item-list.header-name" />,
+      width: 130,
+    },
+    {
+      field: "tags",
+      headerName: <FormattedMessage id="item-list.header-tags" />,
+      width: 180,
+    },
     {
       field: "author",
-      headerName: "Author",
+      headerName: <FormattedMessage id="item-list.header-author" />,
       width: 130,
     },
     {
       field: "collection",
-      headerName: "Collection",
+      headerName: <FormattedMessage id="item-list.header-collection" />,
       width: 160,
     },
   ];
@@ -63,7 +76,11 @@ const ItemsList = (props) => {
 
   return (
     <>
-      <h1> Collection "{props.collectionName}" </h1>
+      <h1>
+        {" "}
+        <FormattedMessage id="item-list.collection-title" /> "{props.name}"{" "}
+      </h1>
+      <p>{props.description}</p>
       {props.rows.length !== 0 ? (
         <>
           <div style={{ height: 400, width: "100%" }}>
@@ -93,7 +110,7 @@ const ItemsList = (props) => {
             onClick={onDeleteHandler}
             disabled={!props.allowedToAction}
           >
-            Delete
+            <FormattedMessage id="item-list.delete-button" />
           </Button>
           <Button
             type="button"
@@ -102,12 +119,15 @@ const ItemsList = (props) => {
             onClick={onEditHandler}
             disabled={!props.allowedToAction}
           >
-            Edit
+            <FormattedMessage id="item-list.edit-button" />
           </Button>
         </>
       ) : (
         <div className={styles.noItems}>
-          <p> There is no item in this collection. </p>
+          <p>
+            {" "}
+            <FormattedMessage id="item-list.no-item" />{" "}
+          </p>
         </div>
       )}
     </>

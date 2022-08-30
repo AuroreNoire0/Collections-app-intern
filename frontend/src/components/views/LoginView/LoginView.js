@@ -8,6 +8,7 @@ import Form from "react-bootstrap/Form";
 import { Container } from "react-bootstrap";
 import useNewInput from "../../hooks/use-new-input";
 import { login } from "../../../actions/userActions";
+import { FormattedMessage } from "react-intl";
 
 const LogView = (props) => {
   const isNotEmpty = (value) => value.trim() !== "";
@@ -58,33 +59,51 @@ const LogView = (props) => {
   return (
     <Container fluid className={styles.container}>
       <Form className={logContainer}>
-        <span className={styles.title}>Log In</span>
+        <span className={styles.title}>
+          <FormattedMessage id="login-view.title" />
+        </span>
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter email"
-            onChange={emailChangedHandler}
-            onBlur={emailBlurHandler}
-            value={email}
-            className={emailStyles}
-          />
+          <Form.Label>
+            <FormattedMessage id="login-view.email-label" />
+          </Form.Label>
+          <FormattedMessage id="login-view.email-placeholder">
+            {(placeholder) => (
+              <Form.Control
+                type="email"
+                placeholder={placeholder}
+                onChange={emailChangedHandler}
+                onBlur={emailBlurHandler}
+                value={email}
+                className={emailStyles}
+              />
+            )}
+          </FormattedMessage>
           {emailHasError && (
-            <p className={styles.errorText}>Please enter a valid email.</p>
+            <p className={styles.errorText}>
+              <FormattedMessage id="login-view.email-error" />
+            </p>
           )}
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            className={passwordStyles}
-            onChange={passwordChangedHandler}
-            onBlur={passwordBlurHandler}
-            value={password}
-          />
+          <Form.Label>
+            <FormattedMessage id="login-view.password-label" />
+          </Form.Label>
+          <FormattedMessage id="login-view.password-placeholder">
+            {(placeholder) => (
+              <Form.Control
+                type="password"
+                placeholder={placeholder}
+                className={passwordStyles}
+                onChange={passwordChangedHandler}
+                onBlur={passwordBlurHandler}
+                value={password}
+              />
+            )}
+          </FormattedMessage>
           {passwordHasError && (
-            <p className={styles.errorText}>This field can't be empty.</p>
+            <p className={styles.errorText}>
+              <FormattedMessage id="login-view.empty-password" />
+            </p>
           )}
           {props.errorMessage && (
             <ErrorMessage variant="danger">{props.errorMessage}</ErrorMessage>
@@ -100,7 +119,7 @@ const LogView = (props) => {
             className={styles.subBtn}
             disabled={!formIsValid}
           >
-            Log in
+            <FormattedMessage id="login-view.login-button" />
           </Button>
         </div>
       </Form>

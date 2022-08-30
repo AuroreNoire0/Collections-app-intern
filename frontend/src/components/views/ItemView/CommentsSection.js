@@ -7,6 +7,7 @@ import { Button, Col, Row } from "react-bootstrap";
 import Comment from "./Comment";
 import { createComment } from "../../../actions/commentActions";
 import MessageSnackbar from "../../additional/MessageSnackbar";
+import { FormattedMessage } from "react-intl";
 
 function CommentsSection(props) {
   const userLogin = useSelector((state) => state.userLogin);
@@ -35,10 +36,13 @@ function CommentsSection(props) {
         <CircularProgress color="inherit" />
       ) : (
         <>
-          <h2 className="my-3"> Comments:</h2>
+          <h2 className="my-3">
+            {" "}
+            <FormattedMessage id="comments-section.header" />:
+          </h2>
           <MessageSnackbar
             open={contentIsEmpty}
-            message={"Comment field can't be empty."}
+            message={<FormattedMessage id="comments-section.warning-message" />}
             severity="warning"
           />
           <Container className={styles.comments}>
@@ -50,7 +54,9 @@ function CommentsSection(props) {
                 <TextareaAutosize
                   aria-label="minimum height"
                   minRows={5}
-                  placeholder="Leave a comment..."
+                  placeholder={
+                    <FormattedMessage id="comments-section.comment-placeholder" />
+                  }
                   onChange={onChangeCommentHandler}
                   className={styles.textArea}
                 />
@@ -62,7 +68,9 @@ function CommentsSection(props) {
                   onClick={onNewCommentHandler}
                   disabled={!userLogin.userInfo}
                 >
-                  Add comment
+                  {
+                    <FormattedMessage id="comments-section.add-comment-button" />
+                  }
                 </Button>
               </Col>
             </Row>

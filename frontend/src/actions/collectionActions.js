@@ -154,10 +154,10 @@ export const createCollection =
   };
 
 export const updateCollection =
-  (name, topic, description, id) => async (dispatch) => {
+  (name, topic, description, img, id) => async (dispatch) => {
     try {
       dispatch({ type: COLLECTION_UPDATE_REQUEST });
-
+      console.log(id);
       const {
         userLogin: { userInfo },
       } = store.getState();
@@ -174,7 +174,7 @@ export const updateCollection =
 
       const { data } = await axios.post(
         `/api/update-collection/${id}`,
-        { name, description, topic },
+        { name, description, topic, img },
         config
       );
 

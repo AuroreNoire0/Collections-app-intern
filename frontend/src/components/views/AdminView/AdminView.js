@@ -12,6 +12,7 @@ import { CircularProgress, Tooltip } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import MessageSnackbar from "../../additional/MessageSnackbar";
 import { useNavigate } from "react-router-dom";
+import { FormattedMessage } from "react-intl";
 
 function AdminView() {
   const users = useSelector((state) => state.users);
@@ -41,7 +42,9 @@ function AdminView() {
       setTableData(userRows);
     };
     fetchUsers();
-    (!userLogin.login || userLogin.userInfo.status === "Blocked") &&
+    (!userLogin.login ||
+      userLogin.userInfo.status === "Blocked" ||
+      userLogin.userInfo.status === "Zablokowany") &&
       navigate("/");
     userLogin.login && !userLogin.userInfo.admin && navigate("/account");
   }, [
@@ -87,17 +90,29 @@ function AdminView() {
   };
 
   const columns = [
-    { field: "id", headerName: "ID", width: 210 },
-    { field: "name", headerName: "Name", width: 140 },
-    { field: "email", headerName: "Email", width: 190 },
+    {
+      field: "id",
+      headerName: <FormattedMessage id="admin-view.header-id" />,
+      width: 210,
+    },
+    {
+      field: "name",
+      headerName: <FormattedMessage id="admin-view.header-name" />,
+      width: 140,
+    },
+    {
+      field: "email",
+      headerName: <FormattedMessage id="admin-view.header-email" />,
+      width: 190,
+    },
     {
       field: "status",
-      headerName: "Status",
+      headerName: <FormattedMessage id="admin-view.header-status" />,
       width: 160,
     },
     {
       field: "admin",
-      headerName: "Admin",
+      headerName: <FormattedMessage id="admin-view.header-admin" />,
       width: 160,
     },
   ];
@@ -107,10 +122,13 @@ function AdminView() {
       {users ? (
         <>
           <div className={styles.header}>
-            <p> Admin panel </p>
+            <p>
+              {" "}
+              <FormattedMessage id="admin-view.admin-panel-title" />
+            </p>
             <div className={btnsStyles}>
               <Button variant="danger" onClick={onBlockHandler}>
-                Block
+                <FormattedMessage id="admin-view.block-button" />
               </Button>{" "}
               <FontAwesomeIcon
                 className={styles.iconLock}
@@ -131,7 +149,7 @@ function AdminView() {
                       marginBottom: 0,
                     }}
                   >
-                    Add/remove admin
+                    <FormattedMessage id="admin-view.tooltip-admin" />
                   </p>
                 }
               >

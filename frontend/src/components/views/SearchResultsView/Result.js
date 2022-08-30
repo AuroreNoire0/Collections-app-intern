@@ -9,6 +9,7 @@ import {
   deleteCollection,
   getCollectionDetails,
 } from "../../../actions/collectionActions";
+import { FormattedMessage } from "react-intl";
 
 const Result = (props) => {
   const params = useParams();
@@ -31,13 +32,19 @@ const Result = (props) => {
         </div>
         <Card.Body>
           <Card.Title className={styles.title}>{props.name}</Card.Title>
-          <Card.Text>Collection: {props.collection}</Card.Text>
-          <Card.Text>Author: {props.author}</Card.Text>
-          <Card.Text>Tags: {props.tags.join(` | `)}</Card.Text>
+          <Card.Text>
+            <FormattedMessage id="result.collection" />: {props.collection}
+          </Card.Text>
+          <Card.Text>
+            <FormattedMessage id="result.author" />: {props.author}
+          </Card.Text>
+          <Card.Text>
+            <FormattedMessage id="result.tags" />: {props.tags.join(` | `)}
+          </Card.Text>
         </Card.Body>
-        <Card.Footer>
+        {/* <Card.Footer>
           <small className="text-muted">Last updated 3 mins ago</small>
-        </Card.Footer>
+        </Card.Footer> */}
       </Card>
     </Col>
   );

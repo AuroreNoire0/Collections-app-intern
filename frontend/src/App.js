@@ -1,5 +1,6 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Routes, Route } from "react-router-dom";
+import { IntlProvider } from "react-intl";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import Header from "./components/common/Header";
@@ -19,9 +20,28 @@ import EditItem from "./components/views/EditItemView/EditItem";
 import AddItem from "./components/views/NewItemView/NewItem";
 import SearchResultsView from "./components/views/SearchResultsView/SearchResultsView";
 
+import enMessages from ".//localization/en.json";
+import plMessages from ".//localization/pl.json";
+import localStorageKeys from ".//constants/localStorageKeys";
+import locales from ".//localization/locales";
+
+const messages = {
+  [locales.EN]: enMessages,
+  [locales.PL]: plMessages,
+};
+
 function App() {
+  const [currentLocale, setCurrentLocale] = useState(
+    localStorage.getItem(localStorageKeys.LOCALE) || locales.PL
+  );
+
+  const setLocale = (locale) => {
+    localStorage.setItem(localStorageKeys.LOCALE, locale);
+    setCurrentLocale(locale);
+  };
+
   return (
-    <Fragment>
+    <IntlProvider locale={currentLocale} messages={messages[currentLocale]}>
       <Header />
       <Routes>
         <Route exact path="/" element={<MainView />}></Route>
@@ -47,7 +67,7 @@ function App() {
         <Route path="/search/:query" element={<SearchResultsView />}></Route>
       </Routes>
       <Footer />
-    </Fragment>
+    </IntlProvider>
   );
 }
 

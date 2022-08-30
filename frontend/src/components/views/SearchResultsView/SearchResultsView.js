@@ -6,6 +6,7 @@ import styles from "./SearchResultsView.module.css";
 import { Container, Row } from "react-bootstrap";
 import { CircularProgress } from "@mui/material";
 import { searchQuery } from "../../../actions/itemActions";
+import { FormattedMessage } from "react-intl";
 
 const SearchResultsView = () => {
   const params = useParams();
@@ -20,7 +21,10 @@ const SearchResultsView = () => {
       {result.loading && <CircularProgress color="inherit" />}
       {!result.loading && result.searchResults && (
         <>
-          <h1>Results for: '{params.query}'</h1>
+          <h1>
+            <FormattedMessage id="search-results-view.results-for" />: '
+            {params.query}'
+          </h1>
           {result.searchResults.length !== 0 ? (
             <Row className={styles.results}>
               {result.searchResults.map((i) => (
@@ -37,7 +41,7 @@ const SearchResultsView = () => {
             </Row>
           ) : (
             <Row className={styles.noResult}>
-              Sorry, there is no matching result. Please try with another word.
+              <FormattedMessage id="search-results-view.no-results" />
             </Row>
           )}
         </>

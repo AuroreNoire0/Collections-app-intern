@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { FormattedMessage } from "react-intl";
 
 const LikeRow = () => {
   const params = useParams();

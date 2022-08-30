@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/esm/Container";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
@@ -12,6 +13,7 @@ import { useSelector } from "react-redux";
 import store from "../../../store";
 import { COLLECTION_UPDATE_CLEAN } from "../../../constants/collectionConstants";
 import MessageSnackbar from "../../additional/MessageSnackbar";
+import { FormattedMessage } from "react-intl";
 
 function EditCollection() {
   const {
@@ -25,6 +27,7 @@ function EditCollection() {
     description: ``,
     topic: ``,
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
     collectionDetails.collectionInfo &&
@@ -32,12 +35,12 @@ function EditCollection() {
         name: `${collectionDetails.collectionInfo.name}`,
         description: `${collectionDetails.collectionInfo.description}`,
         topic: `${collectionDetails.collectionInfo.topic}`,
+        img: `${collectionDetails.collectionInfo.img}`,
       });
   }, [collectionDetails.collectionInfo]);
 
   const dispatch = useDispatch();
 
-  console.log(success);
   useEffect(() => {
     if (success) {
       setTimeout(() => {
@@ -51,65 +54,112 @@ function EditCollection() {
     setValues({ ...values, [name]: value });
   };
 
+  const cancelHandler = async (e) => {
+    navigate("/account");
+  };
   const onFormSubmit = async (e) => {
     e.preventDefault();
-    const { name, topic, description } = values;
+    const { name, topic, description, img } = values;
+    console.log(img);
     const id = collectionDetails.collectionInfo._id;
     const updateColl = () => {
-      dispatch(updateCollection(name, topic, description, id));
+      dispatch(updateCollection(name, topic, description, img, id));
     };
     updateColl();
   };
 
+  const uploadImage = (e, img) => {
+    const url = "https://api.cloudinary.com/v1_1/collapp/image/upload";
+
+    if (img.type === "image/jpeg" || img.type === "image/png") {
+      const formData = new FormData();
+      formData.append("file", img);
+      formData.append("upload_preset", "collectionApp");
+
+      fetch(url, {
+        method: "POST",
+        body: formData,
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          setValues({ ...values, img: data.url.toString() });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      return console.log("Please select an image");
+    }
+  };
+
   return (
     <Container>
-      <MessageSnackbar open={success} message={"Collection updated."} />
+      <MessageSnackbar
+        open={success}
+        message={<FormattedMessage id="edit-collection.succes-message" />}
+      />
       <div className={styles.divTitle}>
-        <h1 className={styles.title}>Edit collection</h1>
+        <h1 className={styles.title}>
+          <FormattedMessage id="edit-collection.header" />
+        </h1>
       </div>
       <Grid className={styles.form}>
         <form onSubmit={onFormSubmit}>
           <Grid container spacing={1}>
             <Grid xs={12} sm={6} item>
-              <TextField
-                placeholder="Enter name"
-                label="Name"
-                variant="outlined"
-                name="name"
-                value={values.name}
-                className={styles.textField}
-                onChange={onChangeHandler}
-              />
+              <FormattedMessage id="edit-collection.name-label">
+                {(label) => (
+                  <TextField
+                    placeholder={label}
+                    label={label}
+                    variant="outlined"
+                    name="name"
+                    value={values.name}
+                    className={styles.textField}
+                    onChange={onChangeHandler}
+                  />
+                )}
+              </FormattedMessage>
             </Grid>
             <Grid xs={12} sm={6} item>
-              <TextField
-                id="outlined-select-currency"
-                select
-                label="Topic"
-                value={values.topic}
-                name="topic"
-                className={styles.textFieldTopic}
-                onChange={onChangeHandler}
-              >
-                {topics.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
+              <FormattedMessage id="edit-collection.topic-label">
+                {(label) => (
+                  <TextField
+                    id="outlined-select-currency"
+                    select
+                    label={label}
+                    value={values.topic}
+                    name="topic"
+                    className={styles.textFieldTopic}
+                    onChange={onChangeHandler}
+                  >
+                    {topics.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                )}
+              </FormattedMessage>
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                id="outlined-multiline-static"
-                label="Description"
-                multiline
-                rows={4}
-                name="description"
-                value={values.description}
-                placeholder="Description"
-                className={styles.textField}
-                onChange={onChangeHandler}
-              />
+              <FormattedMessage id="edit-collection.description-label">
+                {(label) => (
+                  <TextField
+                    id="outlined-multiline-static"
+                    label={label}
+                    multiline
+                    rows={4}
+                    name="description"
+                    value={values.description}
+                    placeholder={label}
+                    className={styles.textField}
+                    onChange={onChangeHandler}
+                  />
+                )}
+              </FormattedMessage>
             </Grid>
             <Grid item xs={4}>
               <TextField
@@ -153,28 +203,21 @@ function EditCollection() {
                 accept="image/*"
                 className={styles.input}
                 id="raised-button-file"
-                multiple
+                onChange={(e) => uploadImage(e, e.target.files[0])}
                 type="file"
               />
-
-              {/* <label htmlFor="raised-button-file">
-                <Button
-                  variant="primary"
-                  component="span"
-                  className={styles.uploadBtn}
-                >
-                  Dodaj
-                </Button>
-              </label> */}
             </Grid>
             <div className={styles.divButton}>
               <Button
-                type="submit"
-                variant="primary"
+                type="button"
+                variant="secondary"
                 className={styles.subBtn}
-                // onClick={addCollectionHandler}
+                onClick={cancelHandler}
               >
-                Edit collection
+                <FormattedMessage id="edit-collection.cancel-button" />
+              </Button>
+              <Button type="submit" variant="primary" className={styles.subBtn}>
+                <FormattedMessage id="edit-collection.edit-button" />
               </Button>
             </div>
           </Grid>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styles from "./NewCollection.module.css";
 import Container from "react-bootstrap/esm/Container";
 import TextField from "@mui/material/TextField";
@@ -11,6 +12,7 @@ import { createCollection } from "../../../actions/collectionActions";
 import { topics } from "../../../constants/topicConstants";
 import { COLLECTION_CREATE_CLEAN } from "../../../constants/collectionConstants";
 import store from "../../../store";
+import { FormattedMessage } from "react-intl";
 
 function NewCollection() {
   const {
@@ -23,8 +25,8 @@ function NewCollection() {
     topic: "",
     img: "",
   });
-  const [pic, setPic] = useState();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (success) {
@@ -37,6 +39,10 @@ function NewCollection() {
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
+  };
+
+  const cancelHandler = async (e) => {
+    navigate("/account");
   };
 
   const onFormSubmit = async (e) => {
@@ -76,51 +82,68 @@ function NewCollection() {
   console.log(values);
   return (
     <Container>
-      <MessageSnackbar open={success} message={"Collection created."} />
+      <MessageSnackbar
+        open={success}
+        message={<FormattedMessage id="new-collection.succes-message" />}
+      />
       <div className={styles.divTitle}>
-        <h1 className={styles.title}>Create a new collection</h1>
+        <h1 className={styles.title}>
+          <FormattedMessage id="new-collection.title" />
+        </h1>
       </div>
       <Grid className={styles.form}>
         <form onSubmit={onFormSubmit}>
           <Grid container spacing={1}>
             <Grid xs={12} sm={6} item>
-              <TextField
-                placeholder="Enter name"
-                label="Name"
-                variant="outlined"
-                name="name"
-                className={styles.textField}
-                onChange={onChangeHandler}
-              />
+              <FormattedMessage id="new-collection.name-placeholder">
+                {(placeholder) => (
+                  <TextField
+                    placeholder={placeholder}
+                    label={placeholder}
+                    variant="outlined"
+                    name="name"
+                    className={styles.textField}
+                    onChange={onChangeHandler}
+                  />
+                )}
+              </FormattedMessage>
             </Grid>
             <Grid xs={12} sm={6} item className={styles.gridTopic}>
-              <TextField
-                id="outlined-select-currency"
-                select
-                label="Topic"
-                value={values.topic}
-                name="topic"
-                className={styles.textFieldTopic}
-                onChange={onChangeHandler}
-              >
-                {topics.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
+              <FormattedMessage id="new-collection.topic-label">
+                {(label) => (
+                  <TextField
+                    id="outlined-select-currency"
+                    select
+                    label={label}
+                    value={values.topic}
+                    name="topic"
+                    className={styles.textFieldTopic}
+                    onChange={onChangeHandler}
+                  >
+                    {topics.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                )}
+              </FormattedMessage>
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                id="outlined-multiline-static"
-                label="Description"
-                multiline
-                rows={4}
-                name="description"
-                placeholder="Description"
-                className={styles.textField}
-                onChange={onChangeHandler}
-              />
+              <FormattedMessage id="new-collection.description-label">
+                {(label) => (
+                  <TextField
+                    id="outlined-multiline-static"
+                    label={label}
+                    multiline
+                    rows={4}
+                    name="description"
+                    placeholder={label}
+                    className={styles.textField}
+                    onChange={onChangeHandler}
+                  />
+                )}
+              </FormattedMessage>
             </Grid>
             <Grid item xs={4}>
               <TextField
@@ -167,25 +190,18 @@ function NewCollection() {
                 onChange={(e) => uploadImage(e, e.target.files[0])}
                 type="file"
               />
-
-              {/* <label htmlFor="raised-button-file">
-                <Button
-                  variant="primary"
-                  component="span"
-                  className={styles.uploadBtn}
-                >
-                  Dodaj
-                </Button>
-              </label> */}
             </Grid>
             <div className={styles.divButton}>
               <Button
-                type="submit"
-                variant="warning"
+                type="button"
+                variant="secondary"
                 className={styles.subBtn}
-                // onClick={addCollectionHandler}
+                onClick={cancelHandler}
               >
-                Add collection
+                <FormattedMessage id="new-collection.cancel-button" />
+              </Button>
+              <Button type="submit" variant="warning" className={styles.subBtn}>
+                <FormattedMessage id="new-collection.add-button" />
               </Button>
             </div>
           </Grid>

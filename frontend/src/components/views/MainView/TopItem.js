@@ -5,6 +5,7 @@ import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/Row";
 import { Link } from "react-router-dom";
 import styles from "./TopItem.module.css";
+import { FormattedMessage } from "react-intl";
 
 function TopItem(props) {
   return (
@@ -18,7 +19,7 @@ function TopItem(props) {
               marginBottom: 0,
             }}
           >
-            Click to check this item
+            <FormattedMessage id="top-item.tooltip" />
           </p>
         }
       >
@@ -28,11 +29,12 @@ function TopItem(props) {
           </Col>
           <Col xs={6} className={styles.details}>
             <Row>
-              Collection:
+              <FormattedMessage id="top-item.collection" />:
               <span className={styles.collectionName}>{props.collection}</span>
             </Row>
             <Row>
-              Author: <span className={styles.author}>{props.author}</span>
+              <FormattedMessage id="top-item.author" />:{" "}
+              <span className={styles.author}>{props.author}</span>
             </Row>
           </Col>
         </Container>

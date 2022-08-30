@@ -10,6 +10,7 @@ import Container from "react-bootstrap/esm/Container";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import image from "../../../img/NoImg.jpg";
+import { FormattedMessage } from "react-intl";
 
 function ItemView() {
   const params = useParams();
@@ -35,6 +36,7 @@ function ItemView() {
   useEffect(() => {
     itemDetails.itemInfo &&
       itemDetails.itemInfo.img &&
+      itemDetails.itemInfo.img !== `` &&
       setImgSrc(`${itemDetails.itemInfo.img}`);
   }, [itemDetails]);
 
@@ -64,11 +66,15 @@ function ItemView() {
                 </Card.Title>
                 <Card.Text className={styles.details}>
                   <span>
-                    Collection: {itemDetails.itemInfo.collectionName}{" "}
+                    {<FormattedMessage id="item-view.collection" />}:{" "}
+                    {itemDetails.itemInfo.collectionName}{" "}
                   </span>
-                  <span>Tags: {itemDetails.itemInfo.tags.join(" | ")} </span>
                   <span>
-                    Author:{" "}
+                    <FormattedMessage id="item-view.tags" />:{" "}
+                    {itemDetails.itemInfo.tags.join(" | ")}{" "}
+                  </span>
+                  <span>
+                    <FormattedMessage id="item-view.author" />:{" "}
                     <Link
                       to={`/user/${itemDetails.itemInfo.authorId}`}
                       className={styles.link}
@@ -82,7 +88,7 @@ function ItemView() {
                   className={styles.link}
                 >
                   {" "}
-                  Check this collection
+                  <FormattedMessage id="item-view.check-collection" />
                 </Link>
 
                 <Row className={styles.likeRow}>
@@ -91,9 +97,15 @@ function ItemView() {
                       {itemDetails.itemInfo.likedBy.includes(
                         userLogin.userInfo._id
                       ) ? (
-                        <span> You like it!</span>
+                        <span>
+                          {" "}
+                          <FormattedMessage id="item-view.like-already" />
+                        </span>
                       ) : (
-                        <span> Do you like this item? Leave a like!</span>
+                        <span>
+                          {" "}
+                          <FormattedMessage id="item-view.no-like" />
+                        </span>
                       )}
                     </Col>
                   )}

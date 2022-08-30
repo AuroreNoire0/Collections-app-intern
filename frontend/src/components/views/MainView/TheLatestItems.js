@@ -5,6 +5,7 @@ import styles from "./TheLatestItems.module.css";
 import { useEffect, useState } from "react";
 import { getItems } from "../../../actions/itemActions";
 import { CircularProgress } from "@mui/material";
+import { FormattedMessage } from "react-intl";
 
 function TheLatestItems() {
   const dispatch = useDispatch();
@@ -20,7 +21,9 @@ function TheLatestItems() {
   return (
     <Container xs={10} lg={6}>
       <div className={styles.divTitle}>
-        <h1 className={styles.title}>The Latest Items</h1>
+        <h1 className={styles.title}>
+          <FormattedMessage id="latest-item.title" />
+        </h1>
       </div>
       {items.loading && !items.items ? (
         <div className="d-flex justify-content-center align-items-center">

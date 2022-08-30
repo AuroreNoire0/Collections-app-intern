@@ -9,6 +9,7 @@ import { getTags } from "../../../actions/itemActions";
 import { Button } from "react-bootstrap";
 import { getCollectionDetails } from "../../../actions/collectionActions";
 import { useParams, useNavigate } from "react-router-dom";
+import { FormattedMessage } from "react-intl";
 
 function CollectionView() {
   const params = useParams();
@@ -70,7 +71,8 @@ function CollectionView() {
           {" "}
           <ItemsList
             rows={tableData}
-            collectionName={collectionDetails.collectionInfo.name}
+            name={collectionDetails.collectionInfo.name}
+            description={collectionDetails.collectionInfo.description}
             allowedToAction={allowedToAction}
           />
         </>
@@ -87,7 +89,7 @@ function CollectionView() {
         onClick={onClickAddItemHandler}
         disabled={!allowedToAction}
       >
-        Add item
+        <FormattedMessage id="collection-view.add-item-button" />
       </Button>
     </Container>
   );

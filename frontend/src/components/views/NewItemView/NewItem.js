@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styles from "./NewItem.module.css";
 import Container from "react-bootstrap/esm/Container";
 import { Button } from "react-bootstrap";
@@ -9,6 +10,7 @@ import { Autocomplete } from "@mui/material";
 import MessageSnackbar from "../../additional/MessageSnackbar";
 import { getTags, createItem } from "../../../actions/itemActions";
 import { ITEM_CREATE_CLEAN } from "../../../constants/itemConstants";
+import { FormattedMessage } from "react-intl";
 
 function NewItem() {
   const [name, setName] = useState("");
@@ -17,6 +19,7 @@ function NewItem() {
   const [tagsOptions, setTagsOptions] = useState([]);
   const itemCreate = useSelector((state) => state.itemCreate);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onTagsChangeHandler = (event, value) => {
     setSelectedTags(value);
@@ -44,6 +47,10 @@ function NewItem() {
     }
   }, [dispatch, itemCreate.success]);
 
+  const cancelHandler = async () => {
+    navigate("/account");
+  };
+
   const uploadImage = (e, img) => {
     const url = "https://api.cloudinary.com/v1_1/collapp/image/upload";
 
@@ -70,57 +77,76 @@ function NewItem() {
     }
   };
 
-  console.log(tagsOptions);
-
   return (
     <Container>
       {itemCreate && (
-        <MessageSnackbar open={itemCreate.success} message={"Item created."} />
+        <MessageSnackbar
+          open={itemCreate.success}
+          message={<FormattedMessage id="new-item.succes-message" />}
+        />
       )}
 
       <div className={styles.divTitle}>
-        <h1 className={styles.title}>Add item</h1>
+        <h1 className={styles.title}>
+          {<FormattedMessage id="new-item.title" />}
+        </h1>
       </div>
       <Grid className={styles.form}>
         <form>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
-              <TextField
-                type="text"
-                placeholder="Id (generated automatically)"
-                label="Id (generated automatically)"
-                variant="outlined"
-                className={styles.textFieldId}
-                disabled
-              />
+              <FormattedMessage id="new-item.id-label">
+                {(label) => (
+                  <TextField
+                    type="text"
+                    placeholder={label}
+                    label={label}
+                    variant="outlined"
+                    className={styles.textFieldId}
+                    disabled
+                  />
+                )}
+              </FormattedMessage>
             </Grid>
             <Grid xs={12} sm={6} item>
-              <TextField
-                placeholder="Enter name"
-                label="Name"
-                value={name}
-                onChange={onChangeNameHandler}
-                variant="outlined"
-                className={styles.textField}
-              />
+              <FormattedMessage id="new-item.name-label">
+                {(label) => (
+                  <TextField
+                    placeholder={label}
+                    label={label}
+                    value={name}
+                    onChange={onChangeNameHandler}
+                    variant="outlined"
+                    className={styles.textField}
+                  />
+                )}
+              </FormattedMessage>
             </Grid>
             <Grid xs={12} sm={12} item>
-              <Autocomplete
-                isOptionEqualToValue={(option, value) => option === value}
-                multiple
-                freeSolo
-                id="tags-filled"
-                label="Tags"
-                className={styles.input}
-                options={tagsOptions}
-                getOptionLabel={(option) => option || ""}
-                onChange={onTagsChangeHandler}
-                filterSelectedOptions
-                value={selectedTags}
-                renderInput={(params) => (
-                  <TextField {...params} placeholder="Tags" />
+              <FormattedMessage id="new-item.tags-label">
+                {(label) => (
+                  <Autocomplete
+                    isOptionEqualToValue={(option, value) => option === value}
+                    multiple
+                    freeSolo
+                    id="tags-filled"
+                    label={label}
+                    className={styles.input}
+                    options={tagsOptions}
+                    getOptionLabel={(option) => option || ""}
+                    onChange={onTagsChangeHandler}
+                    filterSelectedOptions
+                    value={selectedTags}
+                    renderInput={(params) => (
+                      <FormattedMessage id="new-item.tags-placeholder">
+                        {(placeholder) => (
+                          <TextField {...params} placeholder={placeholder} />
+                        )}
+                      </FormattedMessage>
+                    )}
+                  />
                 )}
-              />
+              </FormattedMessage>
             </Grid>
             <Grid item xs={12}>
               <input
@@ -133,13 +159,21 @@ function NewItem() {
             </Grid>
             <div className={styles.divButton}>
               <Button
+                type="button"
+                variant="secondary"
+                className={styles.subBtn}
+                onClick={cancelHandler}
+              >
+                <FormattedMessage id="new-item.cancel-button" />
+              </Button>
+              <Button
                 type="submit"
                 variant="warning"
                 className={styles.subBtn}
                 onClick={onAddItemHandler}
                 // disabled={userLogin}
               >
-                Add Item
+                <FormattedMessage id="new-item.add-button" />
               </Button>
             </div>
           </Grid>
@@ -148,64 +182,5 @@ function NewItem() {
     </Container>
   );
 }
-
-//   return (
-//     <Container className={styles.addItemCon}>
-//       <Grid>
-//         <form>
-//           <Grid container spacing={1}>
-//             <Grid item xs={12} sm={4}>
-//               <TextField
-//                 type="text"
-//                 placeholder="Id (generated automatically)"
-//                 label="Id (generated automatically)"
-//                 variant="outlined"
-//                 className={styles.textField}
-//                 disabled
-//               />
-//             </Grid>
-//             <Grid xs={12} sm={4} item>
-//               <TextField
-//                 placeholder="Enter name"
-//                 label="Name"
-//                 value={name}
-//                 onChange={onChangeNameHandler}
-//                 variant="outlined"
-//                 className={styles.textField}
-//               />
-//             </Grid>
-//             <Grid xs={12} sm={4} item>
-//               <Autocomplete
-//                 isOptionEqualToValue={(option, value) => option === value}
-//                 multiple
-//                 freeSolo
-//                 id="tags-filled"
-//                 label="Tags"
-//                 className={styles.input}
-//                 options={tagsOptions}
-//                 getOptionLabel={(option) => option || ""}
-//                 onChange={onTagsChangeHandler}
-//                 filterSelectedOptions
-//                 renderInput={(params) => (
-//                   <TextField {...params} placeholder="Tags" />
-//                 )}
-//               />
-//             </Grid>
-//             <div className={styles.divButton}>
-//               <Button
-//                 type="submit"
-//                 variant="warning"
-//                 className={styles.subBtn}
-//                 onClick={onAddItemHandler}
-//               >
-//                 Add Item
-//               </Button>
-//             </div>
-//           </Grid>
-//         </form>
-//       </Grid>
-//     </Container>
-//   );
-// }
 
 export default NewItem;

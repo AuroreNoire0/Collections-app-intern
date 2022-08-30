@@ -6,12 +6,18 @@
   text-align: center;
 }
 
-.container h1 {
+.container h1,
+.container p {
   margin: 1vw;
   font-size: 5vh;
   font-style: italic;
   color: var(--color-collection-header-font);
   font-family: var(--font-family-default);
+}
+
+.container p {
+  font-size: 3vh;
+  font-style: normal;
 }
 
 .title .textField {

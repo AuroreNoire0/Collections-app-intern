@@ -9,6 +9,7 @@ import { Row } from "react-bootstrap";
 import ErrorMessage from "../../additional/ErrorMessage";
 import { Container } from "react-bootstrap";
 import { register } from "../../../actions/userActions";
+import { FormattedMessage } from "react-intl";
 
 const RegisterView = (props) => {
   const isNotEmpty = (value) => value.trim() !== "";
@@ -80,51 +81,70 @@ const RegisterView = (props) => {
       <Form className={regContainer}>
         <span className={styles.title}>Register</span>
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter email"
-            onChange={emailChangedHandler}
-            onBlur={emailBlurHandler}
-            value={email}
-            className={emailStyles}
-          />
+          <Form.Label>
+            <FormattedMessage id="register-view.email-label" />
+          </Form.Label>
+          <FormattedMessage id="register-view.email-placeholder">
+            {(placeholder) => (
+              <Form.Control
+                type="email"
+                placeholder={placeholder}
+                onChange={emailChangedHandler}
+                onBlur={emailBlurHandler}
+                value={email}
+                className={emailStyles}
+              />
+            )}
+          </FormattedMessage>
           {emailHasError && (
-            <p className={styles.errorText}>Please enter a valid email.</p>
+            <p className={styles.errorText}>
+              <FormattedMessage id="register-view.email-error" />
+            </p>
           )}
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicName">
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter your name"
-            className={nameStyles}
-            onChange={nameChangedHandler}
-            onBlur={nameBlurHandler}
-            value={name}
-          />
+          <Form.Label>
+            {<FormattedMessage id="register-view.name-label" />}
+          </Form.Label>
+          <FormattedMessage id="register-view.name-placeholder">
+            {(placeholder) => (
+              <Form.Control
+                type="text"
+                placeholder={placeholder}
+                className={nameStyles}
+                onChange={nameChangedHandler}
+                onBlur={nameBlurHandler}
+                value={name}
+              />
+            )}
+          </FormattedMessage>
           {nameHasError && (
-            <p className={styles.errorText}>This field can't be empty.</p>
+            <p className={styles.errorText}>
+              <FormattedMessage id="register-view.empty-name" />
+            </p>
           )}
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            className={passwordStyles}
-            onChange={passwordChangedHandler}
-            onBlur={passwordBlurHandler}
-            value={password}
-          />
+          <Form.Label>
+            <FormattedMessage id="register-view.password-label" />
+          </Form.Label>
+          <FormattedMessage id="register-view.password-placeholder">
+            {(placeholder) => (
+              <Form.Control
+                type="password"
+                placeholder={placeholder}
+                className={passwordStyles}
+                onChange={passwordChangedHandler}
+                onBlur={passwordBlurHandler}
+                value={password}
+              />
+            )}
+          </FormattedMessage>
           {passwordHasError && (
-            <p className={styles.errorText}>This field can't be empty.</p>
+            <p className={styles.errorText}>
+              <FormattedMessage id="register-view.empty-password" />
+            </p>
           )}
-          {/* {regOK ? (
-            <ErrorMessage variant="success">
-              {"Registration successful! You can log in."}
-            </ErrorMessage>
-          ) : null} */}
           {error ? <ErrorMessage variant="danger">{error}</ErrorMessage> : ""}
         </Form.Group>
 
@@ -136,16 +156,8 @@ const RegisterView = (props) => {
             disabled={!formIsValid}
             onClick={regHandler}
           >
-            Register
+            <FormattedMessage id="register-view.register-button" />
           </Button>
-          {/* <Button
-            variant="secondary"
-            type="button"
-            onClick={props.onCloseRegModal}
-            className={styles.subBtn}
-          >
-            Cancel
-          </Button> */}
         </div>
       </Form>
     </Container>

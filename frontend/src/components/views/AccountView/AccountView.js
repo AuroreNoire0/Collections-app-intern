@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import store from "../../../store";
 import styles from "./AccountView.module.css";
-import CollectionMiniature from "../../additional/CollectionMiniature";
 import MessageSnackbar from "../../additional/MessageSnackbar";
 import Container from "react-bootstrap/esm/Container";
 import Button from "react-bootstrap/Button";
@@ -11,6 +10,7 @@ import { CircularProgress } from "@mui/material";
 import { COLLECTION_DELETE_CLEAN } from "../../../constants/collectionConstants";
 import CollectionCard from "../../additional/CollectionCard";
 import { Row } from "react-bootstrap";
+import { FormattedMessage } from "react-intl";
 
 function AccountView() {
   const {
@@ -46,7 +46,10 @@ function AccountView() {
           <>
             {" "}
             <div className={styles.title}>
-              <p> List of your collections:</p>
+              <p>
+                {" "}
+                <FormattedMessage id="account-view.title" />:
+              </p>
             </div>
             <ul className={styles.collectionList}>
               <Row>
@@ -64,8 +67,14 @@ function AccountView() {
           </>
         ) : (
           <div className={styles.noCollection}>
-            <p> You don't have any collection. </p>
-            <p> Click the button to create new unique collection! </p>
+            <p>
+              {" "}
+              <FormattedMessage id="account-view.no-collection" />{" "}
+            </p>
+            <p>
+              {" "}
+              <FormattedMessage id="account-view.no-collection-create" />{" "}
+            </p>
           </div>
         )}
       </>
@@ -74,16 +83,24 @@ function AccountView() {
 
   return (
     <Container>
-      <MessageSnackbar open={success} message={"Collection deleted."} />
+      <MessageSnackbar
+        open={success}
+        message={
+          <FormattedMessage id="account-view.collection-created-message" />
+        }
+      />
       <div className={styles.welcome}>
-        <p> Hello, {userInfo.name}!</p>
+        <p>
+          {" "}
+          <FormattedMessage id="account-view.hello-message" />, {userInfo.name}!
+        </p>
         <Button
           variant="warning"
           type="button"
           onClick={onCreateCollHandler}
           className={styles.btn}
         >
-          Add new collection
+          <FormattedMessage id="account-view.add-collection-button" />
         </Button>
       </div>
       {loading ? (
