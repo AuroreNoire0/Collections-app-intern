@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { IntlProvider } from "react-intl";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -20,10 +20,10 @@ import EditItem from "./components/views/EditItemView/EditItem";
 import AddItem from "./components/views/NewItemView/NewItem";
 import SearchResultsView from "./components/views/SearchResultsView/SearchResultsView";
 
+import locales from ".//localization/locales";
 import enMessages from ".//localization/en.json";
 import plMessages from ".//localization/pl.json";
 import localStorageKeys from ".//constants/localStorageKeys";
-import locales from ".//localization/locales";
 
 const messages = {
   [locales.EN]: enMessages,
@@ -32,17 +32,20 @@ const messages = {
 
 function App() {
   const [currentLocale, setCurrentLocale] = useState(
-    localStorage.getItem(localStorageKeys.LOCALE) || locales.PL
+    localStorage.getItem(localStorageKeys.LOCALE) || locales.EN
   );
-
   const setLocale = (locale) => {
     localStorage.setItem(localStorageKeys.LOCALE, locale);
     setCurrentLocale(locale);
   };
 
   return (
-    <IntlProvider locale={currentLocale} messages={messages[currentLocale]}>
-      <Header />
+    <IntlProvider
+      locale={currentLocale}
+      defaultLocale="en"
+      messages={messages[currentLocale]}
+    >
+      <Header setLocale={setLocale} />
       <Routes>
         <Route exact path="/" element={<MainView />}></Route>
         <Route path="/login" element={<LoginView />}></Route>

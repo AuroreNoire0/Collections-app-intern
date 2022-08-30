@@ -33,7 +33,7 @@ const ItemsList = (props) => {
   const columns = [
     {
       field: "id",
-      headerName: <FormattedMessage id="item-list.header-id" />,
+      headerName: "ID",
       width: 180,
     },
     {

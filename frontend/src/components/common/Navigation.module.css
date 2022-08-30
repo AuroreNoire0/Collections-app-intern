@@ -53,3 +53,17 @@
   color: var(--color-link-hover);
   text-shadow: 60px rgb(43, 42, 42);
 }
+
+.flags {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0vh 1vh;
+  width: 16vh;
+}
+
+.flag {
+  width: 6.5vh;
+  padding: 0.5vw;
+  cursor: pointer;
+}

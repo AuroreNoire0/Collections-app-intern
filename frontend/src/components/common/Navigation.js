@@ -10,8 +10,10 @@ import Switch from "@mui/material/Switch";
 import Tooltip from "@mui/material/Tooltip";
 import { logout } from "../../actions/userActions";
 import { FormattedMessage } from "react-intl";
+import { GB, PL } from "country-flag-icons/react/3x2";
+import locales from "../../localization/locales";
 
-export default function Navigation() {
+export default function Navigation(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userLogin = useSelector((state) => state.userLogin);
@@ -30,6 +32,10 @@ export default function Navigation() {
     ? document.body.setAttribute("data-theme", "dark")
     : document.body.setAttribute("data-theme", "light");
 
+  const onLanguageChangeHandler = (value) => {
+    props.setLocale(value);
+  };
+
   return (
     <Navbar expand="lg" className={styles.navbar}>
       <Container className={styles.navContainer}>
@@ -37,7 +43,10 @@ export default function Navigation() {
           Collection App
         </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+        <Navbar.Collapse
+          id="basic-navbar-nav"
+          className="justify-content-end align-items-center"
+        >
           <Nav>
             {!userInfo ? (
               <>
@@ -81,6 +90,20 @@ export default function Navigation() {
             >
               <Switch {...label} />
             </Tooltip>
+            <div className={styles.flags}>
+              <GB
+                title="English"
+                className={styles.flag}
+                value={locales.EN}
+                onClick={() => onLanguageChangeHandler(locales.EN)}
+              />
+
+              <PL
+                title="Polski"
+                className={styles.flag}
+                onClick={() => onLanguageChangeHandler(locales.PL)}
+              />
+            </div>
           </Nav>
         </Navbar.Collapse>
       </Container>
