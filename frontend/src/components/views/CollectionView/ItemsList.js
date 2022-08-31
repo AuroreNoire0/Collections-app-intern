@@ -80,7 +80,12 @@ const ItemsList = (props) => {
         {" "}
         <FormattedMessage id="item-list.collection-title" /> "{props.name}"{" "}
       </h1>
-      <p>{props.description}</p>
+      <div>
+        <div
+          dangerouslySetInnerHTML={{ __html: props.description }}
+          className={styles.description}
+        ></div>
+      </div>
       {props.rows.length !== 0 ? (
         <>
           <div style={{ height: 400, width: "100%" }}>

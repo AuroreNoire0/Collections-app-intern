@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useRef, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -16,6 +16,8 @@ import locales from "../../localization/locales";
 export default function Navigation(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const wrapperRef = useRef(null);
+  useOutsideAlerter(wrapperRef);
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const [checked, setChecked] = useState(false);
@@ -36,6 +38,23 @@ export default function Navigation(props) {
     props.setLocale(value);
   };
 
+  function useOutsideAlerter(ref) {
+    useEffect(() => {
+      function handleClickOutside(event) {
+        if (
+          ref.current &&
+          !ref.current.contains(event.target) &&
+          wrapperRef.current.classList.contains("show")
+        ) {
+          wrapperRef.current.classList.remove("show");
+        }
+      }
+      document.addEventListener("click", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [ref]);
+  }
   return (
     <Navbar expand="lg" className={styles.navbar}>
       <Container className={styles.navContainer}>
@@ -46,6 +65,7 @@ export default function Navigation(props) {
         <Navbar.Collapse
           id="basic-navbar-nav"
           className="justify-content-end align-items-center"
+          ref={wrapperRef}
         >
           <Nav>
             {!userInfo ? (

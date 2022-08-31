@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styles from "./NewCollection.module.css";
@@ -13,6 +13,9 @@ import { topics } from "../../../constants/topicConstants";
 import { COLLECTION_CREATE_CLEAN } from "../../../constants/collectionConstants";
 import store from "../../../store";
 import { FormattedMessage } from "react-intl";
+import Yamde from "yamde";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 function NewCollection() {
   const {
@@ -27,6 +30,8 @@ function NewCollection() {
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [description, setDescription] = useState("");
+  const ref = useRef(null);
 
   useEffect(() => {
     if (success) {
@@ -54,6 +59,17 @@ function NewCollection() {
     createColl();
   };
 
+  const onChangeQuill = (content, delta, source, editor) => {
+    console.log(editor.getHTML()); // HTML/rich text
+    // setDescription(editor.getText());
+    console.log(editor.getContents());
+    setValues({ ...values, description: editor.getHTML() });
+    // // console.log(editor.getText()); // plain text
+    // // const justHtml = editor.root.innerHTML;
+    // // console.log(justHtml);
+  };
+  console.log(values);
+
   const uploadImage = (e, img) => {
     const url = "https://api.cloudinary.com/v1_1/collapp/image/upload";
 
@@ -80,6 +96,11 @@ function NewCollection() {
     }
   };
   console.log(values);
+  console.log(description);
+  const onChange = (e, value) => {
+    setValues({ ...values, description: value });
+    console.log(e.target);
+  };
   return (
     <Container>
       <MessageSnackbar
@@ -129,7 +150,7 @@ function NewCollection() {
                 )}
               </FormattedMessage>
             </Grid>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <FormattedMessage id="new-collection.description-label">
                 {(label) => (
                   <TextField
@@ -144,7 +165,17 @@ function NewCollection() {
                   />
                 )}
               </FormattedMessage>
+            </Grid> */}
+            <Grid item xs={12}>
+              <ReactQuill
+                theme="snow"
+                // value={description}
+                name="description"
+                onChange={onChangeQuill}
+                ref={ref}
+              />
             </Grid>
+            {/* <div dangerouslySetInnerHTML={{ __html: values.description }}></div> */}
             <Grid item xs={4}>
               <TextField
                 type="text"
@@ -152,7 +183,7 @@ function NewCollection() {
                 label="Name of property"
                 variant="outlined"
                 className={styles.textField}
-                onChange={onChangeHandler}
+                onChange={onChange}
               />
             </Grid>
             <Grid item xs={8}>
@@ -161,6 +192,7 @@ function NewCollection() {
                 placeholder="Enter other value"
                 label="Other value"
                 variant="outlined"
+                value={description}
                 className={styles.textField}
               />
             </Grid>
@@ -182,6 +214,50 @@ function NewCollection() {
                 className={styles.textField}
               />
             </Grid>
+            {/* <Grid item xs={12}>
+              <ReactQuill
+                theme="snow"
+                value={text}
+                name="description"
+                onChange={setText}
+              />
+            </Grid> */}
+            {/* // YAMDE */}
+            {/* <Grid item xs={12}>
+              <div className="container">
+                <Yamde
+                  value={text}
+                  handler={setText}
+                  toolbar={[
+                    "bold",
+                    "italic",
+                    "strikethrough",
+                    "quote",
+                    "heading1",
+                    "heading2",
+                    "heading3",
+                    "ulist",
+                    "olist",
+                  ]}
+                  theme="light"
+                />
+              </div> */}
+
+            {/* <FormattedMessage id="new-collection.description-label">
+                {(label) => (
+                  <TextField
+                    id="outlined-multiline-static"
+                    label={label}
+                    multiline
+                    rows={4}
+                    name="description"
+                    placeholder={label}
+                    className={styles.textField}
+                    onChange={onChangeHandler}
+                  />
+                )}
+              </FormattedMessage> */}
+            {/* </Grid> */}
             <Grid item xs={12}>
               <input
                 accept="image/*"

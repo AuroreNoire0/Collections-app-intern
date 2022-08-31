@@ -20,6 +20,11 @@
   font-style: normal;
 }
 
+.description {
+  font-size: 3vh;
+  font-family: var(--font-family-default);
+}
+
 .title .textField {
   width: 100% !important;
 }

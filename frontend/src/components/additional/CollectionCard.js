@@ -66,7 +66,10 @@ const CollectionCard = (props) => {
         </div>
         <Card.Body>
           <Card.Title className={styles.title}>{props.name}</Card.Title>
-          <Card.Text>{props.description}</Card.Text>
+          <div
+            dangerouslySetInnerHTML={{ __html: props.description }}
+            className={styles.description}
+          ></div>
         </Card.Body>
         <Card.Footer>
           <small className="text-muted">Last updated 3 mins ago</small>
