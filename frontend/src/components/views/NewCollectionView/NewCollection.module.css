@@ -18,7 +18,8 @@
   margin: 2rem 0rem;
 }
 
-.textFieldTopic > div {
+.textFieldTopic > div,
+.inputTypeSelect > div {
   padding-top: 0.35rem;
   font-size: 1.3rem;
   color: var(--color-default-font);
@@ -34,13 +35,22 @@
   width: 100% !important;
   font-family: var(--font-family-default);
 }
+
+.createBtn {
+  display: flex;
+  font-size: 1.5rem;
+  font-family: var(--font-family-default);
+}
+
 .subBtn {
   font-size: 1.8rem;
   margin: 2rem 0rem 2rem 2rem;
 }
 
 .textField,
-.textFieldTopic {
+.textFieldTopic,
+.inputTypeSelect,
+.inputNumber {
   width: 100% !important;
 }
 
@@ -48,13 +58,15 @@
 .form label,
 .form input,
 .form textarea,
-.form menuitem {
-  font-size: 1.5rem;
+.form menuitem,
+.form .description {
+  font-size: 1.4rem;
   color: var(--color-default-font);
 }
 
+.form ::placeholder,
 .form label {
-  font-size: 1.3rem;
+  color: var(--color-default-font-label);
 }
 
 ul {
@@ -63,4 +75,24 @@ ul {
 }
 ul > li {
   font-size: 1.3rem !important;
+}
+
+.moreFields {
+  font-size: 1.7rem;
+  font-family: var(--font-family-default);
+  padding: 1rem;
+  width: 100%;
+  margin: 0;
+}
+
+.form svg {
+  color: var(--color-default-font);
+}
+
+.additionalInputs {
+  padding: 2rem !important;
+}
+
+.gridAdditionalInput {
+  width: 100%;
 }

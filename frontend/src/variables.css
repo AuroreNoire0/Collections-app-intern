@@ -1,6 +1,7 @@
 :root {
   --color-logo: #222;
   --color-default-font: #aa9390;
+  --color-default-font-label: #aa9390bb;
   --color-navbar-bg: #1c1c22;
   --color-navbar-box-shadow: rgb(116, 109, 109);
   --color-navbrand: #aa9390;
@@ -44,6 +45,7 @@
 body[data-theme="light"] {
   --color-logo: #222;
   --color-default-font: #222;
+  --color-default-font-label: rgba(28, 27, 27, 0.853);
   --color-navbar-bg: #aa9390;
   --color-navbar-box-shadow: rgb(81, 77, 77);
   --color-navbrand: black;
@@ -87,6 +89,7 @@ body[data-theme="light"] {
 body[data-theme="dark"] {
   --color-logo: #222;
   --color-default-font: #aa9390;
+  --color-default-font-label: #aa93909e;
   --color-navbar-bg: #1c1c22;
   --color-navbar-box-shadow: rgb(116, 109, 109);
   --color-navbrand: #aa9390;

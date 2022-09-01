@@ -1,0 +1,9 @@
+@import "../../../variables.css";
+
+.gridAdditionalInput > div > label {
+  padding: 1rem;
+  margin-left: 0;
+}
+.textField {
+  width: 100% !important;
+}
