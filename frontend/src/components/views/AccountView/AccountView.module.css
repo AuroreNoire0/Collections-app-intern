@@ -35,14 +35,16 @@
 }
 
 .noCollection {
-  background-color: #aa939053;
+  background-color: var(--color-no-collection-bg);
+  border: 1px solid var(--color-no-collection-border);
+  font-family: var(--font-family-default);
+  padding: 1vh;
   flex-direction: column;
   display: flex;
   justify-content: center;
-  align-items: center;
-  font-size: 3rem;
+  text-align: center;
+  font-size: 2.5rem;
   font-style: italic;
-  border: 1px solid rgba(170, 147, 144, 0.866);
   border-radius: 10px;
   margin: 2rem;
 }
@@ -52,4 +54,5 @@
   align-items: center;
   justify-content: center;
   color: var(--color-default-font);
+  height: 40rem;
 }

@@ -175,7 +175,7 @@ function NewCollection() {
                 ref={ref}
               />
             </Grid>
-            {/* <div dangerouslySetInnerHTML={{ __html: values.description }}></div> */}
+
             <Grid item xs={4}>
               <TextField
                 type="text"

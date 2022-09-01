@@ -41,21 +41,20 @@ function AdminView() {
       );
       setTableData(userRows);
     };
-    fetchUsers();
+    userLogin.login &&
+      userLogin.userInfo.admin &&
+      (userLogin.userInfo.status === "Active" ||
+        userLogin.userInfo.status === "Aktywny") &&
+      fetchUsers();
     (!userLogin.login ||
       userLogin.userInfo.status === "Blocked" ||
       userLogin.userInfo.status === "Zablokowany") &&
       navigate("/");
-    userLogin.login && !userLogin.userInfo.admin && navigate("/account");
-  }, [
-    dispatch,
-    userUpdate.success,
-    userDelete.success,
-    navigate,
-    userLogin.login,
-    userLogin.userInfo.admin,
-    userLogin.userInfo.status,
-  ]);
+    userLogin.login &&
+      userLogin.userInfo &&
+      !userLogin.userInfo.admin &&
+      navigate("/account");
+  }, [dispatch, userUpdate.success, userDelete.success, navigate, userLogin]);
 
   const onBlockHandler = () => {
     selectedItems.forEach((i) => {

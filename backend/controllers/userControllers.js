@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler");
 const generateToken = require("../utils/generateToken");
 const User = require("../models/userModel");
 const Collection = require("../models/collectionModel");
+const Item = require("../models/itemModel");
 
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
@@ -64,15 +65,21 @@ const getUsers = asyncHandler(async (req, res) => {
 const deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
   const userCollections = await Collection.find({ authorId: req.params.id });
+  const userItems = await Item.find({ authorId: req.params.id });
 
-  console.log(userCollections);
-  // if (user) {
-  //   await user.remove();
-  //   res.json({ id: req.params.id, message: "User deleted" });
-  // } else {
-  //   res.status(404);
-  //   throw new Error("User not found");
-  // }
+  if (user) {
+    await user.remove();
+
+    userCollections &&
+      userCollections.forEach(async (col) => await col.remove());
+
+    userItems && userItems.forEach(async (item) => await item.remove());
+
+    res.json({ id: req.params.id, message: "User deleted" });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
 });
 
 const getUserDetails = asyncHandler(async (req, res) => {

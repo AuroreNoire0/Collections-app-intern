@@ -143,11 +143,10 @@ export const updateUser = (id, action) => async (dispatch) => {
       config
     );
 
-    console.log(action);
-
     dispatch({ type: USER_UPDATE_SUCCESS, payload: data });
 
     userInfo._id === id &&
+      action !== "block" &&
       dispatch({ type: USER_LOGIN_SUCCESS, payload: data }) &&
       localStorage.setItem("userInfo", JSON.stringify(data));
     userInfo._id === id && action === "block" && dispatch(logout());
