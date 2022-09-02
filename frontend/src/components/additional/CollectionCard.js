@@ -43,7 +43,7 @@ const CollectionCard = (props) => {
   };
 
   return (
-    <Col md={6} xl={4}>
+    <Col md={6} xl={4} className={styles.wrapper}>
       <Card className={styles.cardContainer} onClick={onClickCollection}>
         <div className={styles.imgContainer}>
           <Card.Img variant="top" src={imgSrc} />

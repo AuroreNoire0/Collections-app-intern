@@ -19,9 +19,9 @@ import "react-quill/dist/quill.snow.css";
 import AdditionalInput from "./AdditionalInput";
 
 function NewCollection() {
-  const {
-    collectionCreate: { success },
-  } = store.getState();
+  // const {
+  //   collectionCreate: { success },
+  // } = store.getState();
   const collectionCreate = useSelector((state) => state.collectionCreate);
   const [values, setValues] = useState({
     name: "",
@@ -30,17 +30,20 @@ function NewCollection() {
     img: "",
   });
   const [additionalInputs, setAdditionalInputs] = useState([]);
-  const [inputToCreate, setInputToCreate] = useState({ type: "", name: "" });
+  const [inputToCreate, setInputToCreate] = useState({
+    type: "String",
+    name: "",
+  });
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (success) {
+    if (collectionCreate.success) {
       setTimeout(() => {
         dispatch({ type: COLLECTION_CREATE_CLEAN });
       }, 5000);
     }
-  }, [dispatch, success]);
+  }, [dispatch, collectionCreate.success]);
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -54,8 +57,11 @@ function NewCollection() {
   const onFormSubmit = async (e) => {
     e.preventDefault();
     const { name, topic, description, img } = values;
+    console.log(additionalInputs);
     const createColl = () => {
-      dispatch(createCollection(name, topic, description, img));
+      dispatch(
+        createCollection(name, topic, description, img, additionalInputs)
+      );
     };
     createColl();
   };
@@ -95,24 +101,25 @@ function NewCollection() {
       : setInputToCreate({ ...inputToCreate, name: e.target.value });
   };
   const renderNewInputHandler = () => {
-    // additionalInputs.push({
-    //   type: inputToCreate.type,
-    //   name: inputToCreate.name,
-    // });
     setAdditionalInputs((prevState) => [
       ...prevState,
       {
         type: inputToCreate.type,
         name: inputToCreate.name,
+        value: "",
       },
     ]);
   };
-  console.log(additionalInputs);
-  console.log(inputToCreate);
+
+  const onDeleteInputHandler = (e) => {
+    additionalInputs.splice(e.target.id, 1);
+    setAdditionalInputs((prevState) => [...prevState]);
+  };
+
   return (
     <Container>
       <MessageSnackbar
-        open={success}
+        open={collectionCreate.success}
         message={<FormattedMessage id="new-collection.succes-message" />}
       />
       <div className={styles.divTitle}>
@@ -188,6 +195,7 @@ function NewCollection() {
                     select
                     label={label}
                     name="type"
+                    value={inputToCreate.type}
                     className={styles.inputTypeSelect}
                     onChange={onChangeNewInputHandler}
                   >
@@ -205,19 +213,12 @@ function NewCollection() {
                 {(label) => (
                   <TextField
                     id="outlined-select-currency"
-                    multiline
                     label={label}
                     value={inputToCreate.name}
                     name="nameInp"
-                    className={styles.inputNumber}
+                    className={styles.textField}
                     onChange={onChangeNewInputHandler}
-                  >
-                    {inputTypes.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
+                  />
                 )}
               </FormattedMessage>
             </Grid>
@@ -239,11 +240,13 @@ function NewCollection() {
             </Grid>
             <Grid item className={styles.gridAdditionalInput}>
               <Grid container spacing={1}>
-                {additionalInputs.map((inp) => (
+                {additionalInputs.map((inp, index) => (
                   <AdditionalInput
-                    key={inp.name}
+                    key={index}
+                    id={index}
                     label={inp.name}
                     type={inp.type}
+                    onDeleteInput={onDeleteInputHandler}
                   />
                 ))}
               </Grid>

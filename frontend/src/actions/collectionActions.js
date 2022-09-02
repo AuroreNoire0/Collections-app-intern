@@ -114,7 +114,7 @@ export const deleteCollection = (id) => async (dispatch) => {
 };
 
 export const createCollection =
-  (name, topic, description, img) => async (dispatch) => {
+  (name, topic, description, img, additionalInputs) => async (dispatch) => {
     try {
       dispatch({ type: COLLECTION_CREATE_REQUEST });
 
@@ -132,10 +132,19 @@ export const createCollection =
       let author = userInfo.name;
       let authorId = userInfo._id;
       let items = [];
-
+      console.log(additionalInputs);
       const { data } = await axios.post(
         `/api/create-collection`,
-        { name, description, topic, img, author, authorId, items },
+        {
+          name,
+          description,
+          topic,
+          img,
+          author,
+          authorId,
+          items,
+          additionalInputs,
+        },
         config
       );
 
@@ -154,7 +163,7 @@ export const createCollection =
   };
 
 export const updateCollection =
-  (name, topic, description, img, id) => async (dispatch) => {
+  (name, topic, description, img, additionalInputs, id) => async (dispatch) => {
     try {
       dispatch({ type: COLLECTION_UPDATE_REQUEST });
       console.log(id);
@@ -171,10 +180,10 @@ export const updateCollection =
 
       let author = userInfo.name;
       let authorId = userInfo._id;
-
+      console.log(additionalInputs);
       const { data } = await axios.post(
         `/api/update-collection/${id}`,
-        { name, description, topic, img },
+        { name, description, topic, img, additionalInputs },
         config
       );
 

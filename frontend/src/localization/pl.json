@@ -86,7 +86,7 @@
   "new-collection.create-inputs-button": "Stwórz pole",
   "new-collection.add-button": "Dodaj kolekcję",
   "new-collection.cancel-button": "Anuluj",
-  "new-collection.additional-fields": "Stwórz dodatkowe pola, które pomogą Ci lepiej opisać przedmioty w tej kolekcji.",
+  "new-collection.additional-fields": "Stwórz dodatkowe pola, które pomogą Ci lepiej opisać przedmioty w tej kolekcji. Podstawowe pola to id, nazwa oraz tagi.",
   "additional-input.your-name-placeholder": "Nazwa pola",
   "additional-input.your-value-placeholder": "Wartość",
   "new-item.succes-message": "Przedmiot stworzony.",

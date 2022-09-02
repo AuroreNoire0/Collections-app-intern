@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import image from "../../../img/NoImg.jpg";
 import { FormattedMessage } from "react-intl";
+import AdditionalInfo from "./AdditionalInfo";
 
 function ItemView() {
   const params = useParams();
@@ -82,6 +83,16 @@ function ItemView() {
                       {itemDetails.itemInfo.author}{" "}
                     </Link>
                   </span>
+                  {itemDetails.itemInfo &&
+                    itemDetails.itemInfo.additionalInputs &&
+                    itemDetails.itemInfo.additionalInputs.map((ai, index) => (
+                      <AdditionalInfo
+                        type={ai.type}
+                        label={ai.name}
+                        value={ai.value}
+                        key={index}
+                      />
+                    ))}
                 </Card.Text>
                 <Link
                   to={`/collection/${itemDetails.itemInfo.collectionId}`}

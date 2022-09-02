@@ -26,57 +26,59 @@ import axios from "axios";
 import { getCollectionDetails } from "./collectionActions";
 import { getUserDetails } from "./userActions";
 
-export const createItem = (name, img, tags) => async (dispatch) => {
-  try {
-    dispatch({ type: ITEM_CREATE_REQUEST });
+export const createItem =
+  (name, img, tags, additionalInputs) => async (dispatch) => {
+    try {
+      dispatch({ type: ITEM_CREATE_REQUEST });
 
-    const {
-      userLogin: { userInfo },
-      collectionDetails: { collectionInfo },
-    } = store.getState();
+      const {
+        userLogin: { userInfo },
+        collectionDetails: { collectionInfo },
+      } = store.getState();
 
-    const config = {
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
 
-    let author = userInfo.name;
-    let authorId = userInfo._id;
-    let collectionName = collectionInfo.name;
-    let collectionId = collectionInfo._id;
-    let comments = [];
+      let author = userInfo.name;
+      let authorId = userInfo._id;
+      let collectionName = collectionInfo.name;
+      let collectionId = collectionInfo._id;
+      let comments = [];
 
-    const { data } = await axios.post(
-      `/api/create-item`,
-      {
-        name,
-        tags,
-        author,
-        authorId,
-        collectionName,
-        collectionId,
-        comments,
-        img,
-      },
-      config
-    );
+      const { data } = await axios.post(
+        `/api/create-item`,
+        {
+          name,
+          tags,
+          author,
+          authorId,
+          collectionName,
+          collectionId,
+          comments,
+          img,
+          additionalInputs,
+        },
+        config
+      );
 
-    dispatch({ type: ITEM_CREATE_SUCCESS, payload: data });
-    dispatch(getCollectionDetails(collectionId));
-    // dispatch(getUserDetails(authorId));
-  } catch (error) {
-    const message =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message;
-    dispatch({
-      type: ITEM_CREATE_FAIL,
-      payload: message,
-    });
-  }
-};
+      dispatch({ type: ITEM_CREATE_SUCCESS, payload: data });
+      dispatch(getCollectionDetails(collectionId));
+      // dispatch(getUserDetails(authorId));
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({
+        type: ITEM_CREATE_FAIL,
+        payload: message,
+      });
+    }
+  };
 
 export const deleteItem = (id) => async (dispatch) => {
   try {

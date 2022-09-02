@@ -42,7 +42,7 @@ export const createComment = (content) => async (dispatch) => {
     dispatch({ type: COMMENT_CREATE_SUCCESS, payload: data });
     dispatch(getItemDetails(itemId));
     dispatch(getCollectionDetails(collectionId));
-    dispatch(getUserDetails());
+    dispatch(getUserDetails(authorItemId)); /* necessary??  */
   } catch (error) {
     const message =
       error.response && error.response.data.message

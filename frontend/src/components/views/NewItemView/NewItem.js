@@ -11,13 +11,17 @@ import MessageSnackbar from "../../additional/MessageSnackbar";
 import { getTags, createItem } from "../../../actions/itemActions";
 import { ITEM_CREATE_CLEAN } from "../../../constants/itemConstants";
 import { FormattedMessage } from "react-intl";
+import AdditionalInput from "../NewCollectionView/AdditionalInput";
 
 function NewItem() {
   const [name, setName] = useState("");
   const [imgSrc, setImgSrc] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
   const [tagsOptions, setTagsOptions] = useState([]);
+  const [values, setValues] = useState([{}]);
+  const [additionalInputs, setAdditionalInputs] = useState([]);
   const itemCreate = useSelector((state) => state.itemCreate);
+  const collectionDetails = useSelector((state) => state.collectionDetails);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -28,7 +32,7 @@ function NewItem() {
   const onAddItemHandler = (e) => {
     e.preventDefault();
     let tags = selectedTags;
-    dispatch(createItem(name, imgSrc, tags));
+    dispatch(createItem(name, imgSrc, tags, additionalInputs));
   };
 
   useEffect(() => {
@@ -39,6 +43,16 @@ function NewItem() {
     tags();
   }, [dispatch]);
 
+  useEffect(() => {
+    const additInp = async () => {
+      setAdditionalInputs(collectionDetails.collectionInfo.additionalInputs);
+    };
+    collectionDetails.collectionInfo &&
+      collectionDetails.collectionInfo.additionalInputs &&
+      additInp();
+  }, [collectionDetails.collectionInfo]);
+
+  console.log(additionalInputs);
   useEffect(() => {
     if (itemCreate.success) {
       setTimeout(() => {
@@ -77,6 +91,16 @@ function NewItem() {
     }
   };
 
+  const onChangeAdditInputHandler = (e) => {
+    console.log(e.target.type);
+    console.log(e.target.ariaLabel);
+    console.log(additionalInputs);
+    e.target.type === "checkbox"
+      ? (additionalInputs[e.target.ariaLabel].value = e.target.checked)
+      : (additionalInputs[e.target.ariaLabel].value = e.target.value);
+    setAdditionalInputs((prevState) => [...prevState]);
+  };
+
   return (
     <Container>
       {itemCreate && (
@@ -99,7 +123,6 @@ function NewItem() {
                 {(label) => (
                   <TextField
                     type="text"
-                    placeholder={label}
                     label={label}
                     variant="outlined"
                     className={styles.textFieldId}
@@ -112,7 +135,6 @@ function NewItem() {
               <FormattedMessage id="new-item.name-label">
                 {(label) => (
                   <TextField
-                    placeholder={label}
                     label={label}
                     value={name}
                     onChange={onChangeNameHandler}
@@ -140,7 +162,7 @@ function NewItem() {
                     renderInput={(params) => (
                       <FormattedMessage id="new-item.tags-placeholder">
                         {(placeholder) => (
-                          <TextField {...params} placeholder={placeholder} />
+                          <TextField {...params} label={placeholder} />
                         )}
                       </FormattedMessage>
                     )}
@@ -148,6 +170,19 @@ function NewItem() {
                 )}
               </FormattedMessage>
             </Grid>
+            {collectionDetails.collectionInfo &&
+              collectionDetails.collectionInfo.additionalInputs &&
+              collectionDetails.collectionInfo.additionalInputs.map(
+                (inp, index) => (
+                  <AdditionalInput
+                    key={index}
+                    id={index}
+                    label={inp.name}
+                    type={inp.type}
+                    onChange={onChangeAdditInputHandler}
+                  />
+                )
+              )}
             <Grid item xs={12}>
               <input
                 accept="image/*"

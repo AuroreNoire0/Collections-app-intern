@@ -51,16 +51,17 @@ function CommentsSection(props) {
                 <div className={styles.userImg}></div>
               </Col>
               <Col className={styles.commentDetails} lg={10}>
-                <TextareaAutosize
-                  aria-label="minimum height"
-                  minRows={5}
-                  placeholder={
-                    <FormattedMessage id="comments-section.comment-placeholder" />
-                  }
-                  onChange={onChangeCommentHandler}
-                  className={styles.textArea}
-                />
-
+                <FormattedMessage id="comments-section.comment-placeholder">
+                  {(label) => (
+                    <TextareaAutosize
+                      aria-label="minimum height"
+                      minRows={5}
+                      placeholder={label}
+                      onChange={onChangeCommentHandler}
+                      className={styles.textArea}
+                    />
+                  )}
+                </FormattedMessage>
                 <Button
                   type="button"
                   variant="warning"

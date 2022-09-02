@@ -52,7 +52,7 @@ function AccountView() {
               </p>
             </div>
             <ul className={styles.collectionList}>
-              <Row>
+              <Row className={styles.collectionWrapper}>
                 {userCollections.map((col) => (
                   <CollectionCard
                     name={col.name}

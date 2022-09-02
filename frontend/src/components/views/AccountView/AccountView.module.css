@@ -32,8 +32,12 @@
   list-style-type: none;
   padding: 0;
   background-color: var(--color-main-bg);
+  align-items: center;
 }
 
+.collectionWrapper {
+  justify-content: center;
+}
 .noCollection {
   background-color: var(--color-no-collection-bg);
   border: 1px solid var(--color-no-collection-border);

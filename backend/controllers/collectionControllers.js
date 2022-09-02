@@ -55,7 +55,17 @@ const getUserCollections = asyncHandler(async (req, res) => {
 // });
 
 const createCollection = asyncHandler(async (req, res) => {
-  const { name, description, topic, author, authorId, items, img } = req.body;
+  const {
+    name,
+    description,
+    topic,
+    author,
+    authorId,
+    items,
+    img,
+    additionalInputs,
+  } = req.body;
+  console.log(additionalInputs);
 
   if (!name || !description || !topic || !authorId || !author) {
     res.status(400);
@@ -69,6 +79,7 @@ const createCollection = asyncHandler(async (req, res) => {
       author,
       items,
       img,
+      additionalInputs,
     });
 
     const createdCollection = await newCollection.save();

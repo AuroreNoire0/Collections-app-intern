@@ -27,6 +27,7 @@ const collectionSchema = mongoose.Schema(
       type: String,
       required: false,
     },
+    additionalInputs: [],
     items: [Item],
   },
   {

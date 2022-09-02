@@ -44,6 +44,7 @@ const itemSchema = mongoose.Schema(
         required: false,
       },
     ],
+    additionalInputs: [],
   },
   {
     timestamps: true,

@@ -13,6 +13,7 @@ const createItem = asyncHandler(async (req, res) => {
     collectionId,
     comments,
     img,
+    additionalInputs,
   } = req.body;
 
   if (!name || !collectionName || !collectionId || !authorId || !author) {
@@ -28,6 +29,7 @@ const createItem = asyncHandler(async (req, res) => {
       collectionId,
       comments,
       img,
+      additionalInputs,
     });
 
     const createdItem = await newItem.save();
