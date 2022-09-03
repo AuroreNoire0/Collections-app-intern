@@ -17,6 +17,7 @@ import {
 } from "../../../actions/itemActions";
 import { ITEM_UPDATE_CLEAN } from "../../../constants/itemConstants";
 import { FormattedMessage } from "react-intl";
+import AdditionalInput from "../../additional/AdditionalInput";
 
 function EditItem() {
   const itemDetails = useSelector((state) => state.itemDetails);
@@ -27,6 +28,7 @@ function EditItem() {
   });
   const [tagsOptions, setTagsOptions] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
+  const [additionalInputs, setAdditionalInputs] = useState([]);
   const params = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -53,6 +55,16 @@ function EditItem() {
     };
     tags();
   }, [dispatch]);
+
+  useEffect(() => {
+    const additInp = () => {
+      const inputs = itemDetails.itemInfo.additionalInputs
+        .slice()
+        .map((el) => ({ ...el }));
+      setAdditionalInputs(inputs);
+    };
+    itemDetails.itemInfo && itemDetails.itemInfo.additionalInputs && additInp();
+  }, [itemDetails.itemInfo]);
 
   useEffect(() => {
     if (itemUpdate.success) {
@@ -98,14 +110,19 @@ function EditItem() {
       return console.log("Please select an image");
     }
   };
+  const onChangeAdditInputHandler = (e) => {
+    e.target.type === "checkbox"
+      ? (additionalInputs[e.target.id].value = e.target.checked)
+      : (additionalInputs[e.target.id].value = e.target.value);
+    setAdditionalInputs((prevState) => [...prevState]);
+  };
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     const { name, img } = values;
     let tags = selectedTags;
-    console.log(params.id);
     const editItem = () => {
-      dispatch(updateItem(name, tags, img, params.id));
+      dispatch(updateItem(name, tags, img, additionalInputs, params.id));
     };
     editItem();
   };
@@ -129,7 +146,7 @@ function EditItem() {
                 {(placeholder) => (
                   <TextField
                     type="text"
-                    placeholder={placeholder}
+                    label={placeholder}
                     value={params.id}
                     variant="outlined"
                     className={styles.textFieldId}
@@ -142,7 +159,6 @@ function EditItem() {
               <FormattedMessage id="edit-item.name-placeholder">
                 {(placeholder) => (
                   <TextField
-                    placeholder={placeholder}
                     label={placeholder}
                     value={values.name}
                     name="name"
@@ -171,7 +187,7 @@ function EditItem() {
                     renderInput={(params) => (
                       <FormattedMessage id="edit-item.tags-placeholder">
                         {(placeholder) => (
-                          <TextField {...params} placeholder={placeholder} />
+                          <TextField {...params} label={placeholder} />
                         )}
                       </FormattedMessage>
                     )}
@@ -179,6 +195,18 @@ function EditItem() {
                 )}
               </FormattedMessage>
             </Grid>
+            {itemDetails.itemInfo &&
+              itemDetails.itemInfo.additionalInputs &&
+              additionalInputs.map((inp, index) => (
+                <AdditionalInput
+                  key={index}
+                  id={index}
+                  name={inp.name}
+                  inputType={inp.type}
+                  value={inp.value}
+                  onChange={onChangeAdditInputHandler}
+                />
+              ))}
             <Grid item xs={12}>
               <input
                 accept="image/*"

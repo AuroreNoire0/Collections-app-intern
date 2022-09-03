@@ -12,7 +12,7 @@ import { CircularProgress, Tooltip } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import MessageSnackbar from "../../additional/MessageSnackbar";
 import { useNavigate } from "react-router-dom";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 function AdminView() {
   const users = useSelector((state) => state.users);
@@ -23,38 +23,50 @@ function AdminView() {
   const [tableData, setTableData] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const intl = useIntl();
+  const locale = localStorage.getItem("app.locale");
   const btnsStyles = `${styles.actionButtons}`;
 
   useEffect(() => {
     const fetchUsers = async () => {
       const usersList = await dispatch(getUsers());
       let userRows = [];
-      usersList.map((user) =>
+      usersList.map((user) => {
         userRows.push({
           id: user._id,
           name: user.name,
           email: user.email,
-          status: user.status,
-          admin: user.admin,
-        })
-      );
+          status:
+            user.status === "Blocked"
+              ? intl.formatMessage({ id: "admin-view.blocked" })
+              : intl.formatMessage({ id: "admin-view.active" }),
+          admin:
+            user.admin === true
+              ? intl.formatMessage({ id: "admin-view.true" })
+              : intl.formatMessage({ id: "admin-view.false" }),
+        });
+      });
       setTableData(userRows);
     };
+
     userLogin.login &&
       userLogin.userInfo.admin &&
-      (userLogin.userInfo.status === "Active" ||
-        userLogin.userInfo.status === "Aktywny") &&
+      userLogin.userInfo.status === "Active" &&
       fetchUsers();
-    (!userLogin.login ||
-      userLogin.userInfo.status === "Blocked" ||
-      userLogin.userInfo.status === "Zablokowany") &&
+    (!userLogin.login || userLogin.userInfo.status === "Blocked") &&
       navigate("/");
     userLogin.login &&
       userLogin.userInfo &&
       !userLogin.userInfo.admin &&
       navigate("/account");
-  }, [dispatch, userUpdate.success, userDelete.success, navigate, userLogin]);
+  }, [
+    dispatch,
+    userUpdate.success,
+    userDelete.success,
+    navigate,
+    userLogin,
+    locale,
+  ]);
 
   const onBlockHandler = () => {
     selectedItems.forEach((i) => {
@@ -91,27 +103,27 @@ function AdminView() {
   const columns = [
     {
       field: "id",
-      headerName: <FormattedMessage id="admin-view.header-id" />,
+      headerName: "ID",
       width: 210,
     },
     {
       field: "name",
-      headerName: <FormattedMessage id="admin-view.header-name" />,
+      headerName: intl.formatMessage({ id: "admin-view.header-name" }),
       width: 140,
     },
     {
       field: "email",
-      headerName: <FormattedMessage id="admin-view.header-email" />,
+      headerName: "Email",
       width: 190,
     },
     {
       field: "status",
-      headerName: <FormattedMessage id="admin-view.header-status" />,
+      headerName: "Status",
       width: 160,
     },
     {
       field: "admin",
-      headerName: <FormattedMessage id="admin-view.header-admin" />,
+      headerName: "Admin",
       width: 160,
     },
   ];

@@ -9,7 +9,7 @@ import { getTags } from "../../../actions/itemActions";
 import { Button } from "react-bootstrap";
 import { getCollectionDetails } from "../../../actions/collectionActions";
 import { useParams, useNavigate } from "react-router-dom";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 function CollectionView() {
   const params = useParams();

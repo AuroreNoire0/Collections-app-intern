@@ -96,11 +96,11 @@ export const deleteCollection = (id) => async (dispatch) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-
+    const authorId = userInfo._id;
     const { data } = await axios.delete(`/api/collection/${id}`, config);
 
     dispatch({ type: COLLECTION_DELETE_SUCCESS, payload: data });
-    dispatch(getUserDetails());
+    dispatch(getUserDetails(authorId));
   } catch (error) {
     const message =
       error.response && error.response.data.message
@@ -183,7 +183,7 @@ export const updateCollection =
       console.log(additionalInputs);
       const { data } = await axios.post(
         `/api/update-collection/${id}`,
-        { name, description, topic, img, additionalInputs },
+        { name, topic, description, img, additionalInputs },
         config
       );
 

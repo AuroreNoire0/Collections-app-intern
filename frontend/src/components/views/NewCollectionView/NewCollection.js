@@ -16,12 +16,9 @@ import store from "../../../store";
 import { FormattedMessage } from "react-intl";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import AdditionalInput from "./AdditionalInput";
+import AdditionalInput from "../../additional/AdditionalInput";
 
 function NewCollection() {
-  // const {
-  //   collectionCreate: { success },
-  // } = store.getState();
   const collectionCreate = useSelector((state) => state.collectionCreate);
   const [values, setValues] = useState({
     name: "",
@@ -57,7 +54,6 @@ function NewCollection() {
   const onFormSubmit = async (e) => {
     e.preventDefault();
     const { name, topic, description, img } = values;
-    console.log(additionalInputs);
     const createColl = () => {
       dispatch(
         createCollection(name, topic, description, img, additionalInputs)
@@ -244,8 +240,8 @@ function NewCollection() {
                   <AdditionalInput
                     key={index}
                     id={index}
-                    label={inp.name}
-                    type={inp.type}
+                    name={inp.name}
+                    inputType={inp.type}
                     onDeleteInput={onDeleteInputHandler}
                   />
                 ))}

@@ -151,7 +151,7 @@ const getCollectionDetails = asyncHandler(async (req, res) => {
 
 const updateCollection = asyncHandler(async (req, res) => {
   const id = req.params.id;
-  const { name, description, topic, img } = req.body;
+  const { name, description, topic, img, additionalInputs } = req.body;
   const collection = await Collection.findOne({ _id: id });
   const authorColId = collection.authorId;
 
@@ -160,6 +160,7 @@ const updateCollection = asyncHandler(async (req, res) => {
     collection.description = description;
     collection.topic = topic;
     collection.img = img;
+    collection.additionalInputs = additionalInputs;
     const updatedCollection = await collection.save();
 
     const authorColl = await User.findOneAndUpdate(
@@ -169,6 +170,7 @@ const updateCollection = asyncHandler(async (req, res) => {
         "collections.$[col].topic": topic,
         "collections.$[col].description": description,
         "collections.$[col].img": img,
+        "collections.$[col].additionalInputs": additionalInputs,
       },
       { arrayFilters: [{ "col._id": id }] }
     );

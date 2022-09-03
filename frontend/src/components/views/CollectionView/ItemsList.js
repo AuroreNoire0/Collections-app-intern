@@ -7,13 +7,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MessageSnackbar from "../../additional/MessageSnackbar";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 const ItemsList = (props) => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const intl = useIntl();
   const onDeleteHandler = () => {
     selectedItems.map((i) => dispatch(deleteItem(i)));
   };
@@ -38,38 +39,26 @@ const ItemsList = (props) => {
     },
     {
       field: "name",
-      headerName: <FormattedMessage id="item-list.header-name" />,
+      headerName: intl.formatMessage({ id: "item-list.header-name" }),
       width: 130,
     },
     {
       field: "tags",
-      headerName: <FormattedMessage id="item-list.header-tags" />,
+      headerName: intl.formatMessage({ id: "item-list.header-tags" }),
       width: 180,
     },
     {
       field: "author",
-      headerName: <FormattedMessage id="item-list.header-author" />,
+      headerName: intl.formatMessage({ id: "item-list.header-author" }),
       width: 130,
     },
     {
       field: "collection",
-      headerName: <FormattedMessage id="item-list.header-collection" />,
+      headerName: intl.formatMessage({ id: "item-list.header-collection" }),
       width: 160,
     },
   ];
 
-  // function QuickSearchToolbar() {
-  //   return (
-  //     <Box
-  //       sx={{
-  //         p: 0.5,
-  //         pb: 0,
-  //       }}
-  //     >
-  //       <GridToolbarQuickFilter />
-  //     </Box>
-  //   );
-  // }
   const handleEvent = (params) => {
     navigate(`/item/${params.id}`);
   };
@@ -90,7 +79,6 @@ const ItemsList = (props) => {
         <>
           <div style={{ height: 400, width: "100%" }}>
             <DataGrid
-              // components={{ Toolbar: QuickSearchToolbar }}
               rows={props.rows}
               columns={columns}
               pageSize={6}

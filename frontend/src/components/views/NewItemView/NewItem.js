@@ -11,7 +11,7 @@ import MessageSnackbar from "../../additional/MessageSnackbar";
 import { getTags, createItem } from "../../../actions/itemActions";
 import { ITEM_CREATE_CLEAN } from "../../../constants/itemConstants";
 import { FormattedMessage } from "react-intl";
-import AdditionalInput from "../NewCollectionView/AdditionalInput";
+import AdditionalInput from "../../additional/AdditionalInput";
 
 function NewItem() {
   const [name, setName] = useState("");
@@ -25,10 +25,22 @@ function NewItem() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const additInp = () => {
+      const inputs = collectionDetails.collectionInfo.additionalInputs
+        .slice()
+        .map((el) => ({ ...el }));
+      setAdditionalInputs(inputs);
+    };
+    collectionDetails.collectionInfo &&
+      collectionDetails.collectionInfo.additionalInputs &&
+      additInp();
+  }, []);
+
+  const onChangeNameHandler = (e) => setName(e.target.value);
   const onTagsChangeHandler = (event, value) => {
     setSelectedTags(value);
   };
-  const onChangeNameHandler = (e) => setName(e.target.value);
   const onAddItemHandler = (e) => {
     e.preventDefault();
     let tags = selectedTags;
@@ -43,16 +55,6 @@ function NewItem() {
     tags();
   }, [dispatch]);
 
-  useEffect(() => {
-    const additInp = async () => {
-      setAdditionalInputs(collectionDetails.collectionInfo.additionalInputs);
-    };
-    collectionDetails.collectionInfo &&
-      collectionDetails.collectionInfo.additionalInputs &&
-      additInp();
-  }, [collectionDetails.collectionInfo]);
-
-  console.log(additionalInputs);
   useEffect(() => {
     if (itemCreate.success) {
       setTimeout(() => {
@@ -92,12 +94,9 @@ function NewItem() {
   };
 
   const onChangeAdditInputHandler = (e) => {
-    console.log(e.target.type);
-    console.log(e.target.ariaLabel);
-    console.log(additionalInputs);
     e.target.type === "checkbox"
-      ? (additionalInputs[e.target.ariaLabel].value = e.target.checked)
-      : (additionalInputs[e.target.ariaLabel].value = e.target.value);
+      ? (additionalInputs[e.target.id].value = e.target.checked)
+      : (additionalInputs[e.target.id].value = e.target.value);
     setAdditionalInputs((prevState) => [...prevState]);
   };
 
@@ -177,8 +176,9 @@ function NewItem() {
                   <AdditionalInput
                     key={index}
                     id={index}
-                    label={inp.name}
-                    type={inp.type}
+                    name={inp.name}
+                    inputType={inp.type}
+                    // value={additionalInputs[index].value}
                     onChange={onChangeAdditInputHandler}
                   />
                 )

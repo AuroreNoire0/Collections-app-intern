@@ -96,12 +96,13 @@ export const deleteItem = (id) => async (dispatch) => {
       },
     };
     let collectionId = collectionInfo._id;
+    let authorId = collectionInfo.authorId;
 
     const { data } = await axios.delete(`/api/delete-item/${id}`, config);
 
     dispatch({ type: ITEM_DELETE_SUCCESS, payload: data });
     dispatch(getCollectionDetails(collectionId));
-    dispatch(getUserDetails());
+    dispatch(getUserDetails(authorId));
   } catch (error) {
     const message =
       error.response && error.response.data.message
@@ -114,40 +115,41 @@ export const deleteItem = (id) => async (dispatch) => {
   }
 };
 
-export const updateItem = (name, tags, img, id) => async (dispatch) => {
-  try {
-    dispatch({ type: ITEM_UPDATE_REQUEST });
+export const updateItem =
+  (name, tags, img, additionalInputs, id) => async (dispatch) => {
+    try {
+      dispatch({ type: ITEM_UPDATE_REQUEST });
 
-    const {
-      userLogin: { userInfo },
-    } = store.getState();
+      const {
+        userLogin: { userInfo },
+      } = store.getState();
 
-    const config = {
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
 
-    const { data } = await axios.post(
-      `/api/update-item/${id}`,
-      { name, tags, img },
-      config
-    );
+      const { data } = await axios.post(
+        `/api/update-item/${id}`,
+        { name, tags, img, additionalInputs },
+        config
+      );
 
-    dispatch({ type: ITEM_UPDATE_SUCCESS, payload: data });
-    dispatch(getItemDetails(id));
-  } catch (error) {
-    const message =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message;
-    dispatch({
-      type: ITEM_UPDATE_FAIL,
-      payload: message,
-    });
-  }
-};
+      dispatch({ type: ITEM_UPDATE_SUCCESS, payload: data });
+      dispatch(getItemDetails(id));
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({
+        type: ITEM_UPDATE_FAIL,
+        payload: message,
+      });
+    }
+  };
 
 export const getItemDetails = (id) => async (dispatch) => {
   try {

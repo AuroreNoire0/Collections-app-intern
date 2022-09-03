@@ -9,11 +9,15 @@ import MenuItem from "@mui/material/MenuItem";
 import { useDispatch } from "react-redux";
 import { updateCollection } from "../../../actions/collectionActions";
 import { topics } from "../../../constants/topicConstants";
+import { inputTypes } from "../../../constants/inputTypes";
 import { useSelector } from "react-redux";
 import store from "../../../store";
 import { COLLECTION_UPDATE_CLEAN } from "../../../constants/collectionConstants";
 import MessageSnackbar from "../../additional/MessageSnackbar";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import AdditionalInput from "../../additional/AdditionalInput";
 
 function EditCollection() {
   const {
@@ -28,6 +32,13 @@ function EditCollection() {
     topic: ``,
   });
   const navigate = useNavigate();
+  const intl = useIntl();
+  const [additionalInputs, setAdditionalInputs] = useState([]);
+  const [inputToCreate, setInputToCreate] = useState({
+    type: "String",
+    name: "",
+    value: "",
+  });
 
   useEffect(() => {
     collectionDetails.collectionInfo &&
@@ -49,9 +60,24 @@ function EditCollection() {
     }
   }, [dispatch, success]);
 
+  useEffect(() => {
+    const additInp = () => {
+      const inputs = collectionDetails.collectionInfo.additionalInputs
+        .slice()
+        .map((el) => ({ ...el }));
+      setAdditionalInputs(inputs);
+    };
+    collectionDetails.collectionInfo &&
+      collectionDetails.collectionInfo.additionalInputs &&
+      additInp();
+  }, []);
+
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
+  };
+  const onChangeQuill = (content, delta, source, editor) => {
+    setValues({ ...values, description: editor.getHTML() });
   };
 
   const cancelHandler = async (e) => {
@@ -60,14 +86,43 @@ function EditCollection() {
   const onFormSubmit = async (e) => {
     e.preventDefault();
     const { name, topic, description, img } = values;
-    console.log(img);
+
     const id = collectionDetails.collectionInfo._id;
     const updateColl = () => {
-      dispatch(updateCollection(name, topic, description, img, id));
+      dispatch(
+        updateCollection(name, topic, description, img, additionalInputs, id)
+      );
     };
     updateColl();
   };
+  const onChangeNewInputHandler = (e) => {
+    e.target.name === "type"
+      ? setInputToCreate({ ...inputToCreate, type: e.target.value })
+      : setInputToCreate({ ...inputToCreate, name: e.target.value });
+  };
+  const renderNewInputHandler = () => {
+    setAdditionalInputs((prevState) => [
+      ...prevState,
+      {
+        type: inputToCreate.type,
+        name: inputToCreate.name,
+        value: "",
+      },
+    ]);
+  };
+  const onChangeAdditInputHandler = (e) => {
+    e.target.type === "checkbox"
+      ? (additionalInputs[e.target.id].value = e.target.checked)
+      : (additionalInputs[e.target.id].value = e.target.value);
+    setAdditionalInputs((prevState) => [...prevState]);
+  };
 
+  const onDeleteInputHandler = (e) => {
+    additionalInputs.splice(e.target.id, 1);
+    setAdditionalInputs((prevState) => [...prevState]);
+  };
+
+  console.log(additionalInputs);
   const uploadImage = (e, img) => {
     const url = "https://api.cloudinary.com/v1_1/collapp/image/upload";
 
@@ -109,93 +164,46 @@ function EditCollection() {
         <form onSubmit={onFormSubmit}>
           <Grid container spacing={1}>
             <Grid xs={12} sm={6} item>
-              <FormattedMessage id="edit-collection.name-label">
-                {(label) => (
-                  <TextField
-                    placeholder={label}
-                    label={label}
-                    variant="outlined"
-                    name="name"
-                    value={values.name}
-                    className={styles.textField}
-                    onChange={onChangeHandler}
-                  />
-                )}
-              </FormattedMessage>
-            </Grid>
-            <Grid xs={12} sm={6} item>
-              <FormattedMessage id="edit-collection.topic-label">
-                {(label) => (
-                  <TextField
-                    id="outlined-select-currency"
-                    select
-                    label={label}
-                    value={values.topic}
-                    name="topic"
-                    className={styles.textFieldTopic}
-                    onChange={onChangeHandler}
-                  >
-                    {topics.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                )}
-              </FormattedMessage>
-            </Grid>
-            <Grid item xs={12}>
-              <FormattedMessage id="edit-collection.description-label">
-                {(label) => (
-                  <TextField
-                    id="outlined-multiline-static"
-                    label={label}
-                    multiline
-                    rows={4}
-                    name="description"
-                    value={values.description}
-                    placeholder={label}
-                    className={styles.textField}
-                    onChange={onChangeHandler}
-                  />
-                )}
-              </FormattedMessage>
-            </Grid>
-            <Grid item xs={4}>
               <TextField
-                type="text"
-                placeholder="Enter name of property"
-                label="Name of property"
+                placeholder={intl.formatMessage({
+                  id: "edit-collection.name-label",
+                })}
+                label={intl.formatMessage({
+                  id: "edit-collection.name-label",
+                })}
                 variant="outlined"
+                name="name"
+                value={values.name}
                 className={styles.textField}
                 onChange={onChangeHandler}
               />
             </Grid>
-            <Grid item xs={8}>
+            <Grid xs={12} sm={6} item>
               <TextField
-                type="text"
-                placeholder="Enter other value"
-                label="Other value"
-                variant="outlined"
-                className={styles.textField}
-              />
+                id="outlined-select-currency"
+                select
+                label={intl.formatMessage({
+                  id: "edit-collection.topic-label",
+                })}
+                value={values.topic}
+                name="topic"
+                className={styles.textFieldTopic}
+                onChange={onChangeHandler}
+              >
+                {topics.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
             </Grid>
-            <Grid item xs={4}>
-              <TextField
-                type="text"
-                placeholder="Enter name of property"
-                label="Name of property"
-                variant="outlined"
-                className={styles.textField}
-              />
-            </Grid>
-            <Grid item xs={8}>
-              <TextField
-                type="data"
-                placeholder="Enter other value"
-                label="Other value"
-                variant="outlined"
-                className={styles.textField}
+            <Grid item xs={12}>
+              <ReactQuill
+                theme="snow"
+                value={values.description}
+                name="description"
+                className={styles.description}
+                onChange={onChangeQuill}
               />
             </Grid>
             <Grid item xs={12}>
@@ -206,6 +214,71 @@ function EditCollection() {
                 onChange={(e) => uploadImage(e, e.target.files[0])}
                 type="file"
               />
+            </Grid>
+            <p className={styles.moreFields}>
+              <FormattedMessage id="new-collection.additional-fields" />
+            </p>
+
+            <Grid xs={12} sm={5} item className={styles.gridInputType}>
+              <TextField
+                id="outlined-select-currency"
+                select
+                label={intl.formatMessage({
+                  id: "edit-collection.name-label",
+                })}
+                name="type"
+                value={inputToCreate.type}
+                className={styles.inputTypeSelect}
+                onChange={onChangeNewInputHandler}
+              >
+                {inputTypes.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+            <Grid xs={12} sm={5} item className={styles.gridInputLabel}>
+              <TextField
+                id="outlined-select-currency"
+                label={intl.formatMessage({
+                  id: "new-collection.input-label",
+                })}
+                value={inputToCreate.name}
+                name="nameInp"
+                className={styles.textField}
+                onChange={onChangeNewInputHandler}
+              />
+            </Grid>
+            <Grid
+              xs={2}
+              item
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Button
+                type="button"
+                variant="success"
+                className={styles.createBtn}
+                onClick={renderNewInputHandler}
+              >
+                <FormattedMessage id="new-collection.create-inputs-button" />
+              </Button>
+            </Grid>
+            <Grid item className={styles.gridAdditionalInput}>
+              <Grid container spacing={1}>
+                {additionalInputs.map((inp, index) => (
+                  <AdditionalInput
+                    key={index}
+                    id={index}
+                    name={inp.name}
+                    inputType={inp.type}
+                    value={inp.value}
+                    onDeleteInput={onDeleteInputHandler}
+                  />
+                ))}
+              </Grid>
             </Grid>
             <div className={styles.divButton}>
               <Button

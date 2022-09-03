@@ -150,7 +150,7 @@ const updateLike = asyncHandler(async (req, res) => {
 
 const updateItem = asyncHandler(async (req, res) => {
   const id = req.params.id;
-  const { name, tags, img } = req.body;
+  const { name, tags, img, additionalInputs } = req.body;
   const item = await Item.findOne({ _id: id });
 
   const authorId = item.authorId;
@@ -159,6 +159,7 @@ const updateItem = asyncHandler(async (req, res) => {
     item.name = name;
     item.tags = tags;
     item.img = img;
+    item.additionalInputs = additionalInputs;
     const updatedItem = await item.save();
 
     const collection = await Collection.findOneAndUpdate(
@@ -167,6 +168,7 @@ const updateItem = asyncHandler(async (req, res) => {
         $set: { "items.$[i].tags": tags },
         "items.$[i].name": name,
         "items.$[i].img": img,
+        "items.$[i].additionalInputs": additionalInputs,
       },
       { arrayFilters: [{ "i._id": id }] }
     );

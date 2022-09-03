@@ -22,7 +22,11 @@
   width: 100% !important;
 }
 .form ::placeholder,
-.form label,
+.form label {
+  font-size: 1.5rem;
+  color: var(--color-default-font-label);
+}
+
 .form input,
 .form textarea {
   font-size: 1.5rem;

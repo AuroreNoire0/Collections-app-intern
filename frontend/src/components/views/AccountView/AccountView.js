@@ -86,7 +86,7 @@ function AccountView() {
       <MessageSnackbar
         open={success}
         message={
-          <FormattedMessage id="account-view.collection-created-message" />
+          <FormattedMessage id="account-view.collection-deleted-message" />
         }
       />
       <div className={styles.welcome}>

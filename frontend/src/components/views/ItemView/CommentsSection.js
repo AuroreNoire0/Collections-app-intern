@@ -7,7 +7,7 @@ import { Button, Col, Row } from "react-bootstrap";
 import Comment from "./Comment";
 import { createComment } from "../../../actions/commentActions";
 import MessageSnackbar from "../../additional/MessageSnackbar";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 function CommentsSection(props) {
   const userLogin = useSelector((state) => state.userLogin);
@@ -15,6 +15,7 @@ function CommentsSection(props) {
   const [content, setContent] = useState("");
   const [contentIsEmpty, setContentIsEmpty] = useState(false);
   const dispatch = useDispatch();
+  const intl = useIntl();
 
   const onChangeCommentHandler = (e) => {
     setContent(e.target.value);
@@ -51,17 +52,16 @@ function CommentsSection(props) {
                 <div className={styles.userImg}></div>
               </Col>
               <Col className={styles.commentDetails} lg={10}>
-                <FormattedMessage id="comments-section.comment-placeholder">
-                  {(label) => (
-                    <TextareaAutosize
-                      aria-label="minimum height"
-                      minRows={5}
-                      placeholder={label}
-                      onChange={onChangeCommentHandler}
-                      className={styles.textArea}
-                    />
-                  )}
-                </FormattedMessage>
+                <TextareaAutosize
+                  aria-label="minimum height"
+                  minRows={5}
+                  placeholder={intl.formatMessage({
+                    id: "comments-section.comment-placeholder",
+                  })}
+                  onChange={onChangeCommentHandler}
+                  className={styles.textArea}
+                />
+
                 <Button
                   type="button"
                   variant="warning"
