@@ -80,6 +80,7 @@ ul > li {
 .moreFields {
   font-size: 1.7rem;
   font-family: var(--font-family-default);
+  color: var(--color-default-font);
   padding: 1rem;
   width: 100%;
   margin: 0;
@@ -95,4 +96,8 @@ ul > li {
 
 .gridAdditionalInput {
   width: 100%;
+}
+
+.form fieldset {
+  border: 1px solid var(--color-default-font);
 }

@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { FormattedMessage } from "react-intl";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import styles from "./NewCollection.module.css";
 import Container from "react-bootstrap/esm/Container";
+import { Button } from "react-bootstrap";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-import { Button } from "react-bootstrap";
 import MenuItem from "@mui/material/MenuItem";
-import MessageSnackbar from "../../additional/MessageSnackbar";
 import { createCollection } from "../../../actions/collectionActions";
 import { topics } from "../../../constants/topicConstants";
 import { inputTypes } from "../../../constants/inputTypes";
 import { COLLECTION_CREATE_CLEAN } from "../../../constants/collectionConstants";
-import store from "../../../store";
-import { FormattedMessage } from "react-intl";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import MessageSnackbar from "../../additional/MessageSnackbar";
 import AdditionalInput from "../../additional/AdditionalInput";
 
 function NewCollection() {
@@ -163,7 +162,6 @@ function NewCollection() {
             <Grid item xs={12}>
               <ReactQuill
                 theme="snow"
-                // value={description}
                 name="description"
                 className={styles.description}
                 onChange={onChangeQuill}
@@ -219,7 +217,8 @@ function NewCollection() {
               </FormattedMessage>
             </Grid>
             <Grid
-              xs={2}
+              xs={12}
+              sm={2}
               item
               display="flex"
               justifyContent="center"
