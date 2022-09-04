@@ -180,7 +180,8 @@ export const getUserDetails = (id) => async (dispatch) => {
 
     dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
 
-    userInfo._id === id &&
+    userInfo &&
+      userInfo._id === id &&
       dispatch({ type: USER_LOGIN_SUCCESS, payload: data }) &&
       localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {

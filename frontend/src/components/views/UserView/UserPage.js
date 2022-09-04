@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Container from "react-bootstrap/esm/Container";
-import CollectionMiniature from "../../additional/CollectionMiniature";
 import styles from "./UserPage.module.css";
 import { CircularProgress } from "@mui/material";
 import { getUserDetails } from "../../../actions/userActions";
@@ -25,7 +24,9 @@ function UserPage() {
   }, [dispatch, params.id]);
 
   useEffect(() => {
-    !userDetails && setUserCollections(userDetails.user.collections);
+    userDetails &&
+      userDetails.user &&
+      setUserCollections(userDetails.user.collections);
   }, [userDetails]);
 
   const Content = () => {

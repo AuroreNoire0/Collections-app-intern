@@ -21,11 +21,13 @@ function AdminView() {
   const userLogin = useSelector((state) => state.userLogin);
   const [selectedItems, setSelectedItems] = useState([]);
   const [tableData, setTableData] = useState([]);
+  const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const intl = useIntl();
   const locale = localStorage.getItem("app.locale");
   const btnsStyles = `${styles.actionButtons}`;
+  const rootId = "631487b574c106ce77f83ef9";
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -70,19 +72,25 @@ function AdminView() {
 
   const onBlockHandler = () => {
     selectedItems.forEach((i) => {
-      dispatch(updateUser(i, `block`));
+      i !== rootId
+        ? dispatch(updateUser(i, `block`))
+        : setError(intl.formatMessage({ id: "admin-view.root-error" }));
     });
   };
 
   const onUnblockHandler = () => {
     selectedItems.forEach((i) => {
-      dispatch(updateUser(i, `unblock`));
+      i !== rootId
+        ? dispatch(updateUser(i, `unblock`))
+        : setError(intl.formatMessage({ id: "admin-view.root-error" }));
     });
   };
 
   const onDeleteHandler = () => {
     selectedItems.forEach((i) => {
-      dispatch(deleteUser(i));
+      i !== rootId
+        ? dispatch(deleteUser(i))
+        : setError(intl.formatMessage({ id: "admin-view.root-error" }));
     });
   };
 
@@ -92,12 +100,19 @@ function AdminView() {
       const action = users.users[selectedUser].admin
         ? "removeAdmin"
         : "addAdmin";
-      dispatch(updateUser(i, action));
+      i !== rootId
+        ? dispatch(updateUser(i, action))
+        : setError(intl.formatMessage({ id: "admin-view.root-error" }));
     });
   };
 
+  const closeError = () => {
+    setTimeout(() => setError(""), 3000);
+  };
+  error && closeError();
+
   const onRowClickHandler = (params) => {
-    navigate(`/user/${params.id}`);
+    params.id !== rootId && navigate(`/user/${params.id}`);
   };
 
   const columns = [
@@ -130,6 +145,7 @@ function AdminView() {
 
   return (
     <Container className={styles.container}>
+      <MessageSnackbar open={error} severity="error" message={error} />
       {users ? (
         <>
           <div className={styles.header}>

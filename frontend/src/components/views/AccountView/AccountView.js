@@ -24,20 +24,23 @@ function AccountView() {
   const collectionDelete = useSelector((state) => state.collectionDelete);
 
   useEffect(() => {
-    setUserCollections(userLogin.userInfo.collections);
-  }, [userLogin.userInfo.collections]);
+    userLogin &&
+      userLogin.userInfo &&
+      setUserCollections(userLogin.userInfo.collections);
+  }, [userLogin.userInfo]);
 
   useEffect(() => {
-    if (success) {
+    if (collectionDelete.success) {
       setTimeout(() => {
         dispatch({ type: COLLECTION_DELETE_CLEAN });
       }, 5000);
     }
-  }, [dispatch, success]);
+  }, [dispatch, collectionDelete.success]);
 
   const onCreateCollHandler = () => {
     navigate("/create-collection");
   };
+
   const Content = () => {
     return (
       <>
@@ -83,32 +86,46 @@ function AccountView() {
 
   return (
     <Container>
-      <MessageSnackbar
-        open={success}
-        message={
-          <FormattedMessage id="account-view.collection-deleted-message" />
-        }
-      />
-      <div className={styles.welcome}>
-        <p>
-          {" "}
-          <FormattedMessage id="account-view.hello-message" />, {userInfo.name}!
-        </p>
-        <Button
-          variant="warning"
-          type="button"
-          onClick={onCreateCollHandler}
-          className={styles.btn}
-        >
-          <FormattedMessage id="account-view.add-collection-button" />
-        </Button>
-      </div>
-      {loading ? (
-        <div className={styles.progressCircle}>
-          <CircularProgress color="inherit" />{" "}
-        </div>
+      {!userLogin.userInfo ? (
+        <MessageSnackbar
+          open={true}
+          severity="error"
+          message={<FormattedMessage id="all.not-allowed" />}
+        />
       ) : (
-        <Content />
+        <>
+          <MessageSnackbar
+            open={collectionDelete.success}
+            message={
+              <FormattedMessage id="account-view.collection-deleted-message" />
+            }
+          />
+          <div className={styles.welcome}>
+            {userLogin.userInfo && (
+              <p>
+                {" "}
+                <FormattedMessage id="account-view.hello-message" />,{" "}
+                {userInfo.name}!
+              </p>
+            )}
+            <Button
+              variant="warning"
+              type="button"
+              onClick={onCreateCollHandler}
+              className={styles.btn}
+            >
+              <FormattedMessage id="account-view.add-collection-button" />
+            </Button>
+          </div>
+
+          {loading ? (
+            <div className={styles.progressCircle}>
+              <CircularProgress color="inherit" />{" "}
+            </div>
+          ) : (
+            <Content />
+          )}
+        </>
       )}
     </Container>
   );

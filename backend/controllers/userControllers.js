@@ -28,6 +28,7 @@ const registerUser = asyncHandler(async (req, res) => {
       status: user.status,
       admin: user.admin,
       collections: user.collections,
+      root: user.root,
       token: generateToken(user._id),
     });
   } else {
@@ -66,8 +67,9 @@ const deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
   const userCollections = await Collection.find({ authorId: req.params.id });
   const userItems = await Item.find({ authorId: req.params.id });
+  console.log(user.root);
 
-  if (user) {
+  if (user && !user.root) {
     await user.remove();
 
     userCollections &&
@@ -76,6 +78,8 @@ const deleteUser = asyncHandler(async (req, res) => {
     userItems && userItems.forEach(async (item) => await item.remove());
 
     res.json({ id: req.params.id, message: "User deleted" });
+  } else if (user && user.root) {
+    res.json({ id: req.params.id, message: "You can't delete root user." });
   } else {
     res.status(404);
     throw new Error("User not found");

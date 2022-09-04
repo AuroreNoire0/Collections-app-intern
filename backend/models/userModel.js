@@ -26,6 +26,7 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    root: { type: Boolean, default: false },
     collections: [Collection],
   },
   {

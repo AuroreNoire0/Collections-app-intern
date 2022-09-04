@@ -12,6 +12,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 const ItemsList = (props) => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [message, setMessage] = useState("");
+  const collectionDetails = useSelector((state) => state.collectionDetails);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const intl = useIntl();
@@ -59,6 +60,13 @@ const ItemsList = (props) => {
     },
   ];
 
+  collectionDetails.collectionInfo.additionalInputs.length !== 0 &&
+    collectionDetails.collectionInfo.additionalInputs.map(
+      (inp) =>
+        (inp.type === "String" || inp.type === "Date") &&
+        columns.push({ field: inp.name, header: inp.name, width: 160 })
+    );
+
   const handleEvent = (params) => {
     navigate(`/item/${params.id}`);
   };
@@ -96,24 +104,26 @@ const ItemsList = (props) => {
             severity="warning"
             message={message}
           />
-          <Button
-            type="button"
-            variant="danger"
-            className={styles.btn}
-            onClick={onDeleteHandler}
-            disabled={!props.allowedToAction}
-          >
-            <FormattedMessage id="item-list.delete-button" />
-          </Button>
-          <Button
-            type="button"
-            variant="primary"
-            className={styles.btn}
-            onClick={onEditHandler}
-            disabled={!props.allowedToAction}
-          >
-            <FormattedMessage id="item-list.edit-button" />
-          </Button>
+          {props.allowedToAction && (
+            <>
+              <Button
+                type="button"
+                variant="danger"
+                className={styles.btn}
+                onClick={onDeleteHandler}
+              >
+                <FormattedMessage id="item-list.delete-button" />
+              </Button>
+              <Button
+                type="button"
+                variant="primary"
+                className={styles.btn}
+                onClick={onEditHandler}
+              >
+                <FormattedMessage id="item-list.edit-button" />
+              </Button>
+            </>
+          )}
         </>
       ) : (
         <div className={styles.noItems}>

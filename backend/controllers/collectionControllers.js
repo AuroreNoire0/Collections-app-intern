@@ -151,9 +151,9 @@ const getCollectionDetails = asyncHandler(async (req, res) => {
 
 const updateCollection = asyncHandler(async (req, res) => {
   const id = req.params.id;
-  const { name, description, topic, img, additionalInputs } = req.body;
+  const { name, description, topic, img, additionalInputs, authorId } =
+    req.body;
   const collection = await Collection.findOne({ _id: id });
-  const authorColId = collection.authorId;
 
   if (collection) {
     collection.name = name;
@@ -164,7 +164,7 @@ const updateCollection = asyncHandler(async (req, res) => {
     const updatedCollection = await collection.save();
 
     const authorColl = await User.findOneAndUpdate(
-      { _id: authorColId },
+      { _id: authorId },
       {
         $set: { "collections.$[col].name": name },
         "collections.$[col].topic": topic,
@@ -182,7 +182,6 @@ const updateCollection = asyncHandler(async (req, res) => {
       throw new Error("User not found");
     }
 
-    console.log(updatedCollection);
     res.json(updatedCollection);
   } else {
     res.status(404);

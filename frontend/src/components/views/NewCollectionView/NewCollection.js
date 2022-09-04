@@ -19,6 +19,8 @@ import AdditionalInput from "../../additional/AdditionalInput";
 
 function NewCollection() {
   const collectionCreate = useSelector((state) => state.collectionCreate);
+  const userLogin = useSelector((state) => state.userLogin);
+  const collectionDetails = useSelector((state) => state.collectionDetails);
   const [values, setValues] = useState({
     name: "",
     description: "",
@@ -111,6 +113,14 @@ function NewCollection() {
     setAdditionalInputs((prevState) => [...prevState]);
   };
 
+  const isAuthor =
+    userLogin &&
+    userLogin.login &&
+    collectionDetails.collectionInfo &&
+    userLogin.userInfo._id === collectionDetails.collectionInfo.authorId;
+  const isAdmin = userLogin && userLogin.login && userLogin.userInfo.admin;
+  const allowedToAction = (userLogin.login && isAuthor) || isAdmin;
+
   return (
     <Container>
       <MessageSnackbar
@@ -122,146 +132,158 @@ function NewCollection() {
           <FormattedMessage id="new-collection.title" />
         </h1>
       </div>
-      <Grid className={styles.form}>
-        <form onSubmit={onFormSubmit}>
-          <Grid container spacing={1}>
-            <Grid xs={12} sm={6} item>
-              <FormattedMessage id="new-collection.name-label">
-                {(label) => (
-                  <TextField
-                    label={label}
-                    variant="outlined"
-                    name="name"
-                    className={styles.textField}
-                    onChange={onChangeHandler}
-                  />
-                )}
-              </FormattedMessage>
-            </Grid>
-            <Grid xs={12} sm={6} item className={styles.gridTopic}>
-              <FormattedMessage id="new-collection.topic-label">
-                {(label) => (
-                  <TextField
-                    id="outlined-select-currency"
-                    select
-                    label={label}
-                    value={values.topic}
-                    name="topic"
-                    className={styles.textFieldTopic}
-                    onChange={onChangeHandler}
-                  >
-                    {topics.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                )}
-              </FormattedMessage>
-            </Grid>
-            <Grid item xs={12}>
-              <ReactQuill
-                theme="snow"
-                name="description"
-                className={styles.description}
-                onChange={onChangeQuill}
-              />
-            </Grid>
-
-            <Grid item xs={12}>
-              <input
-                accept="image/*"
-                className={styles.input}
-                id="raised-button-file"
-                onChange={(e) => uploadImage(e, e.target.files[0])}
-                type="file"
-              />
-            </Grid>
-            <p className={styles.moreFields}>
-              <FormattedMessage id="new-collection.additional-fields" />
-            </p>
-
-            <Grid xs={12} sm={5} item className={styles.gridInputType}>
-              <FormattedMessage id="new-collection.input-type">
-                {(label) => (
-                  <TextField
-                    id="outlined-select-currency"
-                    select
-                    label={label}
-                    name="type"
-                    value={inputToCreate.type}
-                    className={styles.inputTypeSelect}
-                    onChange={onChangeNewInputHandler}
-                  >
-                    {inputTypes.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                )}
-              </FormattedMessage>
-            </Grid>
-            <Grid xs={12} sm={5} item className={styles.gridInputLabel}>
-              <FormattedMessage id="new-collection.input-label">
-                {(label) => (
-                  <TextField
-                    id="outlined-select-currency"
-                    label={label}
-                    value={inputToCreate.name}
-                    name="nameInp"
-                    className={styles.textField}
-                    onChange={onChangeNewInputHandler}
-                  />
-                )}
-              </FormattedMessage>
-            </Grid>
-            <Grid
-              xs={12}
-              sm={2}
-              item
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Button
-                type="button"
-                variant="success"
-                className={styles.createBtn}
-                onClick={renderNewInputHandler}
-              >
-                <FormattedMessage id="new-collection.create-inputs-button" />
-              </Button>
-            </Grid>
-            <Grid item className={styles.gridAdditionalInput}>
-              <Grid container spacing={1}>
-                {additionalInputs.map((inp, index) => (
-                  <AdditionalInput
-                    key={index}
-                    id={index}
-                    name={inp.name}
-                    inputType={inp.type}
-                    onDeleteInput={onDeleteInputHandler}
-                  />
-                ))}
+      {!allowedToAction ? (
+        <MessageSnackbar
+          open={true}
+          severity="error"
+          message={<FormattedMessage id="all.not-allowed" />}
+        />
+      ) : (
+        <Grid className={styles.form}>
+          <form onSubmit={onFormSubmit}>
+            <Grid container spacing={1}>
+              <Grid xs={12} sm={6} item>
+                <FormattedMessage id="new-collection.name-label">
+                  {(label) => (
+                    <TextField
+                      label={label}
+                      variant="outlined"
+                      name="name"
+                      className={styles.textField}
+                      onChange={onChangeHandler}
+                    />
+                  )}
+                </FormattedMessage>
               </Grid>
-            </Grid>
-            <div className={styles.divButton}>
-              <Button
-                type="button"
-                variant="secondary"
-                className={styles.subBtn}
-                onClick={cancelHandler}
+              <Grid xs={12} sm={6} item className={styles.gridTopic}>
+                <FormattedMessage id="new-collection.topic-label">
+                  {(label) => (
+                    <TextField
+                      id="outlined-select-currency"
+                      select
+                      label={label}
+                      value={values.topic}
+                      name="topic"
+                      className={styles.textFieldTopic}
+                      onChange={onChangeHandler}
+                    >
+                      {topics.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  )}
+                </FormattedMessage>
+              </Grid>
+              <Grid item xs={12}>
+                <ReactQuill
+                  theme="snow"
+                  name="description"
+                  className={styles.description}
+                  onChange={onChangeQuill}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <input
+                  accept="image/*"
+                  className={styles.input}
+                  id="raised-button-file"
+                  onChange={(e) => uploadImage(e, e.target.files[0])}
+                  type="file"
+                />
+              </Grid>
+              <p className={styles.moreFields}>
+                <FormattedMessage id="new-collection.additional-fields" />
+              </p>
+
+              <Grid xs={12} sm={5} item className={styles.gridInputType}>
+                <FormattedMessage id="new-collection.input-type">
+                  {(label) => (
+                    <TextField
+                      id="outlined-select-currency"
+                      select
+                      label={label}
+                      name="type"
+                      value={inputToCreate.type}
+                      className={styles.inputTypeSelect}
+                      onChange={onChangeNewInputHandler}
+                    >
+                      {inputTypes.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  )}
+                </FormattedMessage>
+              </Grid>
+              <Grid xs={12} sm={5} item className={styles.gridInputLabel}>
+                <FormattedMessage id="new-collection.input-label">
+                  {(label) => (
+                    <TextField
+                      id="outlined-select-currency"
+                      label={label}
+                      value={inputToCreate.name}
+                      name="nameInp"
+                      className={styles.textField}
+                      onChange={onChangeNewInputHandler}
+                    />
+                  )}
+                </FormattedMessage>
+              </Grid>
+              <Grid
+                xs={12}
+                sm={2}
+                item
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
               >
-                <FormattedMessage id="new-collection.cancel-button" />
-              </Button>
-              <Button type="submit" variant="warning" className={styles.subBtn}>
-                <FormattedMessage id="new-collection.add-button" />
-              </Button>
-            </div>
-          </Grid>
-        </form>
-      </Grid>
+                <Button
+                  type="button"
+                  variant="success"
+                  className={styles.createBtn}
+                  onClick={renderNewInputHandler}
+                >
+                  <FormattedMessage id="new-collection.create-inputs-button" />
+                </Button>
+              </Grid>
+              <Grid item className={styles.gridAdditionalInput}>
+                <Grid container spacing={1}>
+                  {additionalInputs.map((inp, index) => (
+                    <AdditionalInput
+                      key={index}
+                      id={index}
+                      name={inp.name}
+                      inputType={inp.type}
+                      onDeleteInput={onDeleteInputHandler}
+                    />
+                  ))}
+                </Grid>
+              </Grid>
+              <div className={styles.divButton}>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  className={styles.subBtn}
+                  onClick={cancelHandler}
+                >
+                  <FormattedMessage id="new-collection.cancel-button" />
+                </Button>
+                <Button
+                  type="submit"
+                  variant="warning"
+                  className={styles.subBtn}
+                >
+                  <FormattedMessage id="new-collection.add-button" />
+                </Button>
+              </div>
+            </Grid>
+          </form>
+        </Grid>
+      )}
     </Container>
   );
 }

@@ -132,7 +132,7 @@ export const createCollection =
       let author = userInfo.name;
       let authorId = userInfo._id;
       let items = [];
-      console.log(additionalInputs);
+
       const { data } = await axios.post(
         `/api/create-collection`,
         {
@@ -163,10 +163,11 @@ export const createCollection =
   };
 
 export const updateCollection =
-  (name, topic, description, img, additionalInputs, id) => async (dispatch) => {
+  (name, topic, description, img, additionalInputs, id, authorId) =>
+  async (dispatch) => {
     try {
       dispatch({ type: COLLECTION_UPDATE_REQUEST });
-      console.log(id);
+
       const {
         userLogin: { userInfo },
       } = store.getState();
@@ -178,12 +179,9 @@ export const updateCollection =
         },
       };
 
-      let author = userInfo.name;
-      let authorId = userInfo._id;
-      console.log(additionalInputs);
       const { data } = await axios.post(
         `/api/update-collection/${id}`,
-        { name, topic, description, img, additionalInputs },
+        { name, topic, description, img, additionalInputs, authorId },
         config
       );
 

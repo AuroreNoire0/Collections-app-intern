@@ -25,7 +25,7 @@ const Result = (props) => {
     navigate(`/item/${props.id}`);
   };
   return (
-    <Col xs={12} sm={6} lg={4}>
+    <Col xs={12} sm={6} lg={4} className={styles.wrapper}>
       <Card className={styles.cardContainer} onClick={onClickCollection}>
         <div className={styles.imgContainer}>
           <Card.Img variant="top" src={imgSrc} />
@@ -42,9 +42,6 @@ const Result = (props) => {
             <FormattedMessage id="result.tags" />: {props.tags.join(` | `)}
           </Card.Text>
         </Card.Body>
-        {/* <Card.Footer>
-          <small className="text-muted">Last updated 3 mins ago</small>
-        </Card.Footer> */}
       </Card>
     </Col>
   );

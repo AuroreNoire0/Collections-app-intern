@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Container from "react-bootstrap/esm/Container";
-import AddItem from "../NewItemView/NewItem";
 import styles from "./CollectionView.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { CircularProgress } from "@mui/material";
 import ItemsList from "./ItemsList";
-import { getTags } from "../../../actions/itemActions";
 import { Button } from "react-bootstrap";
 import { getCollectionDetails } from "../../../actions/collectionActions";
 import { useParams, useNavigate } from "react-router-dom";
@@ -42,7 +40,8 @@ function CollectionView() {
       });
       setTableData(rows);
     };
-
+    collectionDetails.collectionInfo &&
+      console.log(collectionDetails.collectionInfo.additionalInputs.flat());
     !collectionDetails.loading &&
       collectionDetails.collectionInfo &&
       tableRows();
@@ -82,15 +81,16 @@ function CollectionView() {
         </div>
       )}
 
-      <Button
-        type="button"
-        variant="warning"
-        className={styles.btn}
-        onClick={onClickAddItemHandler}
-        disabled={!allowedToAction}
-      >
-        <FormattedMessage id="collection-view.add-item-button" />
-      </Button>
+      {allowedToAction && (
+        <Button
+          type="button"
+          variant="warning"
+          className={styles.btn}
+          onClick={onClickAddItemHandler}
+        >
+          <FormattedMessage id="collection-view.add-item-button" />
+        </Button>
+      )}
     </Container>
   );
 }

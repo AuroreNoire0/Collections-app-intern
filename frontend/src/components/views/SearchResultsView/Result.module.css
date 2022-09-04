@@ -3,10 +3,14 @@
   font-size: 1.5rem;
   background-color: var(--color-card-bg);
   font-family: var(--font-family-default);
-  margin: 1vh 0rem;
+  height: 100%;
   cursor: pointer;
   color: var(--color-default-font);
   box-shadow: 1px 2px 15px gray;
+}
+
+.wrapper {
+  margin: 1.5vh 0vh;
 }
 
 .cardContainer .card-body {
