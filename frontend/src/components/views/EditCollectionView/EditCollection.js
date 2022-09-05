@@ -34,6 +34,7 @@ function EditCollection() {
   });
   const [description, setDescription] = useState("");
   const [additionalInputs, setAdditionalInputs] = useState([]);
+  const [error, setError] = useState("");
   const [inputToCreate, setInputToCreate] = useState({
     type: "String",
     name: "",
@@ -91,20 +92,23 @@ function EditCollection() {
     const { name, topic, img } = values;
     const id = collectionDetails.collectionInfo._id;
     const authorId = collectionDetails.collectionInfo.authorId;
-    const updateColl = () => {
-      dispatch(
-        updateCollection(
-          name,
-          topic,
-          description,
-          img,
-          additionalInputs,
-          id,
-          authorId
-        )
-      );
-    };
-    updateColl();
+    const formIsValid =
+      name.trim() !== "" && topic !== "" && description.trim() !== "";
+
+    !formIsValid
+      ? setError(intl.formatMessage({ id: "new-item.empty-fields" }))
+      : dispatch(
+          updateCollection(
+            name,
+            topic,
+            description,
+            img,
+            additionalInputs,
+            id,
+            authorId
+          )
+        );
+    window.scrollTo(0, 0);
   };
   const onChangeNewInputHandler = (e) => {
     e.target.name === "type"
@@ -121,7 +125,13 @@ function EditCollection() {
       },
     ]);
   };
-
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        setError("");
+      }, 5000);
+    }
+  }, [error]);
   const onDeleteInputHandler = (e) => {
     additionalInputs.splice(e.target.id, 1);
     setAdditionalInputs((prevState) => [...prevState]);
@@ -130,7 +140,11 @@ function EditCollection() {
   const uploadImage = (e, img) => {
     const url = "https://api.cloudinary.com/v1_1/collapp/image/upload";
 
-    if (img.type === "image/jpeg" || img.type === "image/png") {
+    if (
+      img.type === "image/jpeg" ||
+      img.type === "image/png" ||
+      img.type === "image/jpg"
+    ) {
       const formData = new FormData();
       formData.append("file", img);
       formData.append("upload_preset", "collectionApp");
@@ -149,7 +163,9 @@ function EditCollection() {
           console.log(err);
         });
     } else {
-      return console.log("Please select an image");
+      return setError(
+        intl.formatMessage({ id: "new-collection.invalid-format" })
+      );
     }
   };
 
@@ -167,6 +183,9 @@ function EditCollection() {
         open={collectionUpdate.success}
         message={<FormattedMessage id="edit-collection.succes-message" />}
       />
+      {error && (
+        <MessageSnackbar open={error} severity="error" message={error} />
+      )}
       <div className={styles.divTitle}>
         <h1 className={styles.title}>
           <FormattedMessage id="edit-collection.header" />
@@ -270,7 +289,8 @@ function EditCollection() {
                 />
               </Grid>
               <Grid
-                xs={2}
+                xs={12}
+                sm={2}
                 item
                 display="flex"
                 justifyContent="center"

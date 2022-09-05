@@ -18,6 +18,7 @@ const ItemsList = (props) => {
   const intl = useIntl();
   const onDeleteHandler = () => {
     selectedItems.map((i) => dispatch(deleteItem(i)));
+    window.scrollTo(0, 0);
   };
   const onEditHandler = () => {
     if (selectedItems.length > 1) {

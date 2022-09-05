@@ -40,8 +40,8 @@ function CollectionView() {
       });
       setTableData(rows);
     };
-    collectionDetails.collectionInfo &&
-      console.log(collectionDetails.collectionInfo.additionalInputs.flat());
+    // collectionDetails.collectionInfo &&
+    //   console.log(collectionDetails.collectionInfo.additionalInputs.flat());
     !collectionDetails.loading &&
       collectionDetails.collectionInfo &&
       tableRows();

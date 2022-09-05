@@ -37,7 +37,7 @@ function AdditionalInput(props) {
         <CloseButton id={props.id} onClick={props.onDeleteInput} />
       )}
       <TextField
-        type={inputType}
+        type={inputType === "Integer" ? "number" : inputType}
         id={id}
         label={props.name}
         variant="outlined"

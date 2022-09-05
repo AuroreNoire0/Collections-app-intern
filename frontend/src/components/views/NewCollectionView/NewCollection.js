@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import styles from "./NewCollection.module.css";
@@ -32,8 +32,10 @@ function NewCollection() {
     type: "String",
     name: "",
   });
+  const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const intl = useIntl();
 
   useEffect(() => {
     if (collectionCreate.success) {
@@ -42,6 +44,14 @@ function NewCollection() {
       }, 5000);
     }
   }, [dispatch, collectionCreate.success]);
+
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        setError("");
+      }, 5000);
+    }
+  }, [error]);
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -55,12 +65,15 @@ function NewCollection() {
   const onFormSubmit = async (e) => {
     e.preventDefault();
     const { name, topic, description, img } = values;
-    const createColl = () => {
-      dispatch(
-        createCollection(name, topic, description, img, additionalInputs)
-      );
-    };
-    createColl();
+    const formIsValid =
+      name.trim() !== "" && topic !== "" && description.trim() !== "";
+
+    !formIsValid
+      ? setError(intl.formatMessage({ id: "new-item.empty-fields" }))
+      : dispatch(
+          createCollection(name, topic, description, img, additionalInputs)
+        );
+    window.scrollTo(0, 0);
   };
 
   const onChangeQuill = (content, delta, source, editor) => {
@@ -70,7 +83,11 @@ function NewCollection() {
   const uploadImage = (e, img) => {
     const url = "https://api.cloudinary.com/v1_1/collapp/image/upload";
 
-    if (img.type === "image/jpeg" || img.type === "image/png") {
+    if (
+      img.type === "image/jpeg" ||
+      img.type === "image/png" ||
+      img.type === "image/jpg"
+    ) {
       const formData = new FormData();
       formData.append("file", img);
       formData.append("upload_preset", "collectionApp");
@@ -86,10 +103,12 @@ function NewCollection() {
           setValues({ ...values, img: data.url.toString() });
         })
         .catch((err) => {
-          console.log(err);
+          setError(err);
         });
     } else {
-      return console.log("Please select an image");
+      return setError(
+        intl.formatMessage({ id: "new-collection.invalid-format" })
+      );
     }
   };
   const onChangeNewInputHandler = (e) => {
@@ -127,6 +146,9 @@ function NewCollection() {
         open={collectionCreate.success}
         message={<FormattedMessage id="new-collection.succes-message" />}
       />
+      {error && (
+        <MessageSnackbar open={error} severity="error" message={error} />
+      )}
       <div className={styles.divTitle}>
         <h1 className={styles.title}>
           <FormattedMessage id="new-collection.title" />

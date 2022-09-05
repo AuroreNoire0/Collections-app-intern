@@ -16,7 +16,7 @@ import {
   updateItem,
 } from "../../../actions/itemActions";
 import { ITEM_UPDATE_CLEAN } from "../../../constants/itemConstants";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import AdditionalInput from "../../additional/AdditionalInput";
 
 function EditItem() {
@@ -30,10 +30,11 @@ function EditItem() {
   const [tagsOptions, setTagsOptions] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const [additionalInputs, setAdditionalInputs] = useState([]);
-
+  const [error, setError] = useState("");
   const params = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const intl = useIntl();
 
   useEffect(() => {
     const itemInfo = async () => {
@@ -76,6 +77,14 @@ function EditItem() {
     }
   }, [dispatch, itemUpdate.success]);
 
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        setError("");
+      }, 5000);
+    }
+  }, [error]);
+
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
@@ -90,7 +99,11 @@ function EditItem() {
   const uploadImage = (e, img) => {
     const url = "https://api.cloudinary.com/v1_1/collapp/image/upload";
 
-    if (img.type === "image/jpeg" || img.type === "image/png") {
+    if (
+      img.type === "image/jpeg" ||
+      img.type === "image/png" ||
+      img.type === "image/jpg"
+    ) {
       const formData = new FormData();
       formData.append("file", img);
       formData.append("upload_preset", "collectionApp");
@@ -109,7 +122,9 @@ function EditItem() {
           console.log(err);
         });
     } else {
-      return console.log("Please select an image");
+      return setError(
+        intl.formatMessage({ id: "new-collection.invalid-format" })
+      );
     }
   };
   const onChangeAdditInputHandler = (e) => {
@@ -122,12 +137,22 @@ function EditItem() {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     const { name, img } = values;
-    let tags = selectedTags;
-    const editItem = () => {
-      dispatch(updateItem(name, tags, img, additionalInputs, params.id));
-    };
-    editItem();
+    const addInputsAreValid = additionalInputs.map((ai) =>
+      ai.type !== "Boolean" ? ai.value.trim() !== "" : null
+    );
+    const formIsValid =
+      name.trim() !== "" &&
+      selectedTags.length !== 0 &&
+      !addInputsAreValid.includes(false);
+
+    !formIsValid
+      ? setError(intl.formatMessage({ id: "new-item.empty-fields" }))
+      : dispatch(
+          updateItem(name, selectedTags, img, additionalInputs, params.id)
+        );
+    window.scrollTo(0, 0);
   };
+
   const isAuthor =
     userLogin &&
     userLogin.login &&
@@ -142,6 +167,13 @@ function EditItem() {
         <MessageSnackbar
           open={itemUpdate.success}
           message={<FormattedMessage id="edit-item.succes-message" />}
+        />
+      )}
+      {error && (
+        <MessageSnackbar
+          open={error}
+          severity="error"
+          message={<FormattedMessage id="new-item.empty-fields" />}
         />
       )}
       <div className={styles.divTitle}>

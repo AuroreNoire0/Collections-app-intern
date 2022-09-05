@@ -20,7 +20,7 @@
 }
 
 .title {
-  font-size: 5rem;
+  font-size: 4rem;
   margin-bottom: 1rem;
   font-weight: bold;
   display: flex;
@@ -28,12 +28,14 @@
   justify-content: center;
   text-shadow: var(--text-shadow);
   padding: 0.5rem;
+  text-align: center;
 }
 
 ::placeholder {
   font-size: 2rem;
   padding: 1.5rem;
   margin: 1.5rem;
+  font-family: var(--font-family-default);
 }
 
 .btns {
@@ -64,4 +66,5 @@
 .logContainer .input {
   font-size: 2rem;
   margin: 1rem 0rem;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }

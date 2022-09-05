@@ -10,7 +10,7 @@ import { Autocomplete } from "@mui/material";
 import MessageSnackbar from "../../additional/MessageSnackbar";
 import { getTags, createItem } from "../../../actions/itemActions";
 import { ITEM_CREATE_CLEAN } from "../../../constants/itemConstants";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import AdditionalInput from "../../additional/AdditionalInput";
 
 function NewItem() {
@@ -18,12 +18,13 @@ function NewItem() {
   const [imgSrc, setImgSrc] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
   const [tagsOptions, setTagsOptions] = useState([]);
-  const [values, setValues] = useState([{}]);
+  const [error, setError] = useState("");
   const [additionalInputs, setAdditionalInputs] = useState([]);
   const itemCreate = useSelector((state) => state.itemCreate);
   const collectionDetails = useSelector((state) => state.collectionDetails);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const intl = useIntl();
 
   useEffect(() => {
     const additInp = () => {
@@ -43,9 +44,26 @@ function NewItem() {
   };
   const onAddItemHandler = (e) => {
     e.preventDefault();
-    let tags = selectedTags;
-    dispatch(createItem(name, imgSrc, tags, additionalInputs));
+
+    const addInputsAreValid = additionalInputs.map((ai) =>
+      ai.type !== "Boolean" ? ai.value.trim() !== "" : null
+    );
+    const formIsValid =
+      name.trim() !== "" &&
+      selectedTags.length !== 0 &&
+      !addInputsAreValid.includes(false);
+    !formIsValid
+      ? setError(intl.formatMessage({ id: "new-item.empty-fields" }))
+      : dispatch(createItem(name, imgSrc, selectedTags, additionalInputs));
+    window.scrollTo(0, 0);
   };
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        setError("");
+      }, 3000);
+    }
+  }, [error]);
 
   useEffect(() => {
     const tags = async () => {
@@ -70,7 +88,11 @@ function NewItem() {
   const uploadImage = (e, img) => {
     const url = "https://api.cloudinary.com/v1_1/collapp/image/upload";
 
-    if (img.type === "image/jpeg" || img.type === "image/png") {
+    if (
+      img.type === "image/jpeg" ||
+      img.type === "image/png" ||
+      img.type === "image/jpg"
+    ) {
       const formData = new FormData();
       formData.append("file", img);
       formData.append("upload_preset", "collectionApp");
@@ -89,7 +111,9 @@ function NewItem() {
           console.log(err);
         });
     } else {
-      return console.log("Please select an image");
+      return setError(
+        intl.formatMessage({ id: "new-collection.invalid-format" })
+      );
     }
   };
 
@@ -106,6 +130,13 @@ function NewItem() {
         <MessageSnackbar
           open={itemCreate.success}
           message={<FormattedMessage id="new-item.succes-message" />}
+        />
+      )}
+      {error && (
+        <MessageSnackbar
+          open={error}
+          severity="error"
+          message={<FormattedMessage id="new-item.empty-fields" />}
         />
       )}
 
@@ -171,18 +202,16 @@ function NewItem() {
             </Grid>
             {collectionDetails.collectionInfo &&
               collectionDetails.collectionInfo.additionalInputs &&
-              collectionDetails.collectionInfo.additionalInputs.map(
-                (inp, index) => (
-                  <AdditionalInput
-                    key={index}
-                    id={index}
-                    name={inp.name}
-                    inputType={inp.type}
-                    // value={additionalInputs[index].value}
-                    onChange={onChangeAdditInputHandler}
-                  />
-                )
-              )}
+              additionalInputs.map((inp, index) => (
+                <AdditionalInput
+                  key={index}
+                  id={index}
+                  name={inp.name}
+                  inputType={inp.type}
+                  // value={additionalInputs[index].value}
+                  onChange={onChangeAdditInputHandler}
+                />
+              ))}
             <Grid item xs={12}>
               <input
                 accept="image/*"

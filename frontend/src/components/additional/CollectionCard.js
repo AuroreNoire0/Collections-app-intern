@@ -29,10 +29,8 @@ const CollectionCard = (props) => {
 
   const onDeleteCollection = (e) => {
     e.stopPropagation();
-    const deleteColl = () => {
-      dispatch(deleteCollection(e.target.id));
-    };
-    deleteColl();
+    dispatch(deleteCollection(e.target.id));
+    window.scrollTo(0, 0);
   };
 
   const onEditCollection = (e) => {
