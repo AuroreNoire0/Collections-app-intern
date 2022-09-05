@@ -41,6 +41,13 @@ function NewCollection() {
     if (collectionCreate.success) {
       setTimeout(() => {
         dispatch({ type: COLLECTION_CREATE_CLEAN });
+        setValues({
+          name: "",
+          description: "",
+          topic: "",
+          img: "",
+        });
+        setAdditionalInputs([]);
       }, 5000);
     }
   }, [dispatch, collectionCreate.success]);
@@ -147,7 +154,7 @@ function NewCollection() {
         message={<FormattedMessage id="new-collection.succes-message" />}
       />
       {error && (
-        <MessageSnackbar open={error} severity="error" message={error} />
+        <MessageSnackbar open={error !== ""} severity="error" message={error} />
       )}
       <div className={styles.divTitle}>
         <h1 className={styles.title}>
@@ -171,6 +178,7 @@ function NewCollection() {
                       label={label}
                       variant="outlined"
                       name="name"
+                      value={values.name}
                       className={styles.textField}
                       onChange={onChangeHandler}
                     />

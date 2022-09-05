@@ -29,19 +29,20 @@ function CollectionView() {
     const tableRows = () => {
       let rows = [];
       collectionDetails.collectionInfo.items.map((item) => {
-        rows.push({
+        const row = {
           id: item._id,
           name: item.name,
           tags: item.tags,
           author: item.author,
           collection: item.collectionName,
-        });
+        };
+        item.additionalInputs.map((i) => (row[i.name] = i.value));
+        rows.push(row);
         return rows;
       });
       setTableData(rows);
     };
-    // collectionDetails.collectionInfo &&
-    //   console.log(collectionDetails.collectionInfo.additionalInputs.flat());
+
     !collectionDetails.loading &&
       collectionDetails.collectionInfo &&
       tableRows();

@@ -171,7 +171,7 @@ function EditItem() {
       )}
       {error && (
         <MessageSnackbar
-          open={error}
+          open={error !== ""}
           severity="error"
           message={<FormattedMessage id="new-item.empty-fields" />}
         />

@@ -12,15 +12,18 @@ import { logout } from "../../actions/userActions";
 import { FormattedMessage } from "react-intl";
 import { GB, PL } from "country-flag-icons/react/3x2";
 import locales from "../../localization/locales";
+import localStorageKeys from "../../constants/localStorageKeys";
 
 export default function Navigation(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const wrapperRef = useRef(null);
-  useOutsideAlerter(wrapperRef);
+  const ref = useRef(null);
+  // useOutsideAlerter(ref);
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(
+    localStorage.getItem(localStorageKeys.THEME) === "dark" ? true : false
+  );
 
   const label = { inputProps: { "aria-label": "Switch theme" } };
   const onLogout = (e) => {
@@ -30,31 +33,29 @@ export default function Navigation(props) {
   };
 
   const onThemeChange = (e) => setChecked(!checked);
-  checked
-    ? document.body.setAttribute("data-theme", "dark")
-    : document.body.setAttribute("data-theme", "light");
 
+  if (checked) {
+    document.body.setAttribute("data-theme", "dark");
+    localStorage.setItem(localStorageKeys.THEME, "dark");
+  } else {
+    document.body.setAttribute("data-theme", "light");
+    localStorage.setItem(localStorageKeys.THEME, "light");
+  }
   const onLanguageChangeHandler = (value) => {
     props.setLocale(value);
   };
 
-  function useOutsideAlerter(ref) {
-    useEffect(() => {
-      function handleClickOutside(event) {
-        if (
-          ref.current &&
-          !ref.current.contains(event.target) &&
-          wrapperRef.current.classList.contains("show")
-        ) {
-          wrapperRef.current.classList.remove("show");
-        }
-      }
-      document.addEventListener("click", handleClickOutside);
-      return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
-    }, [ref]);
+  function handleClickOutside(e) {
+    if (ref.current && ref.current.classList.contains("show")) {
+      console.log(ref.current);
+      ref.current.classList.remove("show");
+      document.querySelector(".navbar-toggler").classList.add("collapsed");
+      // document.querySelector(".navbar-toggler").classList.add("collapsed");
+      // document.querySelector(".navbar-toggler").onToggle();
+    }
   }
+  document.addEventListener("click", handleClickOutside);
+
   return (
     <Navbar expand="lg" className={styles.navbar}>
       <Container className={styles.navContainer}>
@@ -65,7 +66,7 @@ export default function Navigation(props) {
         <Navbar.Collapse
           id="basic-navbar-nav"
           className="justify-content-end align-items-center"
-          ref={wrapperRef}
+          ref={ref}
         >
           <Nav>
             {!userInfo ? (

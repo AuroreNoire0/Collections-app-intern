@@ -7,15 +7,10 @@ import Grid from "@mui/material/Grid";
 import { Button } from "react-bootstrap";
 import styles from "../NewCollectionView/NewCollection.module.css";
 import MenuItem from "@mui/material/MenuItem";
-import { useDispatch } from "react-redux";
-import {
-  getCollectionDetails,
-  updateCollection,
-} from "../../../actions/collectionActions";
+import { useDispatch, useSelector } from "react-redux";
+import { updateCollection } from "../../../actions/collectionActions";
 import { topics } from "../../../constants/topicConstants";
 import { inputTypes } from "../../../constants/inputTypes";
-import { useSelector } from "react-redux";
-import store from "../../../store";
 import { COLLECTION_UPDATE_CLEAN } from "../../../constants/collectionConstants";
 import MessageSnackbar from "../../additional/MessageSnackbar";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -184,7 +179,7 @@ function EditCollection() {
         message={<FormattedMessage id="edit-collection.succes-message" />}
       />
       {error && (
-        <MessageSnackbar open={error} severity="error" message={error} />
+        <MessageSnackbar open={error !== ""} severity="error" message={error} />
       )}
       <div className={styles.divTitle}>
         <h1 className={styles.title}>

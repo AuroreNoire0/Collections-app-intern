@@ -36,7 +36,7 @@ function NewItem() {
     collectionDetails.collectionInfo &&
       collectionDetails.collectionInfo.additionalInputs &&
       additInp();
-  }, []);
+  }, [collectionDetails.collectionInfo]);
 
   const onChangeNameHandler = (e) => setName(e.target.value);
   const onTagsChangeHandler = (event, value) => {
@@ -134,7 +134,7 @@ function NewItem() {
       )}
       {error && (
         <MessageSnackbar
-          open={error}
+          open={error !== ""}
           severity="error"
           message={<FormattedMessage id="new-item.empty-fields" />}
         />
