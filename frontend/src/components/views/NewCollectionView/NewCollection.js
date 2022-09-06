@@ -165,7 +165,7 @@ function NewCollection() {
           <FormattedMessage id="new-collection.title" />
         </h1>
       </div>
-      {!allowedToAction ? (
+      {!userLogin.userInfo ? (
         <MessageSnackbar
           open={true}
           severity="error"
