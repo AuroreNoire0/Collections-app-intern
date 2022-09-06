@@ -36,10 +36,11 @@ function ItemView() {
 
   useEffect(() => {
     itemDetails.itemInfo &&
+      itemDetails.itemInfo._id === params.id &&
       itemDetails.itemInfo.img &&
       itemDetails.itemInfo.img !== `` &&
       setImgSrc(`${itemDetails.itemInfo.img}`);
-  }, [itemDetails]);
+  }, [itemDetails.itemInfo]);
 
   const likeStyles = userLogin.userInfo
     ? `${styles.likeIcon}`
