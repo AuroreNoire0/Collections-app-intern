@@ -24,7 +24,7 @@ const userSchema = mongoose.Schema(
     },
     admin: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     root: { type: Boolean, default: false },
     collections: [Collection],
