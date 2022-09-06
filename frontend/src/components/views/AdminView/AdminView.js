@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
-import styles from "./AdminView.module.css";
-import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLockOpen } from "@fortawesome/free-solid-svg-icons";
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteUser, getUsers, updateUser } from "../../../actions/userActions";
+import { useNavigate } from "react-router-dom";
+import { FormattedMessage, useIntl } from "react-intl";
+import styles from "./AdminView.module.css";
+import { Container, Button } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faLockOpen,
+  faTrashCan,
+  faCircleUser,
+} from "@fortawesome/free-solid-svg-icons";
 import { CircularProgress, Tooltip } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import MessageSnackbar from "../../additional/MessageSnackbar";
-import { useNavigate } from "react-router-dom";
-import { FormattedMessage, useIntl } from "react-intl";
+import { deleteUser, getUsers, updateUser } from "../../../actions/userActions";
+import { rootId } from "../../../constants/userConstants";
 
 function AdminView() {
   const users = useSelector((state) => state.users);
@@ -26,14 +28,12 @@ function AdminView() {
   const navigate = useNavigate();
   const intl = useIntl();
   const locale = localStorage.getItem("app.locale");
-  const btnsStyles = `${styles.actionButtons}`;
-  const rootId = "631487b574c106ce77f83ef9";
 
   useEffect(() => {
     const fetchUsers = async () => {
       const usersList = await dispatch(getUsers());
       let userRows = [];
-      usersList.map((user) => {
+      usersList.forEach((user) => {
         userRows.push({
           id: user._id,
           name: user.name,
@@ -68,6 +68,7 @@ function AdminView() {
     navigate,
     userLogin,
     locale,
+    intl,
   ]);
 
   const onBlockHandler = () => {
@@ -145,7 +146,7 @@ function AdminView() {
 
   return (
     <Container className={styles.container}>
-      <MessageSnackbar open={error} severity="error" message={error} />
+      <MessageSnackbar open={error !== ""} severity="error" message={error} />
       {users ? (
         <>
           <div className={styles.header}>
@@ -153,7 +154,7 @@ function AdminView() {
               {" "}
               <FormattedMessage id="admin-view.admin-panel-title" />
             </p>
-            <div className={btnsStyles}>
+            <div className={styles.actionButtons}>
               <Button variant="danger" onClick={onBlockHandler}>
                 <FormattedMessage id="admin-view.block-button" />
               </Button>{" "}

@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { FormattedMessage, useIntl } from "react-intl";
 import styles from "./NewItem.module.css";
 import Container from "react-bootstrap/esm/Container";
 import { Button } from "react-bootstrap";
-import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
-import { Autocomplete } from "@mui/material";
-import MessageSnackbar from "../../additional/MessageSnackbar";
+import { Autocomplete, TextField, Grid } from "@mui/material";
 import { getTags, createItem } from "../../../actions/itemActions";
 import { ITEM_CREATE_CLEAN } from "../../../constants/itemConstants";
-import { FormattedMessage, useIntl } from "react-intl";
+import MessageSnackbar from "../../additional/MessageSnackbar";
 import AdditionalInput from "../../additional/AdditionalInput";
 
 function NewItem() {
@@ -239,7 +237,6 @@ function NewItem() {
                 variant="warning"
                 className={styles.subBtn}
                 onClick={onAddItemHandler}
-                // disabled={userLogin}
               >
                 <FormattedMessage id="new-item.add-button" />
               </Button>

@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { DataGrid, GridToolbarQuickFilter } from "@mui/x-data-grid";
+import { DataGrid } from "@mui/x-data-grid";
 import styles from "./CollectionView.module.css";
 import { Button } from "react-bootstrap";
 import { deleteItem } from "../../../actions/itemActions";
 import { useSelector, useDispatch } from "react-redux";
-import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MessageSnackbar from "../../additional/MessageSnackbar";
 import { FormattedMessage, useIntl } from "react-intl";

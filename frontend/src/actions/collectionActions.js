@@ -17,10 +17,6 @@ import {
 } from "../constants/collectionConstants";
 import axios from "axios";
 import store from "../store";
-import {
-  USER_LOGIN_SUCCESS,
-  USER_UPDATE_SUCCESS,
-} from "../constants/userConstants";
 import { getUserDetails } from "./userActions";
 
 export const fetchUsersCollections = () => async (dispatch) => {

@@ -1,3 +1,4 @@
+import React from "react";
 import Container from "react-bootstrap/esm/Container";
 import Navigation from "./Navigation";
 import Search from "./Search";

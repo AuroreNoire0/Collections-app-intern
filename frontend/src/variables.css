@@ -78,6 +78,7 @@
   --text-shadow-item: 0.1rem 0.1rem rgb(151, 151, 151);
   --color-link-hover: rgb(118, 90, 6);
   --color-comment-area-bg: whitesmoke;
+  --color-additional-input-close-btn: rgb(151, 150, 150);
   --font-family-logo: "Gwendolyn", cursive;
   --font-family-default: "Aboreto", cursive;
   --font-family-header: "Grey Qo", cursive;
@@ -124,6 +125,7 @@ body[data-theme="light"] {
   --text-shadow-item: 0.1rem 0.1rem rgb(151, 151, 151);
   --color-link-hover: rgb(118, 90, 6);
   --color-comment-area-bg: whitesmoke;
+  --color-additional-input-close-btn: rgb(151, 150, 150);
   --font-family-logo: "Gwendolyn", cursive;
   --font-family-default: "Aboreto", cursive;
   --font-family-header: "Grey Qo", cursive;
@@ -171,6 +173,7 @@ body[data-theme="dark"] {
   --text-shadow-item: 0.1rem 0.1rem rgb(98, 95, 95);
   --color-link-hover: rgb(118, 90, 6);
   --color-comment-area-bg: #34343e;
+  --color-additional-input-close-btn: rgb(151, 150, 150);
   --font-family-logo: "Gwendolyn", cursive;
   --font-family-default: "Aboreto", cursive;
   --font-family-header: "Grey Qo", cursive;

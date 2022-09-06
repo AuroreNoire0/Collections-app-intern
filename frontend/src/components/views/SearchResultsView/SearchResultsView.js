@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import Result from "./Result";
+import { FormattedMessage } from "react-intl";
 import styles from "./SearchResultsView.module.css";
 import { Container, Row } from "react-bootstrap";
 import { CircularProgress } from "@mui/material";
 import { searchQuery } from "../../../actions/itemActions";
-import { FormattedMessage } from "react-intl";
+import Result from "./Result";
 
 const SearchResultsView = () => {
   const params = useParams();

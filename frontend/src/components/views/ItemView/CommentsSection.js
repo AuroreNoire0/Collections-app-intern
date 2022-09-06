@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import Container from "react-bootstrap/esm/Container";
-import styles from "./CommentsSection.module.css";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { FormattedMessage, useIntl } from "react-intl";
+import styles from "./CommentsSection.module.css";
 import { CircularProgress, TextareaAutosize } from "@mui/material";
+import Container from "react-bootstrap/esm/Container";
 import { Button, Col, Row } from "react-bootstrap";
-import Comment from "./Comment";
 import { createComment } from "../../../actions/commentActions";
 import MessageSnackbar from "../../additional/MessageSnackbar";
-import { FormattedMessage, useIntl } from "react-intl";
+import Comment from "./Comment";
 
 function CommentsSection(props) {
   const userLogin = useSelector((state) => state.userLogin);

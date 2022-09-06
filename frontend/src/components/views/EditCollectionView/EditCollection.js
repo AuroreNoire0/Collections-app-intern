@@ -1,22 +1,19 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import { FormattedMessage, useIntl } from "react-intl";
 import Container from "react-bootstrap/esm/Container";
-import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
+import { Grid, MenuItem, TextField } from "@mui/material";
 import { Button } from "react-bootstrap";
 import styles from "../NewCollectionView/NewCollection.module.css";
-import MenuItem from "@mui/material/MenuItem";
-import { useDispatch, useSelector } from "react-redux";
-import { updateCollection } from "../../../actions/collectionActions";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import { topics } from "../../../constants/topicConstants";
 import { inputTypes } from "../../../constants/inputTypes";
 import { COLLECTION_UPDATE_CLEAN } from "../../../constants/collectionConstants";
 import MessageSnackbar from "../../additional/MessageSnackbar";
-import { FormattedMessage, useIntl } from "react-intl";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
 import AdditionalInput from "../../additional/AdditionalInput";
+import { updateCollection } from "../../../actions/collectionActions";
 
 function EditCollection() {
   const collectionDetails = useSelector((state) => state.collectionDetails);
@@ -35,7 +32,6 @@ function EditCollection() {
     name: "",
     value: "",
   });
-  const params = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const intl = useIntl();
@@ -62,19 +58,13 @@ function EditCollection() {
       additInp();
   }, [collectionDetails.collectionInfo]);
 
-  const onChangeHandler = (e) => {
-    const { name, value } = e.target;
-    setValues({ ...values, [name]: value });
-  };
-  const onChangeQuill = (content, delta, source, editor) => {
-    editor.getText().trim() === ""
-      ? setDescription(editor.getText().trim())
-      : setDescription(editor.getHTML());
-  };
-
-  const cancelHandler = async (e) => {
-    navigate("/account");
-  };
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        setError("");
+      }, 4000);
+    }
+  }, [error]);
 
   useEffect(() => {
     if (collectionUpdate.success) {
@@ -84,55 +74,33 @@ function EditCollection() {
     }
   }, [dispatch, collectionUpdate.success]);
 
-  const onFormSubmit = async (e) => {
-    e.preventDefault();
-    const { name, topic, img } = values;
-    const id = collectionDetails.collectionInfo._id;
-    const authorId = collectionDetails.collectionInfo.authorId;
-    const formIsValid =
-      name.trim() !== "" && topic !== "" && description.trim() !== "";
-
-    !formIsValid
-      ? setError(intl.formatMessage({ id: "new-item.empty-fields" }))
-      : dispatch(
-          updateCollection(
-            name,
-            topic,
-            description,
-            img,
-            additionalInputs,
-            id,
-            authorId
-          )
-        );
-    window.scrollTo(0, 0);
+  const onDeleteInputHandler = (e) => {
+    additionalInputs.splice(e.target.id, 1);
+    setAdditionalInputs((prevState) => [...prevState]);
   };
+
+  const onChangeHandler = (e) => {
+    const { name, value } = e.target;
+    setValues({ ...values, [name]: value });
+  };
+
+  const onChangeQuill = (content, delta, source, editor) => {
+    editor.getText().trim() === ""
+      ? setDescription(editor.getText().trim())
+      : setDescription(editor.getHTML());
+  };
+
   const onChangeNewInputHandler = (e) => {
     e.target.name === "type"
       ? setInputToCreate({ ...inputToCreate, type: e.target.value })
       : setInputToCreate({ ...inputToCreate, name: e.target.value });
   };
-  const renderNewInputHandler = () => {
-    setAdditionalInputs((prevState) => [
-      ...prevState,
-      {
-        type: inputToCreate.type,
-        name: inputToCreate.name,
-        value: "",
-      },
-    ]);
+
+  const cancelHandler = async (e) => {
+    navigate("/account");
   };
-  useEffect(() => {
-    if (error) {
-      setTimeout(() => {
-        setError("");
-      }, 5000);
-    }
-  }, [error]);
-  const onDeleteInputHandler = (e) => {
-    additionalInputs.splice(e.target.id, 1);
-    setAdditionalInputs((prevState) => [...prevState]);
-  };
+
+  error && window.scrollTo(0, 0);
 
   const uploadImage = (e, img) => {
     const url = "https://api.cloudinary.com/v1_1/collapp/image/upload";
@@ -166,6 +134,45 @@ function EditCollection() {
     }
   };
 
+  const onFormSubmit = async (e) => {
+    e.preventDefault();
+    const { name, topic, img } = values;
+    const id = collectionDetails.collectionInfo._id;
+    const authorId = collectionDetails.collectionInfo.authorId;
+    const formIsValid =
+      name.trim() !== "" && topic !== "" && description.trim() !== "";
+
+    !formIsValid
+      ? setError(intl.formatMessage({ id: "new-item.empty-fields" }))
+      : dispatch(
+          updateCollection(
+            name,
+            topic,
+            description,
+            img,
+            additionalInputs,
+            id,
+            authorId
+          )
+        );
+    window.scrollTo(0, 0);
+  };
+
+  const onRenderNewInputHandler = () => {
+    inputToCreate.name.trim() !== ""
+      ? setAdditionalInputs((prevState) => [
+          ...prevState,
+          {
+            type: inputToCreate.type,
+            name: inputToCreate.name,
+            value: "",
+          },
+        ])
+      : setError(
+          intl.formatMessage({ id: "new-collection.empty-additional-field" })
+        );
+  };
+
   const isAuthor =
     userLogin &&
     userLogin.login &&
@@ -180,9 +187,9 @@ function EditCollection() {
         open={collectionUpdate.success}
         message={<FormattedMessage id="edit-collection.succes-message" />}
       />
-      {error && (
-        <MessageSnackbar open={error !== ""} severity="error" message={error} />
-      )}
+
+      <MessageSnackbar open={error !== ""} severity="error" message={error} />
+
       <div className={styles.divTitle}>
         <h1 className={styles.title}>
           <FormattedMessage id="edit-collection.header" />
@@ -297,7 +304,7 @@ function EditCollection() {
                   type="button"
                   variant="success"
                   className={styles.createBtn}
-                  onClick={renderNewInputHandler}
+                  onClick={onRenderNewInputHandler}
                 >
                   <FormattedMessage id="new-collection.create-inputs-button" />
                 </Button>

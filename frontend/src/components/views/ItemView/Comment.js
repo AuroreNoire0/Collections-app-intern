@@ -1,9 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./CommentsSection.module.css";
-import { useSelector, useDispatch } from "react-redux";
-import { CircularProgress, TextareaAutosize } from "@mui/material";
-import { Button, Col, Form, Row } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { Col, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 

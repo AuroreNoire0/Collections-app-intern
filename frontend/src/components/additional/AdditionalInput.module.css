@@ -4,7 +4,7 @@
   padding: 1rem;
   margin-left: 0;
 }
-.textField {
+.textFieldAI {
   width: 100% !important;
 }
 
@@ -14,4 +14,13 @@
 
 .booleanGrid span {
   font-size: 1.5rem;
+}
+
+.closeButton {
+  background-color: var(--color-additional-input-close-btn);
+}
+
+.textFieldAI label {
+  -webkit-text-fill-color: var(--color-disabled-font) !important;
+  color: var(--color-default-font-label);
 }

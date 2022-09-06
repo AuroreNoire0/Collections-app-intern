@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
-import Container from "react-bootstrap/esm/Container";
-import styles from "./CollectionView.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { CircularProgress } from "@mui/material";
-import ItemsList from "./ItemsList";
-import { Button } from "react-bootstrap";
-import { getCollectionDetails } from "../../../actions/collectionActions";
 import { useParams, useNavigate } from "react-router-dom";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
+import styles from "./CollectionView.module.css";
+import Container from "react-bootstrap/esm/Container";
+import { CircularProgress } from "@mui/material";
+import { Button } from "react-bootstrap";
+import ItemsList from "./ItemsList";
+import { getCollectionDetails } from "../../../actions/collectionActions";
 
 function CollectionView() {
-  const params = useParams();
-  const navigate = useNavigate();
   const collectionDetails = useSelector((state) => state.collectionDetails);
   const userLogin = useSelector((state) => state.userLogin);
   const [tableData, setTableData] = useState([]);
   const [imgSrc, setImgSrc] = useState([]);
+  const params = useParams();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -46,7 +46,7 @@ function CollectionView() {
     !collectionDetails.loading &&
       collectionDetails.collectionInfo &&
       tableRows();
-  }, [collectionDetails.collectionInfo]);
+  }, [collectionDetails.collectionInfo, collectionDetails.loading]);
 
   useEffect(() => {
     collectionDetails.collectionInfo &&

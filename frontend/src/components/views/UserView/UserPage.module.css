@@ -36,6 +36,11 @@ h1 {
   background-color: var(--color-main-bg);
 }
 
+.rowCollections {
+  display: flex;
+  justify-content: center;
+}
+
 .noCollection {
   background-color: var(--color-no-collection-bg);
   border: 1px solid var(--color-no-collection-border);

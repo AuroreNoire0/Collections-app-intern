@@ -1,9 +1,10 @@
-import Container from "react-bootstrap/esm/Container";
+import React from "react";
+import { FormattedMessage } from "react-intl";
+import styles from "./MainView.module.css";
 import TheLargestCollection from "./TheLargestCollection";
 import TheLatestItems from "./TheLatestItems";
-import styles from "./MainView.module.css";
 import TagCloudContainer from "./TagCloudContainer";
-import { FormattedMessage } from "react-intl";
+import Container from "react-bootstrap/esm/Container";
 
 function MainView() {
   return (

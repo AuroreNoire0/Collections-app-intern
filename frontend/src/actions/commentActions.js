@@ -2,14 +2,11 @@ import {
   COMMENT_CREATE_REQUEST,
   COMMENT_CREATE_SUCCESS,
   COMMENT_CREATE_FAIL,
-  COMMENT_LIST_REQUEST,
-  COMMENT_LIST_SUCCESS,
-  COMMENT_LIST_FAIL,
 } from "../constants/commentConstants";
 import store from "../store";
 import axios from "axios";
 import { getCollectionDetails } from "./collectionActions";
-import { getUserDetails, updateUserState } from "./userActions";
+import { getUserDetails } from "./userActions";
 import { getItemDetails } from "./itemActions";
 
 export const createComment = (content) => async (dispatch) => {

@@ -1,22 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Container from "react-bootstrap/esm/Container";
-import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
-import { Button } from "react-bootstrap";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { FormattedMessage, useIntl } from "react-intl";
 import styles from "./EditItem.module.css";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import MessageSnackbar from "../../additional/MessageSnackbar";
-import { Autocomplete } from "@mui/material";
-import { useParams } from "react-router-dom";
+import Container from "react-bootstrap/esm/Container";
+import { Grid, TextField, Autocomplete } from "@mui/material";
+import { Button } from "react-bootstrap";
 import {
   getItemDetails,
   getTags,
   updateItem,
 } from "../../../actions/itemActions";
 import { ITEM_UPDATE_CLEAN } from "../../../constants/itemConstants";
-import { FormattedMessage, useIntl } from "react-intl";
+import MessageSnackbar from "../../additional/MessageSnackbar";
 import AdditionalInput from "../../additional/AdditionalInput";
 
 function EditItem() {
@@ -96,6 +92,13 @@ function EditItem() {
     setSelectedTags(value);
   };
 
+  const onChangeAdditInputHandler = (e) => {
+    e.target.type === "checkbox"
+      ? (additionalInputs[e.target.id].value = e.target.checked)
+      : (additionalInputs[e.target.id].value = e.target.value);
+    setAdditionalInputs((prevState) => [...prevState]);
+  };
+
   const uploadImage = (e, img) => {
     const url = "https://api.cloudinary.com/v1_1/collapp/image/upload";
 
@@ -126,12 +129,6 @@ function EditItem() {
         intl.formatMessage({ id: "new-collection.invalid-format" })
       );
     }
-  };
-  const onChangeAdditInputHandler = (e) => {
-    e.target.type === "checkbox"
-      ? (additionalInputs[e.target.id].value = e.target.checked)
-      : (additionalInputs[e.target.id].value = e.target.value);
-    setAdditionalInputs((prevState) => [...prevState]);
   };
 
   const onSubmitHandler = async (e) => {

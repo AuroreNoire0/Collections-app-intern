@@ -1,11 +1,10 @@
+import React from "react";
+import { FormattedMessage } from "react-intl";
 import { Tooltip } from "@mui/material";
-import { style } from "@mui/system";
-import { Col } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import Container from "react-bootstrap/esm/Container";
-import Row from "react-bootstrap/Row";
 import { Link } from "react-router-dom";
 import styles from "./TopItem.module.css";
-import { FormattedMessage } from "react-intl";
 
 function TopItem(props) {
   return (

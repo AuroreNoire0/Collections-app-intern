@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import TopCollection from "./TopCollection";
+import { FormattedMessage } from "react-intl";
 import styles from "./TheLatestItems.module.css";
 import Container from "react-bootstrap/esm/Container";
 import { CircularProgress } from "@mui/material";
 import { getCollections } from "../../../actions/collectionActions";
-import { FormattedMessage } from "react-intl";
+import TopCollection from "./TopCollection";
 
 function TheLargestCollection() {
   const dispatch = useDispatch();

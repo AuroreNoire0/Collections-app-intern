@@ -1,24 +1,22 @@
-import { React, useEffect } from "react";
+import { React, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import styles from "./RegisterView.module.css";
-import useNewInput from "../../hooks/use-new-input";
 import { useNavigate } from "react-router-dom";
-import { Row } from "react-bootstrap";
-import ErrorMessage from "../../additional/ErrorMessage";
-import { Container } from "react-bootstrap";
-import { register } from "../../../actions/userActions";
 import { FormattedMessage } from "react-intl";
+import styles from "./RegisterView.module.css";
+import { Container, Button, Form } from "react-bootstrap";
+import useNewInput from "../../hooks/use-new-input";
+import ErrorMessage from "../../additional/ErrorMessage";
+import { register } from "../../../actions/userActions";
+import { USER_REGISTER_CLEAN } from "../../../constants/userConstants";
 
-const RegisterView = (props) => {
+const RegisterView = () => {
   const isNotEmpty = (value) => value.trim() !== "";
   const isEmail = (value) => value.includes("@");
-  // const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userRegister = useSelector((state) => state.userRegister);
-  const { loading, error, userInfo } = userRegister;
+  const userLogin = useSelector((state) => state.userLogin);
+  const [errorMsg, setErrorMsg] = useState();
 
   const {
     value: name,
@@ -26,7 +24,6 @@ const RegisterView = (props) => {
     hasError: nameHasError,
     valueChangedHandler: nameChangedHandler,
     inputBlurHandler: nameBlurHandler,
-    reset: resetName,
   } = useNewInput(isNotEmpty);
 
   const {
@@ -35,7 +32,6 @@ const RegisterView = (props) => {
     hasError: passwordHasError,
     valueChangedHandler: passwordChangedHandler,
     inputBlurHandler: passwordBlurHandler,
-    reset: resetPassword,
   } = useNewInput(isNotEmpty);
 
   const {
@@ -44,21 +40,37 @@ const RegisterView = (props) => {
     hasError: emailHasError,
     valueChangedHandler: emailChangedHandler,
     inputBlurHandler: emailBlurHandler,
-    reset: resetEmail,
   } = useNewInput(isNotEmpty && isEmail);
 
   const regHandler = async (event) => {
     event.preventDefault();
-    // setError(null);
 
     dispatch(register(name, email, password));
   };
 
   useEffect(() => {
-    if (userInfo) {
+    if (userLogin.userInfo) {
       navigate("/account");
     } else return;
-  }, [userInfo, navigate]);
+  }, [userLogin, navigate]);
+
+  useEffect(() => {
+    if (userRegister.error === "User already exists") {
+      setErrorMsg(<FormattedMessage id="register-view.user-already-exists" />);
+      setTimeout(() => {
+        dispatch({ type: USER_REGISTER_CLEAN });
+        setErrorMsg("");
+      }, 4000);
+    } else if (!userRegister.error) {
+      return;
+    } else {
+      setErrorMsg(userRegister.error);
+      setTimeout(() => {
+        dispatch({ type: USER_REGISTER_CLEAN });
+        setErrorMsg("");
+      }, 4000);
+    }
+  }, [dispatch, userRegister.error]);
 
   const formIsValid = emailIsValid && passwordIsValid && nameIsValid;
 
@@ -145,7 +157,11 @@ const RegisterView = (props) => {
               <FormattedMessage id="register-view.empty-password" />
             </p>
           )}
-          {error ? <ErrorMessage variant="danger">{error}</ErrorMessage> : ""}
+          {errorMsg ? (
+            <ErrorMessage variant="danger">{errorMsg}</ErrorMessage>
+          ) : (
+            ""
+          )}
         </Form.Group>
 
         <div className={styles.btns}>

@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Card, Col } from "react-bootstrap";
 import styles from "./CollectionCard.module.css";
+import { Card, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import image from "../../img/NoImg.jpg";
 import {
   deleteCollection,

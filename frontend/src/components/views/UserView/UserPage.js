@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-import Container from "react-bootstrap/esm/Container";
+import { useParams } from "react-router-dom";
+import { FormattedMessage } from "react-intl";
 import styles from "./UserPage.module.css";
+import Container from "react-bootstrap/esm/Container";
+import { Row } from "react-bootstrap";
 import { CircularProgress } from "@mui/material";
 import { getUserDetails } from "../../../actions/userActions";
 import CollectionCard from "../../additional/CollectionCard";
-import { Row } from "react-bootstrap";
-import { FormattedMessage } from "react-intl";
 
 function UserPage() {
-  const [userCollections, setUserCollections] = useState([]);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const params = useParams();
   const userDetails = useSelector((state) => state.userDetails);
@@ -22,12 +20,6 @@ function UserPage() {
     };
     fetchUserDetails();
   }, [dispatch, params.id]);
-
-  useEffect(() => {
-    userDetails &&
-      userDetails.user &&
-      setUserCollections(userDetails.user.collections);
-  }, [userDetails]);
 
   const Content = () => {
     return (
@@ -43,7 +35,7 @@ function UserPage() {
               </h1>
             </div>
             <ul className={styles.collectionList}>
-              <Row>
+              <Row className={styles.rowCollections}>
                 {userDetails.user.collections.map((col) => (
                   <CollectionCard
                     name={col.name}

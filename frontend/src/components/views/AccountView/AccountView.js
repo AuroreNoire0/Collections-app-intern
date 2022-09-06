@@ -1,22 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import store from "../../../store";
+import { FormattedMessage } from "react-intl";
 import styles from "./AccountView.module.css";
-import MessageSnackbar from "../../additional/MessageSnackbar";
 import Container from "react-bootstrap/esm/Container";
-import Button from "react-bootstrap/Button";
+import { Row, Button } from "react-bootstrap";
 import { CircularProgress } from "@mui/material";
 import { COLLECTION_DELETE_CLEAN } from "../../../constants/collectionConstants";
+import MessageSnackbar from "../../additional/MessageSnackbar";
 import CollectionCard from "../../additional/CollectionCard";
-import { Row } from "react-bootstrap";
-import { FormattedMessage } from "react-intl";
 
 function AccountView() {
-  const {
-    userLogin: { userInfo },
-    collectionDelete: { success, loading },
-  } = store.getState();
   const [userCollections, setUserCollections] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -27,7 +21,7 @@ function AccountView() {
     userLogin &&
       userLogin.userInfo &&
       setUserCollections(userLogin.userInfo.collections);
-  }, [userLogin.userInfo]);
+  }, [userLogin, userLogin.userInfo]);
 
   useEffect(() => {
     if (collectionDelete.success) {
@@ -105,7 +99,7 @@ function AccountView() {
               <p>
                 {" "}
                 <FormattedMessage id="account-view.hello-message" />,{" "}
-                {userInfo.name}!
+                {userLogin.userInfo.name}!
               </p>
             )}
             <Button
@@ -118,7 +112,7 @@ function AccountView() {
             </Button>
           </div>
 
-          {loading ? (
+          {collectionDelete.loading ? (
             <div className={styles.progressCircle}>
               <CircularProgress color="inherit" />{" "}
             </div>

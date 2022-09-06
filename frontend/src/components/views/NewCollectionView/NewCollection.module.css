@@ -55,8 +55,6 @@
   width: 100% !important;
 }
 
-.form ::placeholder,
-.form label,
 .form input,
 .form textarea,
 .form menuitem,
@@ -67,6 +65,7 @@
 
 .form ::placeholder,
 .form label {
+  font-size: 1.4rem;
   color: var(--color-default-font-label);
 }
 

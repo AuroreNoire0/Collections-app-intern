@@ -1,20 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { Card, Col, Container } from "react-bootstrap";
+import { FormattedMessage } from "react-intl";
+import { Card, Col } from "react-bootstrap";
 import styles from "./Result.module.css";
 import image from "../../../img/NoImg.jpg";
-import {
-  deleteCollection,
-  getCollectionDetails,
-} from "../../../actions/collectionActions";
-import { FormattedMessage } from "react-intl";
 
 const Result = (props) => {
-  const params = useParams();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [imgSrc, setImgSrc] = useState(image);
 
   useEffect(() => {

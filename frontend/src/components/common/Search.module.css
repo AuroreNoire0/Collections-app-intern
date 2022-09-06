@@ -1,11 +1,5 @@
 @import "../../variables.css";
 
-/* .searchStack {
-  font-size: 3rem;
-  background-color: var(--color-search-bg);
-  color: rgb(0, 0, 0);
-} */
-
 .searchContainer {
   display: flex;
   width: 100%;

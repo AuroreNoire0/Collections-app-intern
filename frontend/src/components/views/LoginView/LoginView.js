@@ -1,14 +1,13 @@
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { FormattedMessage } from "react-intl";
 import styles from "./LoginView.module.css";
-import ErrorMessage from "../../additional/ErrorMessage";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import { Container } from "react-bootstrap";
+import { Container, Form, Button } from "react-bootstrap";
 import useNewInput from "../../hooks/use-new-input";
 import { login } from "../../../actions/userActions";
-import { FormattedMessage } from "react-intl";
+import ErrorMessage from "../../additional/ErrorMessage";
+import { USER_LOGIN_CLEAN } from "../../../constants/userConstants";
 
 const LogView = (props) => {
   const isNotEmpty = (value) => value.trim() !== "";
@@ -16,7 +15,7 @@ const LogView = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userLogin = useSelector((state) => state.userLogin);
-  const { error, userInfo } = userLogin;
+  const [errorMsg, setErrorMsg] = useState();
 
   const {
     value: password,
@@ -43,10 +42,31 @@ const LogView = (props) => {
   };
 
   useEffect(() => {
-    if (userInfo) {
+    if (userLogin.userInfo) {
       navigate("/account");
     } else return;
-  }, [userInfo, navigate]);
+  }, [userLogin.userInfo, navigate]);
+
+  useEffect(() => {
+    if (userLogin.error && userLogin.error === "Invalid email or password") {
+      setErrorMsg(<FormattedMessage id="login-view.invalid-password" />);
+      setTimeout(() => {
+        setErrorMsg("");
+      }, 4000);
+    } else if (!userLogin.error) {
+      return;
+    } else {
+      setErrorMsg(userLogin.error);
+      setTimeout(() => {
+        setErrorMsg("");
+      }, 4000);
+    }
+  }, [dispatch, userLogin.error]);
+
+  useEffect(() => {
+    setErrorMsg("");
+    dispatch({ type: USER_LOGIN_CLEAN });
+  }, [dispatch]);
 
   const passwordStyles = passwordHasError
     ? `${styles.invalid} ${styles.input}`
@@ -109,7 +129,7 @@ const LogView = (props) => {
             <ErrorMessage variant="danger">{props.errorMessage}</ErrorMessage>
           )}
         </Form.Group>
-        {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+        {errorMsg && <ErrorMessage variant="danger">{errorMsg}</ErrorMessage>}
 
         <div className={styles.btns}>
           <Button

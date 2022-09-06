@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { TagCloud } from "react-tagcloud";
 import Container from "react-bootstrap/esm/Container";
 import styles from "./TagCloudContainer.module.css";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { getTags } from "../../../actions/itemActions";
 
 function TagCloudContainer() {

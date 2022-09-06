@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, Link } from "react-router-dom";
-import CommentsSection from "./CommentsSection";
+import { FormattedMessage } from "react-intl";
 import styles from "./ItemView.module.css";
 import { Badge, CircularProgress } from "@mui/material";
 import { Card, Col, Row } from "react-bootstrap";
-import { getItemDetails, updateLike } from "../../../actions/itemActions";
 import Container from "react-bootstrap/esm/Container";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { getItemDetails, updateLike } from "../../../actions/itemActions";
 import image from "../../../img/NoImg.jpg";
-import { FormattedMessage } from "react-intl";
+import CommentsSection from "./CommentsSection";
 import AdditionalInfo from "./AdditionalInfo";
 
 function ItemView() {
@@ -20,7 +20,6 @@ function ItemView() {
   const dispatch = useDispatch();
   const [imgSrc, setImgSrc] = useState(image);
 
-  //run twice? Without itemInfo() cl runs once, with - 4
   useEffect(() => {
     const itemInfo = async () => {
       await dispatch(getItemDetails(params.id));
@@ -29,6 +28,7 @@ function ItemView() {
   }, [dispatch, params.id]);
 
   const onLikeHandler = () => {
+    userLogin.userInfo &&
     itemDetails.itemInfo.likedBy.includes(userLogin.userInfo._id)
       ? dispatch(updateLike(params.id, "remove"))
       : dispatch(updateLike(params.id, "add"));
@@ -41,12 +41,6 @@ function ItemView() {
       setImgSrc(`${itemDetails.itemInfo.img}`);
   }, [itemDetails]);
 
-  //   const isAuthor =
-  //     userLogin.userInfo &&
-  //     collectionDetails.collectionInfo &&
-  //     userLogin.userInfo._id === collectionDetails.collectionInfo.authorId;
-  //   const isAdmin = userLogin.userInfo && userLogin.userInfo.admin;
-  //   const allowedToAction = (userLogin.userInfo && isAuthor) || isAdmin;
   const likeStyles = userLogin.userInfo
     ? `${styles.likeIcon}`
     : `${styles.likeIconInactive}`;
@@ -145,7 +139,6 @@ function ItemView() {
                 className={styles.img}
                 alt="Item"
               />
-              {/* <img src={imgSrc} className={styles.img} alt="Item"></img> */}
             </Col>
           </Row>
           <CommentsSection comments={itemDetails.itemInfo.comments} />

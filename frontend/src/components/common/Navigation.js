@@ -1,15 +1,13 @@
-import { React, useEffect, useRef, useState } from "react";
+import { React, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { FormattedMessage } from "react-intl";
+import styles from "./Navigation.module.css";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import styles from "./Navigation.module.css";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import Switch from "@mui/material/Switch";
-import Tooltip from "@mui/material/Tooltip";
+import { Switch, Tooltip } from "@mui/material";
 import { logout } from "../../actions/userActions";
-import { FormattedMessage } from "react-intl";
 import { GB, PL } from "country-flag-icons/react/3x2";
 import locales from "../../localization/locales";
 import localStorageKeys from "../../constants/localStorageKeys";
@@ -18,7 +16,6 @@ export default function Navigation(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const ref = useRef(null);
-  // useOutsideAlerter(ref);
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const [checked, setChecked] = useState(

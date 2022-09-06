@@ -1,10 +1,8 @@
 import { Tooltip } from "@mui/material";
-import { Col } from "react-bootstrap";
-import Container from "react-bootstrap/esm/Container";
-import Row from "react-bootstrap/Row";
-import { Link } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
-
+import { Link } from "react-router-dom";
+import { Col, Row } from "react-bootstrap";
+import Container from "react-bootstrap/esm/Container";
 import styles from "./TopItem.module.css";
 
 function TopCollection(props) {

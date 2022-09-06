@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./AdditionalInput.module.css";
-import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
-import { Checkbox, FormControlLabel, Radio } from "@mui/material";
+import { Checkbox, Grid, FormControlLabel, TextField } from "@mui/material";
 import CloseButton from "react-bootstrap/CloseButton";
 
 function AdditionalInput(props) {
@@ -26,7 +24,7 @@ function AdditionalInput(props) {
       ? setChecked(true)
       : setChecked(false);
     inputType !== "Boolean" && setValue(props.value);
-  }, [props.value]);
+  }, [props.value, inputType]);
   const onChangeCheckbox = (e) => {
     setChecked(!checked);
     props.onChange(e);
@@ -35,7 +33,11 @@ function AdditionalInput(props) {
   const contentTextDataInt = (
     <Grid xs={6} sm={4} item>
       {props.onDeleteInput && (
-        <CloseButton id={props.id} onClick={props.onDeleteInput} />
+        <CloseButton
+          id={props.id}
+          className={styles.closeButton}
+          onClick={props.onDeleteInput}
+        />
       )}
       <TextField
         type={inputType === "Integer" ? "number" : inputType}
@@ -45,7 +47,7 @@ function AdditionalInput(props) {
         value={value || ""}
         name={props.name}
         disabled={readOnly}
-        className={styles.textField}
+        className={styles.textFieldAI}
         onChange={props.onChange}
         inputProps={inputPropsCustom}
       />
@@ -70,7 +72,7 @@ function AdditionalInput(props) {
             rows={4}
             value={value}
             name={props.name}
-            className={styles.textField}
+            className={styles.textFieldAI}
             onChange={props.onChange}
             disabled={readOnly}
             inputProps={{
