@@ -67,7 +67,6 @@ const deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
   const userCollections = await Collection.find({ authorId: req.params.id });
   const userItems = await Item.find({ authorId: req.params.id });
-  console.log(user.root);
 
   if (user && !user.root) {
     await user.remove();
@@ -102,7 +101,6 @@ const getUserDetails = asyncHandler(async (req, res) => {
 const updateUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
   const { action } = req.body;
-  console.log(action);
   if (user) {
     switch (action) {
       case "block":

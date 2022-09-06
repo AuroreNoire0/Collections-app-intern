@@ -56,6 +56,8 @@ function NewItem() {
     window.scrollTo(0, 0);
   };
 
+  console.log(imgSrc);
+
   useEffect(() => {
     if (error) {
       setTimeout(() => {

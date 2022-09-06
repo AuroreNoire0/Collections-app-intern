@@ -42,10 +42,12 @@
   justify-content: center;
   align-items: center;
   display: flex;
+  max-height: 50rem;
 }
 
 .img {
   object-fit: contain;
+  max-height: 50rem;
 }
 
 .itemCard .title {

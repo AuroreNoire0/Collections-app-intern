@@ -44,11 +44,8 @@ export default function Navigation(props) {
 
   function handleClickOutside(e) {
     if (ref.current && ref.current.classList.contains("show")) {
-      console.log(ref.current);
       ref.current.classList.remove("show");
       document.querySelector(".navbar-toggler").classList.add("collapsed");
-      // document.querySelector(".navbar-toggler").classList.add("collapsed");
-      // document.querySelector(".navbar-toggler").onToggle();
     }
   }
   document.addEventListener("click", handleClickOutside);

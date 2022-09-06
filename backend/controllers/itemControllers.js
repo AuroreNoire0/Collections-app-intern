@@ -230,8 +230,4 @@ module.exports = {
   updateLike,
   getItems,
   search,
-  // getUserCollections,
-  // deleteCollection,
-  // getCollectionDetails,
-  // updateCollection,
 };

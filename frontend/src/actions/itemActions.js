@@ -163,7 +163,6 @@ export const getItemDetails = (id) => async (dispatch) => {
     const { data } = await axios.get(`/api/item-details/${id}`, config);
 
     dispatch({ type: ITEM_DETAILS_SUCCESS, payload: data });
-    // localStorage.setItem("itemInfo", JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: ITEM_DETAILS_FAIL,

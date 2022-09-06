@@ -25,10 +25,6 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-// app.get("/", (req, res) => {
-//   res.send("API is running!");
-// });
-
 app.use(notFound);
 app.use(errorHandler);
 
