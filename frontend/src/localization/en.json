@@ -91,6 +91,7 @@
   "new-collection.cancel-button": "Cancel",
   "new-collection.additional-fields": "You can create the additional fields which help you describe every item in your collection. Standard fields: id, name and tags.",
   "new-collection.invalid-format": "Supported image file format: .jpg, .png or .jpeg",
+  "new-collection.empty-additional-field": "Label field can't be empty.",
   "additional-input.your-name-placeholder": "Name of field",
   "additional-input.your-value-placeholder": "Value",
   "new-item.succes-message": "Item created.",

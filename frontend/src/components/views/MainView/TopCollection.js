@@ -23,7 +23,7 @@ function TopCollection(props) {
           </p>
         }
       >
-        <Container className={styles.container}>
+        <Container fluid className={styles.container}>
           <Col xs={8} className={styles.itemName}>
             {props.name}
           </Col>

@@ -39,6 +39,7 @@
   --color-logo: #222;
   --color-default-font: #222;
   --color-default-font-label: rgba(57, 57, 57, 0.853);
+  /* --color-default-font-disabled: rgb(204, 44, 44); */
   --color-navbar-bg: #aa9390;
   --color-navbar-box-shadow: rgb(81, 77, 77);
   --color-navbrand: black;
@@ -86,6 +87,7 @@ body[data-theme="light"] {
   --color-logo: #222;
   --color-default-font: #222;
   --color-default-font-label: rgba(28, 27, 27, 0.853);
+  /* --color-default-font-disabled: rgb(166, 40, 40); */
   --color-navbar-bg: #aa9390;
   --color-navbar-box-shadow: rgb(81, 77, 77);
   --color-navbrand: black;

@@ -33,7 +33,7 @@ function AccountView() {
     if (collectionDelete.success) {
       setTimeout(() => {
         dispatch({ type: COLLECTION_DELETE_CLEAN });
-      }, 5000);
+      }, 4000);
     }
   }, [dispatch, collectionDelete.success]);
 

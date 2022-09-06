@@ -22,9 +22,9 @@ const ItemsList = (props) => {
   };
   const onEditHandler = () => {
     if (selectedItems.length > 1) {
-      setMessage();
+      setMessage(<FormattedMessage id="item-list.edit-warning" />);
       setTimeout(() => {
-        setMessage(<FormattedMessage id="item-list.edit-warning" />);
+        setMessage("");
       }, 3000);
     } else if (selectedItems.length === 0) {
       return;
@@ -101,7 +101,7 @@ const ItemsList = (props) => {
             />
           </div>
           <MessageSnackbar
-            open={message !== "" ? true : false}
+            open={message !== ""}
             severity="warning"
             message={message}
           />

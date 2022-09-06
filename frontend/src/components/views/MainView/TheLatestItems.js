@@ -19,7 +19,7 @@ function TheLatestItems() {
     topItems();
   }, [dispatch]);
   return (
-    <Container xs={10} lg={6}>
+    <Container fluid xs={11} lg={6}>
       <div className={styles.divTitle}>
         <h1 className={styles.title}>
           <FormattedMessage id="latest-item.title" />

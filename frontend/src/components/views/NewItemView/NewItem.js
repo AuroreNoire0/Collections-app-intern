@@ -57,6 +57,7 @@ function NewItem() {
       : dispatch(createItem(name, imgSrc, selectedTags, additionalInputs));
     window.scrollTo(0, 0);
   };
+
   useEffect(() => {
     if (error) {
       setTimeout(() => {
@@ -77,6 +78,9 @@ function NewItem() {
     if (itemCreate.success) {
       setTimeout(() => {
         dispatch({ type: ITEM_CREATE_CLEAN });
+        setName("");
+        setImgSrc("");
+        setSelectedTags([]);
       }, 5000);
     }
   }, [dispatch, itemCreate.success]);
@@ -208,7 +212,7 @@ function NewItem() {
                   id={index}
                   name={inp.name}
                   inputType={inp.type}
-                  // value={additionalInputs[index].value}
+                  value={additionalInputs[index].value}
                   onChange={onChangeAdditInputHandler}
                 />
               ))}

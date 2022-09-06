@@ -95,6 +95,7 @@
   "new-collection.cancel-button": "Anuluj",
   "new-collection.additional-fields": "Stwórz dodatkowe pola, które pomogą Ci lepiej opisać przedmioty w tej kolekcji. Podstawowe pola to id, nazwa oraz tagi.",
   "new-collection.invalid-format": "Wspierane formaty obrazu: .jpg, .png lub .jpeg",
+  "new-collection.empty-additional-field": "Pole nazwy nie może być puste.",
   "additional-input.your-name-placeholder": "Nazwa pola",
   "additional-input.your-value-placeholder": "Wartość",
   "new-item.succes-message": "Przedmiot stworzony.",

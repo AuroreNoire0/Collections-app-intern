@@ -56,7 +56,7 @@ function NewCollection() {
     if (error) {
       setTimeout(() => {
         setError("");
-      }, 5000);
+      }, 4000);
     }
   }, [error]);
 
@@ -84,7 +84,9 @@ function NewCollection() {
   };
 
   const onChangeQuill = (content, delta, source, editor) => {
-    setValues({ ...values, description: editor.getHTML() });
+    editor.getText().trim() === ""
+      ? setValues({ ...values, description: editor.getText().trim() })
+      : setValues({ ...values, description: editor.getHTML() });
   };
 
   const uploadImage = (e, img) => {
@@ -123,17 +125,21 @@ function NewCollection() {
       ? setInputToCreate({ ...inputToCreate, type: e.target.value })
       : setInputToCreate({ ...inputToCreate, name: e.target.value });
   };
-  const renderNewInputHandler = () => {
-    setAdditionalInputs((prevState) => [
-      ...prevState,
-      {
-        type: inputToCreate.type,
-        name: inputToCreate.name,
-        value: "",
-      },
-    ]);
+  const onRenderNewInputHandler = () => {
+    inputToCreate.name.trim() !== ""
+      ? setAdditionalInputs((prevState) => [
+          ...prevState,
+          {
+            type: inputToCreate.type,
+            name: inputToCreate.name,
+            value: "",
+          },
+        ])
+      : setError(
+          intl.formatMessage({ id: "new-collection.empty-additional-field" })
+        );
   };
-
+  error && window.scrollTo(0, 0);
   const onDeleteInputHandler = (e) => {
     additionalInputs.splice(e.target.id, 1);
     setAdditionalInputs((prevState) => [...prevState]);
@@ -153,9 +159,9 @@ function NewCollection() {
         open={collectionCreate.success}
         message={<FormattedMessage id="new-collection.succes-message" />}
       />
-      {error && (
-        <MessageSnackbar open={error !== ""} severity="error" message={error} />
-      )}
+
+      <MessageSnackbar open={error !== ""} severity="error" message={error} />
+
       <div className={styles.divTitle}>
         <h1 className={styles.title}>
           <FormattedMessage id="new-collection.title" />
@@ -210,6 +216,7 @@ function NewCollection() {
                 <ReactQuill
                   theme="snow"
                   name="description"
+                  value={values.description}
                   className={styles.description}
                   onChange={onChangeQuill}
                 />
@@ -257,7 +264,7 @@ function NewCollection() {
                       label={label}
                       value={inputToCreate.name}
                       name="nameInp"
-                      className={styles.textField}
+                      className={styles.textFieldLabel}
                       onChange={onChangeNewInputHandler}
                     />
                   )}
@@ -275,7 +282,7 @@ function NewCollection() {
                   type="button"
                   variant="success"
                   className={styles.createBtn}
-                  onClick={renderNewInputHandler}
+                  onClick={onRenderNewInputHandler}
                 >
                   <FormattedMessage id="new-collection.create-inputs-button" />
                 </Button>
@@ -289,6 +296,7 @@ function NewCollection() {
                       name={inp.name}
                       inputType={inp.type}
                       onDeleteInput={onDeleteInputHandler}
+                      readOnly={true}
                     />
                   ))}
                 </Grid>

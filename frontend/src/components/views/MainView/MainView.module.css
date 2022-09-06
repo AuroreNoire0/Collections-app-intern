@@ -3,6 +3,10 @@
 .mainContainer {
   background-color: var(--color-main-bg);
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .mainHeader {
   display: flex;

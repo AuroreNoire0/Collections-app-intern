@@ -67,7 +67,9 @@ function EditCollection() {
     setValues({ ...values, [name]: value });
   };
   const onChangeQuill = (content, delta, source, editor) => {
-    setDescription(editor.getHTML());
+    editor.getText().trim() === ""
+      ? setDescription(editor.getText().trim())
+      : setDescription(editor.getHTML());
   };
 
   const cancelHandler = async (e) => {
@@ -78,7 +80,7 @@ function EditCollection() {
     if (collectionUpdate.success) {
       setTimeout(() => {
         dispatch({ type: COLLECTION_UPDATE_CLEAN });
-      }, 5000);
+      }, 4000);
     }
   }, [dispatch, collectionUpdate.success]);
 
@@ -310,6 +312,7 @@ function EditCollection() {
                       inputType={inp.type}
                       value={inp.value}
                       onDeleteInput={onDeleteInputHandler}
+                      readOnly={true}
                     />
                   ))}
                 </Grid>

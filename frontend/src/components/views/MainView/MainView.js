@@ -15,9 +15,9 @@ function MainView() {
         </p>
       </div>
 
-      <Container className={styles.topContainers}>
-        <TheLatestItems xs={10} lg={5}></TheLatestItems>
-        <TheLargestCollection xs={10} lg={5}></TheLargestCollection>
+      <Container fluid className={styles.topContainers}>
+        <TheLatestItems></TheLatestItems>
+        <TheLargestCollection></TheLargestCollection>
       </Container>
       <TagCloudContainer />
     </Container>

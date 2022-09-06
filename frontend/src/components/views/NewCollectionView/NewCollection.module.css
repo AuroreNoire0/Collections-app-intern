@@ -49,6 +49,7 @@
 
 .textField,
 .textFieldTopic,
+.textFieldLabel,
 .inputTypeSelect,
 .inputNumber {
   width: 100% !important;
@@ -98,6 +99,7 @@ ul > li {
   width: 100%;
 }
 
-.form fieldset {
-  border: 1px solid var(--color-default-font);
+.form fieldset,
+.form fieldset:disabled {
+  border: 1px solid var(--color-default-font) !important;
 }

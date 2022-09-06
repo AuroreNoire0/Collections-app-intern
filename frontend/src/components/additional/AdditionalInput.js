@@ -10,6 +10,7 @@ function AdditionalInput(props) {
   const [value, setValue] = useState("");
   const inputType = props.inputType;
   const id = props.id.toString();
+  const readOnly = props.readOnly;
   const inputPropsCustom =
     inputType === "Integer"
       ? {
@@ -41,8 +42,9 @@ function AdditionalInput(props) {
         id={id}
         label={props.name}
         variant="outlined"
+        value={value || ""}
         name={props.name}
-        value={value}
+        disabled={readOnly}
         className={styles.textField}
         onChange={props.onChange}
         inputProps={inputPropsCustom}
@@ -70,6 +72,7 @@ function AdditionalInput(props) {
             name={props.name}
             className={styles.textField}
             onChange={props.onChange}
+            disabled={readOnly}
             inputProps={{
               "aria-label": inputType,
             }}
@@ -95,6 +98,7 @@ function AdditionalInput(props) {
                     "aria-label": inputType,
                   }}
                   checked={checked}
+                  disabled={readOnly}
                 />
               }
               label={props.name}

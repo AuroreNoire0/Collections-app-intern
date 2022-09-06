@@ -23,7 +23,7 @@ function TopItem(props) {
           </p>
         }
       >
-        <Container className={styles.container}>
+        <Container fluid className={styles.container}>
           <Col xs={6} className={styles.itemName}>
             {props.name}
           </Col>
