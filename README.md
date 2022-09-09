@@ -11,4 +11,6 @@ New user by default is not an admin. Only admin can manage users- block, unblock
 
 
 Application is created entirely by me as course project during the internship.
-Technologies: HTML/CSS/Bootstrap/MUI/Javascript/React/Node.js/MongoDB/Express
+
+
+Technologies: HTML/CSS/Bootstrap/MUI/Javascript/React/Redux/Node.js/MongoDB/Express
